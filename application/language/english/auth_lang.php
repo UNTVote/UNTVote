@@ -75,6 +75,8 @@ $lang['create_user_validation_phone3_label']           = 'Third Part of Phone';
 $lang['create_user_validation_company_label']          = 'Company Name';
 $lang['create_user_validation_password_label']         = 'Password';
 $lang['create_user_validation_password_confirm_label'] = 'Password Confirmation';
+$lang['create_user_validation_college_label']          = 'College';
+
 
 // Edit User
 $lang['edit_user_heading']                           = 'Edit User';

@@ -4,6 +4,7 @@
         <p><h3>Changelog:</h3></p>
         *Version 1: Initial page setup
         <br>*9/15 - 1:30: User Authentication Login System Setup
-        <br>*9/15 - 9:45: Navigation Created</br>
+        <br>*9/15 - 9:45: Navigation Created
+        <br>*9/27 - Cleaned Code Up
     </body>
 </html>

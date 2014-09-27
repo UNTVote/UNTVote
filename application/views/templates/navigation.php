@@ -1,22 +1,17 @@
+<! navigation area!>
+<?=anchor('/', 'Home | ')?>
+<?=anchor('/about', 'About | ')?>
 
-<?php
-// home
-echo anchor('/', 'Home|');   
-echo anchor('/about', 'About|');
-// select to display login or logout depending on if a user is logged in or not
-if($loggedIn == FALSE)
-{
-    echo anchor('user/login', 'Log In|');
-    echo anchor('user/register', "Register");
-}
-// user is logged in, let them know they can log out
-else
-{
-    echo anchor('user/logout', 'Log Out');
-    // if the user that is logged in is an admin show them a link to the admin panel
-    if($isAdmin == true)
-    {
-        echo anchor('auth', '|Admin Panel');
-    }       
-}
-?>
+<! display Login or Logout depending on whether or not they are logged in !>
+<?php if($loggedIn == FALSE): ?>
+    <! display Login and Register for the user !>
+    <?=anchor('user/login', 'Log In|')?>
+    <?=anchor('user/register', "Register")?>
+    
+<?php else: ?>
+    <?=anchor('user/logout', 'Log Out')?>
+    <?php if($isAdmin): ?>
+        <?=anchor('auth', '|Admin Panel')?>
+    <?php endif; ?>
+<?php endif; ?>
+<hr>
