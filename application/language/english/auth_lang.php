@@ -36,6 +36,7 @@ $lang['index_fname_th']          = 'First Name';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_euid_th']           = 'EUID';
 $lang['index_email_th']          = 'Email';
+$lang['index_college_th']        = 'College';
 $lang['index_groups_th']         = 'Groups';
 $lang['index_status_th']         = 'Status';
 $lang['index_action_th']         = 'Action';
@@ -43,6 +44,7 @@ $lang['index_active_link']       = 'Active';
 $lang['index_inactive_link']     = 'Inactive';
 $lang['index_create_user_link']  = 'Create a new user';
 $lang['index_create_group_link'] = 'Create a new group';
+$lang['index_create_college_link'] = 'Create a new college';
 
 // Deactivate User
 $lang['deactivate_heading']                  = 'Deactivate User';
@@ -59,6 +61,7 @@ $lang['create_user_subheading']                        = 'Please enter the user\
 $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_euid_label']                        = 'EUID:';
+$lang['create_user_college_label']                     = 'College:';
 $lang['create_user_company_label']                     = 'Company Name:';
 $lang['create_user_email_label']                       = 'Email:';
 $lang['create_user_phone_label']                       = 'Phone:';
@@ -84,22 +87,26 @@ $lang['edit_user_subheading']                        = 'Please enter the user\'s
 $lang['edit_user_fname_label']                       = 'First Name:';
 $lang['edit_user_lname_label']                       = 'Last Name:';
 $lang['edit_user_euid_label']                        = 'EUID:';
+$lang['edit_user_college_label']                     = 'College:';
 $lang['edit_user_company_label']                     = 'Company Name:';
 $lang['edit_user_email_label']                       = 'Email:';
 $lang['edit_user_phone_label']                       = 'Phone:';
 $lang['edit_user_password_label']                    = 'Password: (if changing password)';
 $lang['edit_user_password_confirm_label']            = 'Confirm Password: (if changing password)';
 $lang['edit_user_groups_heading']                    = 'Member of groups';
+$lang['edit_user_colleges_heading']                  = 'Member of Colleges';
 $lang['edit_user_submit_btn']                        = 'Save User';
 $lang['edit_user_validation_fname_label']            = 'First Name';
 $lang['edit_user_validation_lname_label']            = 'Last Name';
 $lang['edit_user_validation_euid_label']             = 'EUID';
 $lang['edit_user_validation_email_label']            = 'Email Address';
+$lang['edit_user_validation_college_label']          = 'College';
 $lang['edit_user_validation_phone1_label']           = 'First Part of Phone';
 $lang['edit_user_validation_phone2_label']           = 'Second Part of Phone';
 $lang['edit_user_validation_phone3_label']           = 'Third Part of Phone';
 $lang['edit_user_validation_company_label']          = 'Company Name';
 $lang['edit_user_validation_groups_label']           = 'Groups';
+$lang['edit_user_validation_colleges_label']         = 'Colleges';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
 
@@ -113,6 +120,16 @@ $lang['create_group_submit_btn']             = 'Create Group';
 $lang['create_group_validation_name_label']  = 'Group Name';
 $lang['create_group_validation_desc_label']  = 'Description';
 
+// Create college
+$lang['create_college_title']                  = 'Create College';
+$lang['create_college_heading']                = 'Create College';
+$lang['create_college_subheading']             = 'Please enter the college information below.';
+$lang['create_college_name_label']             = 'College Name:';
+$lang['create_college_desc_label']             = 'Description:';
+$lang['create_college_submit_btn']             = 'Create College';
+$lang['create_college_validation_name_label']  = 'College Name';
+$lang['create_college_validation_desc_label']  = 'Description';
+
 // Edit Group
 $lang['edit_group_title']                  = 'Edit Group';
 $lang['edit_group_saved']                  = 'Group Saved';
@@ -123,6 +140,17 @@ $lang['edit_group_desc_label']             = 'Description:';
 $lang['edit_group_submit_btn']             = 'Save Group';
 $lang['edit_group_validation_name_label']  = 'Group Name';
 $lang['edit_group_validation_desc_label']  = 'Description';
+
+// Edit College
+$lang['edit_college_title']                  = 'Edit College';
+$lang['edit_college_saved']                  = 'College Saved';
+$lang['edit_college_heading']                = 'Edit College';
+$lang['edit_college_subheading']             = 'Please enter the college information below.';
+$lang['edit_college_name_label']             = 'College Name:';
+$lang['edit_college_desc_label']             = 'Description:';
+$lang['edit_college_submit_btn']             = 'Save College';
+$lang['edit_college_validation_name_label']  = 'College Name';
+$lang['edit_college_validation_desc_label']  = 'Description';
 
 // Change Password
 $lang['change_password_heading']                               = 'Change Password';

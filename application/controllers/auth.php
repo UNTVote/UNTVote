@@ -43,6 +43,7 @@ class Auth extends CI_Controller {
 			foreach ($this->data['users'] as $k => $user)
 			{
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+                $this->data['users'][$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
 			}
             $this->load->view('templates/header', $data);
             $this->load->view('templates/admin_navigation', $data);
@@ -493,13 +494,16 @@ class Auth extends CI_Controller {
 		}
 
 		$user = $this->ion_auth->user($id)->row();
-		$groups=$this->ion_auth->groups()->result_array();
+		$groups = $this->ion_auth->groups()->result_array();
 		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $colleges = $this->ion_auth->colleges()->result_array();
+        $currentCollege = $this->ion_auth->get_users_colleges($id)->result();
 
 		//validate form input
 		$this->form_validation->set_rules('euid', $this->lang->line('edit_user_validation_euid_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'), 'xss_clean');
 		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
 		if (isset($_POST) && !empty($_POST))
@@ -516,21 +520,33 @@ class Auth extends CI_Controller {
 				'last_name'  => $this->input->post('last_name'),
 			);
 
-			// Only allow updating groups if user is admin
+			// Only allow updating groups and colleges if user is admin
 			if ($this->ion_auth->is_admin())
 			{
-				//Update the groups user belongs to
+				//Update the groups and colleges user belongs to
 				$groupData = $this->input->post('groups');
+                $collegeData = $this->input->post('colleges');
 
-				if (isset($groupData) && !empty($groupData)) {
-
+				if (isset($groupData) && !empty($groupData)) 
+				{
 					$this->ion_auth->remove_from_group('', $id);
 
-					foreach ($groupData as $grp) {
+					foreach ($groupData as $grp) 
+					{
 						$this->ion_auth->add_to_group($grp, $id);
 					}
-
 				}
+                
+                if (isset($collegeData) && !empty($collegeData)) 
+                {
+                    $this->ion_auth->remove_from_college('', $id);
+
+                    foreach ($collegeData as $clg) 
+                    {
+                        $this->ion_auth->add_to_college($clg, $id);
+                    }
+                }
+                
 			}
 
 			//update the password if it was posted
@@ -570,6 +586,9 @@ class Auth extends CI_Controller {
 		$this->data['user'] = $user;
 		$this->data['groups'] = $groups;
 		$this->data['currentGroups'] = $currentGroups;
+        // sets the options for the dropdown box
+        $this->data['options'] = $colleges;
+        $this->data['collegeDefault'] = $currentCollege;
 
         $this->data['euid'] = array(
             'name'  => 'euid',

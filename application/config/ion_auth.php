@@ -29,7 +29,9 @@
 */
 $config['tables']['users']           = 'users';
 $config['tables']['groups']          = 'groups';
+$config['tables']['colleges']        = 'colleges';
 $config['tables']['users_groups']    = 'users_groups';
+$config['tables']['users_colleges']  = 'users_colleges';
 $config['tables']['login_attempts']  = 'login_attempts';
 
 /*
@@ -38,8 +40,9 @@ $config['tables']['login_attempts']  = 'login_attempts';
  | Joins from users.id
  | Joins from groups.id
  */
-$config['join']['users']  = 'user_id';
-$config['join']['groups'] = 'group_id';
+$config['join']['users']  =   'user_id';
+$config['join']['groups'] =   'group_id';
+$config['join']['colleges'] = 'college_id';
 
 /*
  | -------------------------------------------------------------------------
@@ -84,6 +87,7 @@ $config['salt_prefix']    = '$2y$';
 $config['site_title']                 = "UNTVote";       // Site Title, example.com
 $config['admin_email']                = "Smith.Chad12@gmail.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';           // Default group, use name
+$config['default_college']            = 'business';          // Default college
 $config['admin_group']                = 'admin';             // Default administrators group, use name
 $config['identity']                   = 'username';          // A database column which is used to login with
 $config['min_password_length']        = 8;                   // Minimum Required Length of Password

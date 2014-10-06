@@ -1,0 +1,54 @@
+1: Create College Table in database
+	College Table
+
+id, name, description
+
+	users_colleges
+id, user_id, college_id
+----------------------------------------
+2: Add to $config['tables']
+Add to $config['join']
+
+----------------------------------------
+3: Overload register with $colleges = array();
+Check to see if the colleges array is not empty
+Add each user to the college
+Add a $_cache_user_in_college = array();
+Add a $_cache_colleges = array();
+
+---------------------------------------
+3: Overload users with $users = NULL
+
+---------------------------------------
+4: Add a add_to_college($college_id, $user_id=false)
+
+---------------------------------------
+5: Add a remove_from_group($college_ids=false, $user_id=false)
+
+---------------------------------------
+6: Add a colleges()
+
+---------------------------------------
+7: Add a college($id = NULL)
+
+---------------------------------------
+8: Add a create_college($college_name = false, $college_description = '', $additional_data = array())
+
+---------------------------------------
+9: Add a update_college($college_id = false, $college_name = false, $addition_data = array())
+
+---------------------------------------
+10: Add a delete_college($college_id = false)
+
+--------------------------------------
+11: Add a $_cache_user_in_college in Ion_Auth library class
+
+---------------------------------------
+12: In constructor: 
+$this->_cache_user_in_college =& $this->ion_auth_model->_cache_user_in_college;
+
+---------------------------------------
+13: Overload register function with $college_ids
+
+---------------------------------------
+14: Add in_college($check_college, $id=false, $check_all = false)

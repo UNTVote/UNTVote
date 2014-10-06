@@ -109,22 +109,7 @@ class User extends CI_Controller
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
         
-        // sets the options for the dropdown box
-        $this->data['options'] = array(
-        'arts_and_sciences' => "College of Arts and Sciences",
-        'business' => "College of Business",
-        'education' => "College of Education",
-        'engineering' => "College of Engineering",
-        'information' => "College of Information",
-        'merchandishing_hospitality_tourism' => "College of Merchandishing, Hospitality and Tourism",
-        'music' => "College of Music",
-        'public_affairs_community_service' => "College of Public Affairs and Community Service",
-        'visual_arts_design' => "College of Visual Arts and Design",
-        'journalism' => "Frank W. and Sue Mayborn School of Journalism",
-        'honors' => "Honors College",
-        'tams' => "TAMS",
-        'toulouse' => "Toulouse Graduate School",
-        );
+        $colleges = $this->ion_auth->colleges()->result_array();
 
         $tables = $this->config->item('tables','ion_auth');
 
@@ -133,10 +118,9 @@ class User extends CI_Controller
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
-        $this->form_validation->set_rules('college', $this->lang->line('create_user_validation_college_label'), 'required|xss_clean');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
-
+        
         if ($this->form_validation->run() == true)
         {
             // make both the username and email lowercase
@@ -148,7 +132,6 @@ class User extends CI_Controller
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name'  => $this->input->post('last_name'),
-                'college'    => $this->input->post('college'),
             );
         }
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
@@ -188,11 +171,6 @@ class User extends CI_Controller
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('email'),
             );
-            $this->data['college'] = array(
-                'name'  => 'college',
-                'id'    => 'college',
-                'value' => $this->form_validation->set_value('college'), 
-            );
             $this->data['password'] = array(
                 'name'  => 'password',
                 'id'    => 'password',
@@ -223,5 +201,17 @@ class User extends CI_Controller
             return $viewHTML;
         }
     }
+    
+    function _valid_csrf_nonce()
+    {
+        if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
+            $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue'))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
 }
-

@@ -55,6 +55,15 @@ $lang['group_delete_successful']    = 'Group deleted';
 $lang['group_delete_unsuccessful'] 	= 'Unable to delete group';
 $lang['group_name_required'] 		= 'Group name is a required field';
 
+// Colleges
+$lang['college_creation_successful']  = 'College created Successfully';
+$lang['college_already_exists']       = 'College name already taken';
+$lang['college_update_successful']    = 'College details updated';
+$lang['college_delete_successful']    = 'College deleted';
+$lang['college_delete_unsuccessful']  = 'Unable to delete college';
+$lang['college_name_required']        = 'College name is a required field';
+
+
 // Activation Email
 $lang['email_activation_subject']            = 'Account Activation';
 $lang['email_activate_heading']    = 'Activate account for %s';

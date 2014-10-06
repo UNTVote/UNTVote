@@ -29,6 +29,35 @@
             <?php echo lang('edit_user_password_confirm_label', 'password_confirm');?><br />
             <?php echo form_input($password_confirm);?>
       </p>
+      
+      <!-- the college dropdown list -->
+      <?php if($this->ion_auth->is_admin()): ?>
+          <!-- output the heading -->
+          <h3><?php echo lang('user_user_college_heading');?></h3>
+          <!-- create the dropdown list -->
+          <select name = "colleges[]">
+              <!-- for each college that we have -->
+              <?php foreach($options as $college):?>
+                  <!-- create an option for that college -->
+                  <?php
+                    $cID = $college['id'];
+                    $default = null;
+                    $item = null;
+                    // default college
+                    foreach($collegeDefault as $clg)
+                    {
+                        if($cID == $clg->id)
+                        {
+                            $default = ' selected = "selected"';
+                        }
+                        break;
+                    }
+                  ?>
+                  <option value = "<?php echo $college['id'];?>"<?php echo $default;?>>
+                  <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>
+              <?php endforeach?>   
+          </select>
+      <?php endif?>
 
       <?php if ($this->ion_auth->is_admin()): ?>
 
@@ -39,8 +68,10 @@
                   $gID=$group['id'];
                   $checked = null;
                   $item = null;
-                  foreach($currentGroups as $grp) {
-                      if ($gID == $grp->id) {
+                  foreach($currentGroups as $grp) 
+                  {
+                      if ($gID == $grp->id) 
+                      {
                           $checked= ' checked="checked"';
                       break;
                       }
@@ -52,7 +83,7 @@
           <?php endforeach?>
 
       <?php endif ?>
-
+      
       <?php echo form_hidden('id', $user->id);?>
       <?php echo form_hidden($csrf); ?>
 
