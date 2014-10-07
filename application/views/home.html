@@ -84,7 +84,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-5">
               
-              <form class="form-horizontal col-md-10 col-lg-8 block-center" role="form">
+              <form class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
                 <div class="row">
                   <h1>Register</h1>
                 </div>
@@ -92,11 +92,11 @@
                   <label>Name</label>
                   <div class="row">
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" placeholder="First">
+                      <input type="text" class="form-control" placeholder="First" required data-parsley-pattern="^[a-zA-Z]+$" data-parsley-pattern-message="Invalid name" data-parsley-required-message="Required field" data-parsley-trigger="change keyup">
                     </div>
                     <div class="visible-xs col-xs-1">&nbsp;</div> <!-- This adds a space after textbox on small screens -->
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" placeholder="Last">
+                      <input type="text" class="form-control" placeholder="Last" required data-parsley-pattern="^[a-zA-Z]+$" data-parsley-pattern-message="Invalid name" data-parsley-required-message="Required field" data-parsley-trigger="change keyup">
                     </div>
                   </div>
                 </div>
@@ -117,18 +117,19 @@
                 </div>
                 <div class="form-group">
                   <label>EUID</label>
-                  <input type="text" class="form-control" placeholder="UNT EUID">
+                  <input type="text" class="form-control" placeholder="UNT EUID" required data-parsley-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/" data-parsley-pattern-message="This EUID seems to be invalid." data-parsley-required-message="Required field" data-parsley-trigger="change keyup">
                 </div>
                 <div class="form-group">
                   <label>Email</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="UNT email">
+                    <input type="text" class="form-control" placeholder="UNT email" required data-parsley-type="alphanum" data-parsley-type-message="This email seems to be invalid." data-parsley-required-message="Required field" data-parsley-errors-container="#error-container-email" data-parsley-trigger="change keyup">
                     <span class="input-group-addon">@my.unt.edu</span>
                   </div>
+                  <div id="error-container-email"></div>
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" class="form-control" placeholder="Password" required data-parsley-minlength="8" data-parsley-minlength-message="Password should have 8 character or more." data-parsley-required-message="Required field" data-parsley-trigger="change focusout">
                 </div>
                 <div class="form-group">
                   <br>
@@ -161,5 +162,6 @@
     <!-- All scripts go below this area -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../assets/js/vendor/parsley.min.js"></script>
   </body>
 </html>
