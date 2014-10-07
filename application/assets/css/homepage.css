@@ -1,0 +1,21 @@
+body {
+  background: url(../img/home.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6, p, label{
+  color: #fff;
+}
+
+.block-center {
+  margin: 0 auto;
+  float: none;
+}
+
+.site-features {
+  width: 64px;
+  height: 64px;
+}
