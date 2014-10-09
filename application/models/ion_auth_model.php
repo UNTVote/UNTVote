@@ -963,7 +963,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author Chad
      **/
-    public function registerUser($username, $password, $email, $additional_data = array(), $groups = array(), $colleges = array())
+    public function registerUser($username, $password, $email, $colleges = array(), $additional_data = array(), $groups = array())
     {
         $this->trigger_events('pre_register');
 
@@ -1042,13 +1042,21 @@ class Ion_auth_model extends CI_Model
         
         if (!empty($colleges))
         {
-            //add to groups
+            //add to colleges
             foreach ($colleges as $college)
             {
                 $this->add_to_college($college, $id);
             }
-        }        
+        }
 
+        //add to default group if not already set
+        $default_college = $this->where('name', $this->config->item('default_college', 'ion_auth'))->college()->row();
+        /*if ((isset($default_college->id) && empty($colleges)) || (!empty($colleges) && !in_array($default_college->id, $colleges)))
+        {
+            $this->add_to_college($default_college->id, $id);
+        }*/
+        
+        
         $this->trigger_events('post_register');
 
         return (isset($id)) ? $id : FALSE;

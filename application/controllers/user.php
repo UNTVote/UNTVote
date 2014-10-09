@@ -109,6 +109,7 @@ class User extends CI_Controller
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
         
+        $groups = $this->ion_auth->groups()->result_array();
         $colleges = $this->ion_auth->colleges()->result_array();
 
         $tables = $this->config->item('tables','ion_auth');
@@ -117,6 +118,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('euid', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('colleges', $this->lang->line('create_user_validation_college_label'), 'required|xss_clean');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
@@ -128,13 +130,16 @@ class User extends CI_Controller
             $username = strtolower($this->input->post('euid'));
             $email    = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
+            $group    = array('1');
+            $collegeData = $this->input->post('colleges');
 
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name'  => $this->input->post('last_name'),
             );
+            
         }
-        if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
+        if ($this->form_validation->run() == true && $this->ion_auth->registerUser($username, $password, $email, $collegeData, $additional_data))
         {
             //check to see if we are creating the user
             //redirect them back to the register page
@@ -183,6 +188,8 @@ class User extends CI_Controller
                 'type'  => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
+            
+            $this->data['options'] = $colleges;
             
             $this->load->view('templates/header', $this->data);
             $this->load->view('templates/navigation', $this->data);
