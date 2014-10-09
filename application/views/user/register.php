@@ -5,17 +5,6 @@
 
 <div id="loginForm">
 <?php echo form_open("user/register");?>
-      <p>
-          <?php echo lang('create_user_college_lavel', 'colleges');?>
-          <select name = "colleges[]">
-              <!-- for every college that we have -->
-              <?php foreach($options as $college):?>
-                  <option value = "<?php echo $college['id'];?>">
-                      <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>
-                  </option>
-              <?php endforeach?>      
-          </select>
-      </p>
 
       <p>
             <?php echo lang('create_user_euid_label', 'euid');?> <br />
