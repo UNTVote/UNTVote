@@ -41,6 +41,27 @@ body {
 }
 
 /*
+ * User, Admin and Candidate Pages
+ */
+
+.profile-pic{
+    width: 48px;
+    height: 48px; 
+}
+
+.dropdown-menu-open-left{
+    right: 0;
+    left: auto;
+}
+
+
+
+
+
+
+
+
+/*
  * Sidebar
  */
 
