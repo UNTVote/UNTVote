@@ -130,3 +130,12 @@ body {
 .footer-text:hover {
   text-decoration: none;
 }
+
+/*
+ * Helper classes
+ */
+
+.block-center {
+  margin: 0 auto;
+  float: none;
+}
