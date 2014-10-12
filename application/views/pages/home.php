@@ -111,7 +111,7 @@
                 <div class="form-group">
                   <label>College</label>
                   <select name="colleges[]" class="form-control">
-                    <!-- for every college that we have -->      
+                    <!-- create an option for every college that we have -->      
 -                   <?php foreach($options as $college):?>       
 -                       <option value = "<?php echo $college['id'];?>">      
 -                           <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>     

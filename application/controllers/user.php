@@ -131,17 +131,21 @@ class User extends CI_Controller
             // append @my.unt.edu to the email
             $email   .= '@my.unt.edu'; 
             $password = $this->input->post('password');
-      
-           $collegeData = $this->input->post('colleges');
-            $additional_data = array(
+ 				
+			// all the colleges the user has picked.     
+            $collegeData = $this->input->post('colleges');
+            
+			// additional data to be send to the users table
+			$additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name'  => $this->input->post('last_name'),
             );
         }
+		
+		// check to see if we are creating the user
         if ($this->form_validation->run() == true && $this->ion_auth->registerUser($username, $password, $email, $collegeData, $additional_data))
         {
-            //check to see if we are creating the user
-            //redirect them back to the register page
+            // redirect them back to the register page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             redirect("user/login", 'refresh');
         }
@@ -181,12 +185,7 @@ class User extends CI_Controller
                 'type'  => 'password',
                 'value' => $this->form_validation->set_value('password'),
             );
-            $this->data['password_confirm'] = array(
-                'name'  => 'password_confirm',
-                'id'    => 'password_confirm',
-                'type'  => 'password',
-                'value' => $this->form_validation->set_value('password_confirm'),
-            );
+			
             $this->data['options'] = $colleges;
             
             $this->load->view('templates/header', $this->data);
