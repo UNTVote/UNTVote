@@ -54,10 +54,10 @@
               <form role="form">
                 <div class="form-group">
                   <label>EUID</label>
-                  <input type="email" class="form-control" placeholder="UNT EUID">
+                  <input type="text" class="form-control" placeholder="UNT EUID">
                 </div>
                 <div class="form-group">
-                  <label>Password <a href="#">(Forgot?)</a></label>
+                  <label>Password <a href="#" tabindex="-1">(Forgot?)</a></label>
                   <input type="password" class="form-control" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-default">Sign in</button>

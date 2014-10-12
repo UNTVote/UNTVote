@@ -57,7 +57,7 @@
                 <div class="media">
                   <a class="pull-left" href="#">
                     <!-- <img class="media-object site-features" src="../assets/img/elections.png" alt="Elections"> -->
-                    <img class="navbar-brand" src="<?=img_url()?>elections.png" alt="Elections">
+                    <img class="media-object site-features" src="<?=img_url()?>elections.png" alt="Elections">
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">Elections</h4>
@@ -67,7 +67,7 @@
                 <div class="media">
                   <a class="pull-left" href="#">
                     <!-- <img class="media-object site-features" src="../assets/img/results.png" alt="Results"> -->
-                    <img class="navbar-brand" src="<?=img_url()?>results.png" alt="Results">
+                    <img class="media-object site-features" src="<?=img_url()?>results.png" alt="Results">
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">View results</h4>
@@ -77,7 +77,7 @@
                 <div class="media">
                 <a class="pull-left" href="#">
                   <!-- <img class="media-object site-features" src="../assets/img/candidate.png" alt="Become a candidate"> -->
-                  <img class="navbar-brand" src="<?=img_url()?>candidate.png" alt="Become a candidate">
+                  <img class="media-object site-features" src="<?=img_url()?>candidate.png" alt="Become a candidate">
                 </a>
                 <div class="media-body">
                   <h4 class="media-heading">Become a candidate</h4>
