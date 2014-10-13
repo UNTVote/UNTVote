@@ -34,7 +34,8 @@
             <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNTVote"></a>
           </div>
           <div class="col-xs-7 text-right">
-            <a href="#" class="btn btn-primary">Register</a>
+            <!-- <a href="#" class="btn btn-primary">Register</a> -->
+            <?=anchor('/', 'Register', array('class' => 'btn btn-primary'));?>
           </div>
         </div>
       </div>
@@ -51,14 +52,15 @@
               <h3 class="panel-title">Sign in</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+            <div id="infoMessage"><?php echo $message;?></div>
+              <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
                 <div class="form-group">
                   <label>EUID</label>
-                  <input type="text" class="form-control" placeholder="UNT EUID">
+                  <input name="identity" id="identity" type="text" class="form-control" placeholder="UNT EUID">
                 </div>
                 <div class="form-group">
                   <label>Password <a href="#" tabindex="-1">(Forgot?)</a></label>
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input name="password" id="password" type="password" class="form-control" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-default">Sign in</button>
               </form>

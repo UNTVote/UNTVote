@@ -36,7 +36,7 @@
             <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNT Vote"></a>
           </div>
           <div class="col-xs-7 text-right">
-            <a href="#" class="btn btn-default">Sign in</a>
+            <?=anchor('user/login', 'Sign In', array('class' => 'btn btn-default'))?>
           </div>
         </div>
       </div>
@@ -91,8 +91,8 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-5">
               
-              <!-- <?=form_open('user/register', $attributes)?> -->
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/register')?>" class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
+              <div id="message"><?php echo $message;?></div>
                 <div class="row">
                   <h1>Register</h1>
                 </div>

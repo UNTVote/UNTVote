@@ -54,9 +54,9 @@ class User extends CI_Controller
             if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
             {
                 //if the login is successful
-                //redirect them back to the home page
+                //redirect them to the users page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('/', 'refresh');
+                redirect('user/', 'refresh');
             }
             else
             {
@@ -145,7 +145,7 @@ class User extends CI_Controller
 		// check to see if we are creating the user
         if ($this->form_validation->run() == true && $this->ion_auth->registerUser($username, $password, $email, $collegeData, $additional_data))
         {
-            // redirect them back to the register page
+            // redirect them back to the login page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             redirect("user/login", 'refresh');
         }
@@ -190,7 +190,7 @@ class User extends CI_Controller
             
             $this->load->view('templates/header', $this->data);
             $this->load->view('templates/navigation', $this->data);
-            $this->_render_page('user/register', $this->data);
+            $this->_render_page('pages/home', $this->data);
         }
     }
 

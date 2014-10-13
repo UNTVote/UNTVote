@@ -22,17 +22,19 @@ class Pages extends CI_Controller
         // do we have a logged in user
         $data['loggedIn'] = $this->ion_auth->logged_in();
         $data['isAdmin'] = $this->ion_auth->is_admin();
+		
+		$data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+		
+		// before we go any further, check to see if anyone is logged in
+		if($this->ion_auth->logged_in())
+		{
+			// redirect user to the user page
+			redirect('user/');
+		}
         
         // get all the colleges from the database
         $data['options'] = $this->ion_auth->colleges()->result_array();
-        
-        // attributes for the registration form
-        $attributes = array(
-            'class' => 'form-horizontal col-md-10 col-lg-8 block-center',
-            'id'    => 'register',
-            'role'  => 'form',
-            'data-' => 'parsley-validate');
-        $data['attributes'] = $attributes;
+		
         
         // load the view needed, load the templates with the view
         $this->load->view('templates/header', $data);
