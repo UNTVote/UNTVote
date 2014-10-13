@@ -1,28 +1,95 @@
-<h1><?php echo lang('login_heading');?></h1>
-<p><?php echo lang('login_subheading');?></p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+    <title>Login | UNTVote</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
-<div id="infoMessage"><?php echo $message;?></div>
+    <!-- Custom styles -->
+    <?=css('style-main.css')?>
+    <?=css('user-auth.css')?>
+    <!-- <link href="../assets/css/style-main.css" rel="stylesheet">
+    <link href="../assets/css/user-auth.css" rel="stylesheet"> -->
 
-<?php echo form_open("user/login");?>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-  <p>
-    <?php echo lang('login_identity_label', 'identity');?>
-    <?php echo form_input($identity);?>
-  </p>
+  <body>
+    <!-- Navigation -->
+    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-5">
+            <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNTVote"></a>
+          </div>
+          <div class="col-xs-7 text-right">
+            <!-- <a href="#" class="btn btn-primary">Register</a> -->
+            <?=anchor('/', 'Register', array('class' => 'btn btn-primary'));?>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <p>
-    <?php echo lang('login_password_label', 'password');?>
-    <?php echo form_input($password);?>
-  </p>
+    <div class="container-fluid">
+      <div class="row">
+        <br>
+        
+        <!-- Main body content -->
+        <div class="col-xs-12">
+          <div class="panel panel-default panel-user-auth block-center">
+            <div class="panel-heading">
+              <h3 class="panel-title">Sign in</h3>
+            </div>
+            <div class="panel-body">
+            <div id="infoMessage"><?php echo $message;?></div>
+              <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
+                <div class="form-group">
+                  <label>EUID</label>
+                  <input name="identity" id="identity" type="text" class="form-control" placeholder="UNT EUID">
+                </div>
+                <div class="form-group">
+                  <label>Password <a href="#" tabindex="-1">(Forgot?)</a></label>
+                  <input name="password" id="password" type="password" class="form-control" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-default">Sign in</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <br>
+      </div>
+    </div>
 
-  <p>
-    <?php echo lang('login_remember_label', 'remember');?>
-    <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?>
-  </p>
-
-
-  <p><?php echo form_submit('submit', lang('login_submit_btn'));?></p>
-
-<?php echo form_close();?>
-
-<p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>
+    <!-- Footer area -->
+    <div class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-6">
+            <p class="footer-text">&copy; 2014 UNT Vote</p>
+          </div>
+          <div class="col-xs-6 text-right">
+            <a href="#" class="footer-text">Contact</a>
+            &nbsp;
+            <a href="#" class="footer-text">Help</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- All scripts go below this area -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
