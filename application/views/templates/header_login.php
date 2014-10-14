@@ -13,11 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
     <!-- Custom styles -->
-
     <?=css('style-main.css')?>
-    <?=css('homepage.css')?>
-    <!-- <link href="../assets/css/style-main.css" rel="stylesheet"> -->
-    <!-- <link href="../assets/css/homepage.css" rel="stylesheet"> -->
+    <?=css('user-auth.css')?>
+    <!-- <link href="../assets/css/style-main.css" rel="stylesheet">
+    <link href="../assets/css/user-auth.css" rel="stylesheet"> -->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
