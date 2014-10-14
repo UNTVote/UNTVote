@@ -43,7 +43,7 @@ class User extends CI_Controller
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
         
-        //validate form input
+        // validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -72,7 +72,6 @@ class User extends CI_Controller
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-			$this->data['errorMessage'] = validation_errors();
             
             $this->load->view('templates/header_login', $this->data);
             $this->load->view('templates/navigation_login', $this->data);
@@ -146,6 +145,7 @@ class User extends CI_Controller
             //display the create user form
             //set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['inforMessage'] = $this->session->flashdata('message');
 
             $this->data['options'] = $colleges;
             

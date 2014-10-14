@@ -11,7 +11,7 @@
             <?php if($message != NULL):?>
             	<div id="message" class="alert alert-danger"><?php echo $message;?></div> 
                 </div>
-            <?php endif;?>
+            <?php endif; ?>
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
                 <div class="form-group">
                   <label>EUID</label>
