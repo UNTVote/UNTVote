@@ -48,11 +48,9 @@
             <div class="col-xs-12 col-sm-6 col-lg-5">
               
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/register')?>" class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
+                <div id="message"><?php echo $message;?></div>
                 <div class="row">
                   <h1>Register</h1>
-                </div>
-                <div class="row">
-                  <div id="message" class="alert alert-danger"><?php echo $message;?></div>
                 </div>
                 <div class="form-group">
                   <label>Name</label>
