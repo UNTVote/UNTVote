@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2014 at 01:20 AM
+-- Generation Time: Oct 14, 2014 at 06:06 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,6 +19,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `unt_proto`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `colleges`
+--
+
+CREATE TABLE IF NOT EXISTS `colleges` (
+`id` mediumint(5) NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `description` varchar(200) CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `colleges`
+--
+
+INSERT INTO `colleges` (`id`, `name`, `description`) VALUES
+(1, 'arts_and_sciences', 'College of Arts and Sciences'),
+(2, 'business', 'College of Business'),
+(3, 'education', 'College of Education'),
+(4, 'engineering', 'College of Engineering'),
+(5, 'information', 'College of Information'),
+(6, 'merchandising_hospitality_tourism', 'College of Merchandising, Hospitality and Tourism'),
+(7, 'music', 'College of Music'),
+(8, 'public_affairs', 'College of Public Affairs and Community Service'),
+(10, 'visual_arts', 'College of Visual Arts and Design'),
+(11, 'journalism', 'Frank W. and Sue Mayborn School of Journalism'),
+(12, 'honors', 'Honors College'),
+(13, 'tams', 'Texas Academy of Mathematics and Science (TAMS)'),
+(14, 'toulouse', 'Toulouse Graduate School');
 
 -- --------------------------------------------------------
 
@@ -90,19 +121,52 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `college` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+  `phone` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `college`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1411659273, 1, 'Chad', 'Smith', 'None', '2147296420', NULL),
-(5, '::1', 'cs0357', '$2y$08$EudIpAx2WvO.7o4EJfAkf.RrWyMGawsMxr.Qt5ebzyHAS0TuerUO2', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1411857689, 1, 'Chad', 'Smith', NULL, NULL, NULL),
-(6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL, NULL),
-(7, '::1', 'cs041', '$2y$08$Vav/P0mw/rCqLx5pGRxFK.5ajrjIlJXMUztDVyPOXojNlGbEqD44m', NULL, 'testing@test.com', NULL, NULL, NULL, NULL, 1411857558, 1411857572, 1, 'chad', 'Smith', NULL, NULL, 'engineering');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1413257052, 1, 'Chad', 'Smith', 'None', '2147296420'),
+(5, '::1', 'cs0357', '$2y$08$EudIpAx2WvO.7o4EJfAkf.RrWyMGawsMxr.Qt5ebzyHAS0TuerUO2', NULL, 'chadsmith4@my.unt.edu', NULL, 'Sbf.DyFvH3B0NtRTi91XIub207e11ebf0ed0a576', 1413255296, NULL, 1411505230, 1413180294, 1, 'Chad', 'Smith', NULL, NULL),
+(6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL),
+(34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Chad', 'Smith', NULL, NULL),
+(35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Chad', 'Smith', NULL, NULL),
+(36, '::1', 'cs1', '$2y$08$Pooyam.gF/K00NNfDVS3z.fI07rCPmCSLiFw/XjoptIIPcJP5PKwe', NULL, 'testing@test.com', NULL, NULL, NULL, NULL, 1412909291, 1412909291, 1, 'chad', 'smith', NULL, NULL),
+(37, '::1', 'ej123', '$2y$08$FmiA9AF55Y3KIKaZownv6O0Sh5ztVxZ.EPHqGNcXEUSjeEFmW/LVy', NULL, 'rootemail@my.unt.edu', NULL, NULL, NULL, NULL, 1412916249, 1412916249, 1, 'Chad', 'Smith', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_colleges`
+--
+
+CREATE TABLE IF NOT EXISTS `users_colleges` (
+`id` mediumint(5) NOT NULL,
+  `user_id` mediumint(5) NOT NULL,
+  `college_id` mediumint(5) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+
+--
+-- Dumping data for table `users_colleges`
+--
+
+INSERT INTO `users_colleges` (`id`, `user_id`, `college_id`) VALUES
+(28, 8, 2),
+(29, 11, 3),
+(30, 7, 1),
+(31, 5, 4),
+(35, 17, 2),
+(36, 31, 1),
+(37, 32, 1),
+(38, 33, 1),
+(39, 34, 1),
+(40, 34, 2),
+(42, 35, 4),
+(43, 36, 4),
+(44, 37, 4);
 
 -- --------------------------------------------------------
 
@@ -114,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=141 ;
 
 --
 -- Dumping data for table `users_groups`
@@ -123,14 +187,23 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (21, 1, 1),
 (22, 1, 2),
-(29, 5, 1),
-(30, 5, 2),
+(106, 5, 1),
+(107, 5, 2),
 (14, 6, 2),
-(31, 7, 2);
+(136, 34, 2),
+(138, 35, 2),
+(139, 36, 2),
+(140, 37, 2);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `colleges`
+--
+ALTER TABLE `colleges`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `election`
@@ -157,6 +230,12 @@ ALTER TABLE `users`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users_colleges`
+--
+ALTER TABLE `users_colleges`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users_groups`
 --
 ALTER TABLE `users_groups`
@@ -166,6 +245,11 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `colleges`
+--
+ALTER TABLE `colleges`
+MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `election`
 --
@@ -185,12 +269,17 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+--
+-- AUTO_INCREMENT for table `users_colleges`
+--
+ALTER TABLE `users_colleges`
+MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=141;
 --
 -- Constraints for dumped tables
 --
