@@ -1,17 +1,16 @@
-<! navigation area!>
-<?=anchor('/', 'Home | ')?>
-<?=anchor('/about', 'About | ')?>
-
-<! display Login or Logout depending on whether or not they are logged in !>
-<?php if($loggedIn == FALSE): ?>
-    <! display Login and Register for the user !>
-    <?=anchor('user/login', 'Log In|')?>
-    <?=anchor('user/register', "Register")?>
+<body>
+    <!-- Navigation -->
+    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-5">
+            <!-- <a href="#"><img class="navbar-brand" src="../assets/img/UNTVote-logo.png" alt="UNT Vote"></a> -->
+            <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNT Vote"></a>
+          </div>
+          <div class="col-xs-7 text-right">
+            <?=anchor('user/login', 'Sign In', array('class' => 'btn btn-default'))?>
+          </div>
+        </div>
+      </div>
+    </div>
     
-<?php else: ?>
-    <?=anchor('user/logout', 'Log Out')?>
-    <?php if($isAdmin): ?>
-        <?=anchor('auth', '|Admin Panel')?>
-    <?php endif; ?>
-<?php endif; ?>
-<hr>

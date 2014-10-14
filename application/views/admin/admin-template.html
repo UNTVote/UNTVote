@@ -51,15 +51,33 @@
       <div class="row">
         <!-- Sidebar -->
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="#">Sidebar item 1</a></li>
-            <li><a href="#">Sidebar item 2</a></li>
+          <ul class="nav nav-sidebar panel-group" id="menuAccordion">
+            <li class="panel"><a href="#"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Dashboard</a></li>
+            <li class="panel">
+              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
+              <div id="collapseElections" class="panel-collapse collapse">
+                <ul class="nav-sidebar-sub-menu">
+                  <li><a href="#">Manage</a></li>
+                  <li><a href="#">Results</a></li>
+                  <li><a href="#">Live Feed</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="panel">
+              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseUsers"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Users</a>
+              <div id="collapseUsers" class="panel-collapse collapse">
+                <ul class="nav-sidebar-sub-menu">
+                  <li><a href="#">Manage</a></li>
+                  <li><a href="#">Approvals</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </div>
         
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Template</h1>
+          <h1 class="page-header">Admin Template</h1>
 
         </div>
       </div>
