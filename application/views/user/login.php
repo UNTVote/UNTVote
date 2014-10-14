@@ -2,27 +2,27 @@
 
  
         <!-- Main body content -->
-        <div class="col-xs-12">
-          <div class="panel panel-default panel-user-auth block-center">
-            <div class="panel-heading">
-              <h3 class="panel-title">Sign in</h3>
-            </div>
-            <div class="panel-body">
-            <?php if($message != NULL):?>
-            	<div id="message" class="alert alert-danger"><?php echo $message;?></div> 
-                </div>
-            <?php endif;?>
-              <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
-                <div class="form-group">
-                  <label>EUID</label>
-                  <input name="identity" id="identity" type="text" class="form-control" placeholder="UNT EUID">
-                </div>
-                <div class="form-group">
-                  <label>Password <?=anchor('user/forgot_password', '(Forgot?)', array('tabindex' => '-1'))?></label> 
-                  <input name="password" id="password" type="password" class="form-control" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-default">Sign in</button>
-              </form>
+          <div class="col-xs-12">
+            <div class="panel panel-default panel-user-auth block-center">
+              <div class="panel-heading">
+                <h3 class="panel-title">Sign in</h3>
+              </div>
+              <div class="panel-body">
+                <?php if($message != NULL):?>
+                  <div id="message" class="alert alert-danger"><?php echo $message;?></div> 
+                <?php endif;?>
+                <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
+                  <div class="form-group">
+                    <label>EUID</label>
+                    <input name="identity" id="identity" type="text" class="form-control" placeholder="UNT EUID">
+                  </div>
+                  <div class="form-group">
+                    <label>Password <?=anchor('user/forgot_password', '(Forgot?)', array('tabindex' => '-1'))?></label> 
+                    <input name="password" id="password" type="password" class="form-control" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-default">Sign in</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
