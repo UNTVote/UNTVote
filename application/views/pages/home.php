@@ -1,47 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    
-    <title><?=$title?></title>
-    
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-    <!-- Custom styles -->
-
-    <?=css('style-main.css')?>
-    <?=css('homepage.css')?>
-    <!-- <link href="../assets/css/style-main.css" rel="stylesheet"> -->
-    <!-- <link href="../assets/css/homepage.css" rel="stylesheet"> -->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <!-- Navigation -->
-    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-5">
-            <!-- <a href="#"><img class="navbar-brand" src="../assets/img/UNTVote-logo.png" alt="UNT Vote"></a> -->
-            <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNT Vote"></a>
-          </div>
-          <div class="col-xs-7 text-right">
-            <?=anchor('user/login', 'Sign In', array('class' => 'btn btn-default'))?>
-          </div>
-        </div>
-      </div>
-    </div>
-    
     <!-- Main body content -->
     <div class="container-fluid">
       <div class="row">
@@ -146,27 +102,3 @@
         </div>
       </div>
     </div>
-
-    <!-- Footer area -->
-    <div class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-6">
-            <p class="footer-text">&copy; 2014 UNT Vote</p>
-          </div>
-          <div class="col-xs-6 text-right">
-            <a href="#" class="footer-text">Contact</a>
-            &nbsp;
-            <a href="#" class="footer-text">Help</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- All scripts go below this area -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <!-- <script src="../assets/js/vendor/parsley.min.js"></script> -->
-    <?=js('vendor/parsley.min.js')?>
-  </body>
-</html>
