@@ -10,8 +10,12 @@ h1, h2, h3, h4, h5, h6, p, label{
   color: #fff;
 }
 
-li {
+.parsley-errors-list > li {
   color: #e74c3c;
+}
+
+.alert-danger > p {
+  color: #a94442;
 }
 
 .site-features {
