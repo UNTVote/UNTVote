@@ -8,7 +8,10 @@
               <h3 class="panel-title">Sign in</h3>
             </div>
             <div class="panel-body">
-            <div id="infoMessage"><?php echo $message;?></div>
+            <?php if($message != NULL):?>
+            	<div id="message" class="alert alert-danger"><?php echo $message;?></div> 
+                </div>
+            <?php endif;?>
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
                 <div class="form-group">
                   <label>EUID</label>

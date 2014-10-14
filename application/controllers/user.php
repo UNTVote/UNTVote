@@ -4,6 +4,8 @@
 // What all the general users can do
 class User extends CI_Controller 
 {
+	private $errorMessage = false;
+	
     function __construct()
     {
         parent::__construct();
@@ -70,6 +72,7 @@ class User extends CI_Controller
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			$this->data['errorMessage'] = validation_errors();
             
             $this->load->view('templates/header_login', $this->data);
             $this->load->view('templates/navigation_login', $this->data);
@@ -199,7 +202,7 @@ class User extends CI_Controller
 		}
 	}
 	
-	// reset password - final step for forgotten password
+	//reset password - final step for forgotten password
 	public function reset_password($code = NULL)
 	{
 		if (!$code)
@@ -209,12 +212,12 @@ class User extends CI_Controller
 
 		$user = $this->ion_auth->forgotten_password_check($code);
 
-		// if we have a valid code
 		if ($user)
 		{
+			//if the code is valid then display the password reset form
 
-			$this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
-			$this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
+			$this->form_validation->set_rules('newPassword', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[confirmPassword]');
+			$this->form_validation->set_rules('confirmPassword', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
 
 			if ($this->form_validation->run() == false)
 			{
@@ -223,11 +226,33 @@ class User extends CI_Controller
 				//set the flash data error message if there is one
 				$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+				$this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
+				$this->data['new_password'] = array(
+					'name' => 'new',
+					'id'   => 'new',
+				'type' => 'password',
+					'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+				);
+				$this->data['new_password_confirm'] = array(
+					'name' => 'new_confirm',
+					'id'   => 'new_confirm',
+					'type' => 'password',
+					'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+				);
+				$this->data['user_id'] = array(
+					'name'  => 'user_id',
+					'id'    => 'user_id',
+					'type'  => 'hidden',
+					'value' => $user->id,
+				);
 				$this->data['csrf'] = $this->_get_csrf_nonce();
 				$this->data['code'] = $code;
 
-				// render
-				$this->_render_page('auth/reset_password', $this->data);
+				//render
+				$this->_render_page('templates/header_login', $this->data);
+				$this->_render_page('templates/navigation_forgot', $this->data);
+				$this->_render_page('user/reset-password', $this->data);
+				$this->_render_page('templates/footer', $this->data);
 			}
 			else
 			{
@@ -246,7 +271,7 @@ class User extends CI_Controller
 					// finally change the password
 					$identity = $user->{$this->config->item('identity', 'ion_auth')};
 
-					$change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
+					$change = $this->ion_auth->reset_password($identity, $this->input->post('newPassword'));
 
 					if ($change)
 					{
@@ -257,7 +282,7 @@ class User extends CI_Controller
 					else
 					{
 						$this->session->set_flashdata('message', $this->ion_auth->errors());
-						redirect('auth/reset_password/' . $code, 'refresh');
+						redirect('user/reset_password/' . $code, 'refresh');
 					}
 				}
 			}
@@ -266,7 +291,7 @@ class User extends CI_Controller
 		{
 			//if the code is invalid then send them back to the forgot password page
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
-			redirect("auth/forgot_password", 'refresh');
+			redirect("user/forgot_password", 'refresh');
 		}
 	}
 
@@ -281,6 +306,17 @@ class User extends CI_Controller
             return $viewHTML;
         }
     }
+	
+	function _get_csrf_nonce()
+	{
+		$this->load->helper('string');
+		$key   = random_string('alnum', 8);
+		$value = random_string('alnum', 20);
+		$this->session->set_flashdata('csrfkey', $key);
+		$this->session->set_flashdata('csrfvalue', $value);
+
+		return array($key => $value);
+	}
     
     function _valid_csrf_nonce()
     {
@@ -295,3 +331,4 @@ class User extends CI_Controller
         }
     }
 }
+

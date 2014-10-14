@@ -52,8 +52,10 @@
                   <h1>Register</h1>
                 </div>
                 <div class="row">
+                <?php if($message != NULL):?>
                   <div id="message" class="alert alert-danger"><?php echo $message;?></div>
                 </div>
+                <?php endif;?>
                 <div class="form-group">
                   <label>Name</label>
                   <div class="row">
