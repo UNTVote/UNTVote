@@ -9,8 +9,7 @@
             </div>
             <div class="panel-body">
             <?php if($message != NULL):?>
-            	<div id="message" class="alert alert-danger"><?php echo $message;?></div> 
-                </div>
+            	<?php echo $message;?>
             <?php endif; ?>
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/login')?>" id="login" role="form">
                 <div class="form-group">
