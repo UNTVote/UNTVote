@@ -1,56 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    
-    <title>Terms of Service | UNTVote</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-    <!-- Custom styles -->
-    <link href="../assets/css/style-main.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <!-- Navigation -->
-    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-5">
-            <a href="#"><img class="navbar-brand" src="../assets/img/UNTVote-logo.png" alt="UNTVote"></a>
-          </div>
-          <div class="col-xs-7 text-right">
-            <label class="profile-name">Username</label>
-            <div class="btn-group">
-              <img src="../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
-              <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <br>
-        
         <!-- Main body content -->
         <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center">
           <div class="panel-body">
@@ -72,31 +19,11 @@ Nunc suscipit dolor faucibus, gravida enim quis, convallis nulla. Suspendisse ve
         </div> 
         <br>
         <div class="col-xs-12 text-center">
-          <button class="btn btn-default">Return to UNTVote</button>
+          <form method="link" action="<?=site_url('/')?>">
+          	<button class="btn btn-default">Return to UNTVote</button>
+          </form>
         </div>
         
         <br><br><br>
       </div>
     </div>
-
-    <!-- Footer area -->
-    <div class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-6">
-            <p class="footer-text">&copy; 2014 UNT Vote</p>
-          </div>
-          <div class="col-xs-6 text-right">
-            <a href="#" class="footer-text">Contact</a>
-            &nbsp;
-            <a href="#" class="footer-text">Help</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- All scripts go below this area -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  </body>
-</html>

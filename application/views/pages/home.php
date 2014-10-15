@@ -98,7 +98,7 @@
                 <div class="form-group">
                   <br>
                   <button name="submit" id="submit" type="submit" class="btn btn-primary btn-block">Register for UNTVote</button>
-                  <span class="help-block">By registering, you agree to our <a href="#">Terms of Service.</a></span>
+                  <span class="help-block">By registering, you agree to our <?=anchor('/terms-of-service', 'Terms of Service');?></span>
                 </div>
               </form>
             </div>
