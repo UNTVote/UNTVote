@@ -32,8 +32,8 @@ class Pages extends CI_Controller
 		// load the views based on whether it's the home page or terms of service page
 		if($page == 'terms-of-service')
 		{
-			$this->load->view('templates/header_terms', $data);
-        	$this->load->view('templates/navigation_user', $data);
+			$this->load->view('templates/header_user', $data);
+        	$this->load->view('templates/navigation_login', $data);
 		}
 		else
 		{

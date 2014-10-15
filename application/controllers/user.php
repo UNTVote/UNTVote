@@ -30,9 +30,13 @@ class User extends CI_Controller
         // get the current logged in user to use on the page
         else
         {
+			// get the users first name
+			$firstName = $this->ion_auth->user()->row()->first_name;
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['title'] = $this->ion_auth->user()->row()->first_name;
-            $this->load->view('user/index', $this->data);           
+            $this->data['title'] = $firstName . " | UNTVote";
+			$this->load->view('templates/header_user', $this->data);
+        	$this->load->view('templates/navigation_user', $this->data);
+            $this->load->view('user/user_homepage', $this->data);           
         }
     }
     

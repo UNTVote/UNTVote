@@ -7,7 +7,7 @@
             <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNTVote"></a>
           </div>
           <div class="col-xs-7 text-right">
-            <label class="profile-name">Username</label>
+            <label class="profile-name"><?=$user->first_name?></label>
             <div class="btn-group">
               <img src="<?=img_url()?>user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
               <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
@@ -15,7 +15,7 @@
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><?=anchor('user/logout', 'Logout')?></li>
               </ul>
             </div>
           </div>
