@@ -193,7 +193,7 @@ body {
  */
 
 .info-circle {
-  display:block;
+  display: inline-block;
   width:45px;
   height:45px;
   font-size: 16px;
