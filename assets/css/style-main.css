@@ -199,10 +199,13 @@ body {
   font-size: 16px;
   font-weight: bold;
   text-align: center;
+  vertical-align: baseline;
+  line-height: 1;
+  white-space: nowrap;
   border-radius:50%;
   border-width: 2px;
   border-style: solid;
-  padding-top: 9px;
+  padding-top: 12px;
 }
 
 .info-circle-red {
