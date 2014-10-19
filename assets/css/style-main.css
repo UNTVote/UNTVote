@@ -131,9 +131,8 @@ body {
   .sidebar {
     position: fixed;
     top: 50px;
-    bottom: 50px;
+    bottom: 0px;
     left: 0;
-    z-index: 1000;
     display: block;
     padding: 20px;
     overflow-x: hidden;
