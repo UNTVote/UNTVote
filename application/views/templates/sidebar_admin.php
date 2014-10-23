@@ -6,7 +6,7 @@
               <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
               <div id="collapseElections" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
-                  <li><a href="#">Manage</a></li>
+                  <li><?=anchor('auth/manage_elections', 'Manage Elections')?></li>
                   <li><a href="#">Results</a></li>
                   <li><a href="#">Live Feed</a></li>
                 </ul>

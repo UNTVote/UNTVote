@@ -740,6 +740,20 @@ class Auth extends CI_Controller {
         $this->load->view('templates/admin_navigation', $data);
 		$this->_render_page('auth/edit_group', $this->data);
 	}
+	
+	// admin managing elections
+	function manage_elections()
+	{
+		$firstName = $this->ion_auth->user()->row()->first_name;
+        $this->data['user'] = $this->ion_auth->user()->row();
+        $this->data['title'] = $firstName . " | UNTVote";
+		
+		$this->load->view('templates/header_manage_elections', $this->data);
+		$this->load->view('templates/navigation_admin', $this->data);
+		$this->load->view('templates/sidebar_admin', $this->data);
+		$this->_render_page('admin/admin-elections-manage', $this->data);
+		$this->load->view('templates/footer_manage_elections', $this->data);
+	}
 
 	function _get_csrf_nonce()
 	{
