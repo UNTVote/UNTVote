@@ -22,7 +22,6 @@ class Auth extends CI_Controller {
 	// redirect if needed, otherwise display the user list
 	function index()
 	{
-	    $data['title'] = "Admin Panel";
 		if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
@@ -35,71 +34,62 @@ class Auth extends CI_Controller {
 		}
 		else
 		{
-			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			//list the users
-			$this->data['users'] = $this->ion_auth->users()->result();
-			foreach ($this->data['users'] as $k => $user)
-			{
-				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-                $this->data['users'][$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
-			}
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/admin_navigation', $data);
-			$this->_render_page('auth/index', $this->data);
+			$firstName = $this->ion_auth->user()->row()->first_name;
+        	$this->data['user'] = $this->ion_auth->user()->row();
+        	$this->data['title'] = $firstName . " | UNTVote";
+			
+            $this->load->view('templates/header_user', $this->data);
+            $this->load->view('templates/navigation_admin', $this->data);
+			$this->load->view('templates/sidebar_admin', $this->data);
+			$this->_render_page('admin/admin-dashboard', $this->data);
 		}
 	}
 
 	//log the user in
 	function login()
 	{
-		$this->data['title'] = "Login";
+        $this->data['title'] = "Login | UNTVote";
+        // do we have a logged in user
+        $this->data['loggedIn'] = $this->ion_auth->logged_in();
+        $this->data['isAdmin'] = $this->ion_auth->is_admin();
+        
+        // validate form input
+        $this->form_validation->set_rules('identity', 'Identity', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
 
-		//validate form input
-		$this->form_validation->set_rules('identity', 'Identity', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
+        if ($this->form_validation->run() == true)
+        {
+            //check to see if the user is logging in
+            //check for "remember me"
+            $remember = (bool) $this->input->post('remember');
 
-		if ($this->form_validation->run() == true)
-		{
-			//check to see if the user is logging in
-			//check for "remember me"
-			$remember = (bool) $this->input->post('remember');
-
-			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
-			{
-				//if the login is successful
-				//redirect them back to the home page
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/auth', 'refresh');
-			}
-			else
-			{
-				//if the login was un-successful
-				//redirect them back to the login page
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
-			}
-		}
-		else
-		{
-			//the user is not logging in so display the login page
-			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			$this->data['identity'] = array('name' => 'identity',
-				'id' => 'identity',
-				'type' => 'text',
-				'value' => $this->form_validation->set_value('identity'),
-			);
-			$this->data['password'] = array('name' => 'password',
-				'id' => 'password',
-				'type' => 'password',
-			);
-
-			$this->_render_page('auth/login', $this->data);
-		}
-	}
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
+            {
+                //if the login is successful
+                //redirect them to the users page
+                $this->session->set_flashdata('message', $this->ion_auth->messages());
+                redirect('auth/', 'refresh');
+            }
+            else
+            {
+                // if the login was un-successful
+                // redirect them back to the login page
+                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                redirect('auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+            }
+        }
+        else
+        {
+            // set the flash data error message if there is one
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            
+            $this->load->view('templates/header_login', $this->data);
+            $this->load->view('templates/navigation_login', $this->data);
+            $this->load->view('admin/login', $this->data);    
+			$this->load->view('templates/footer', $this->data);    
+        }
+        
+    }
 
 	//log the user out
 	function logout()
@@ -183,57 +173,47 @@ class Auth extends CI_Controller {
 	}
 
 	//forgot password
-	function forgot_password()
+	public function forgot_password()
 	{
+		$this->data['title'] = 'Forgot Password | UNTVote';
+		
+		// set the validation rules
 		$this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
 		if ($this->form_validation->run() == false)
 		{
-			//setup the input
-			$this->data['email'] = array('name' => 'email',
-				'id' => 'email',
-			);
-
-			if ( $this->config->item('identity', 'ion_auth') == 'username' ){
-				$this->data['identity_label'] = $this->lang->line('forgot_password_username_identity_label');
-			}
-			else
-			{
-				$this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
-			}
+			$this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
 
 			//set any errors and display the form
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-			$this->_render_page('auth/forgot_password', $this->data);
+			$this->_render_page('templates/header_login', $this->data);
+			$this->_render_page('templates/navigation_forgot', $this->data);
+			$this->_render_page('admin/forgot-password', $this->data);
+			$this->_render_page('templates/footer', $this->data);
 		}
 		else
 		{
-			// get identity from username or email
-			if ( $this->config->item('identity', 'ion_auth') == 'username' ){
-				$identity = $this->ion_auth->where('username', strtolower($this->input->post('email')))->users()->row();
-			}
-			else
-			{
-				$identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
-			}
-	            	if(empty($identity)) {
+			// email validation
+			$identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
+	            if(empty($identity)) 
+				{
 		        	$this->ion_auth->set_message('forgot_password_email_not_found');
-		                $this->session->set_flashdata('message', $this->ion_auth->messages());
-                		redirect("auth/forgot_password", 'refresh');
-            		}
+		            $this->session->set_flashdata('message', $this->ion_auth->messages());
+                	redirect("user/forgot_password", 'refresh');
+            	}
 
-			//run the forgotten password method to email an activation code to the user
+			// run the forgotten password method to email an activation code to the user
 			$forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
-
+			
+			// if their were not errors redirect user to the login page
 			if ($forgotten)
 			{
-				//if there were no errors
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
+				redirect("user/login", 'refresh'); //we should display a confirmation page here instead of the login page
 			}
 			else
 			{
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect("auth/forgot_password", 'refresh');
+				redirect("user/forgot_password", 'refresh');
 			}
 		}
 	}
@@ -481,6 +461,30 @@ class Auth extends CI_Controller {
             $this->load->view('templates/admin_navigation', $data);
 			$this->_render_page('auth/create_user', $this->data);
 		}
+	}
+	
+	// manage all the users
+	function manage_users()
+	{
+		$firstName = $this->ion_auth->user()->row()->first_name;
+        $this->data['user'] = $this->ion_auth->user()->row();
+        $this->data['title'] = $firstName . " | UNTVote";
+		
+		//set the flash data error message if there is one
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+		//list the users
+		$this->data['users'] = $this->ion_auth->users()->result();
+		foreach ($this->data['users'] as $k => $user)
+		{
+			$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+            $this->data['users'][$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
+		}
+		
+		 $this->load->view('templates/header_user', $this->data);
+         $this->load->view('templates/navigation_admin', $this->data);
+		 $this->load->view('templates/sidebar_admin', $this->data);
+		 $this->_render_page('auth/manage_users', $this->data);
 	}
 
 	//edit a user

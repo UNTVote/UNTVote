@@ -36,6 +36,7 @@ class User extends CI_Controller
             $this->data['title'] = $firstName . " | UNTVote";
 			$this->load->view('templates/header_user', $this->data);
         	$this->load->view('templates/navigation_user', $this->data);
+			$this->load->view('templates/sidebar_user', $this->data);
             $this->load->view('user/user_homepage', $this->data);           
         }
     }
@@ -93,6 +94,7 @@ class User extends CI_Controller
         $logout = $this->ion_auth->logout();
         
         // redirect to homep age
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('user/login', 'refresh');
     }
     
