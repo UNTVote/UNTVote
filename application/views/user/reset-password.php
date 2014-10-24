@@ -22,7 +22,7 @@
                 	<?php echo form_input($user_id);?>
 					<?php echo form_hidden($csrf); ?>
                 </div>
-                <button name"submit" id="submit" type="submit" class="btn btn-default">Save</button>
+                <button name="submit" id="submit" type="submit" class="btn btn-default">Save</button>
               </form>
             </div>
           </div>
