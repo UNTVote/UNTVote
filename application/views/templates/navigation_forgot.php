@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xs-5">
-            <a href="#"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNTVote"></a>
+            <a href="<?=base_url('/')?>"><img class="navbar-brand" src="<?=img_url()?>UNTVote-logo.png" alt="UNTVote"></a>
           </div>
           <div class="col-xs-7 text-right">
           	<?=anchor('user/login', 'Sign In', array('class' => 'btn btn-default'))?>
