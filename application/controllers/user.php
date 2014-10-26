@@ -34,10 +34,12 @@ class User extends CI_Controller
 			$firstName = $this->ion_auth->user()->row()->first_name;
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['title'] = $firstName . " | UNTVote";
-			$this->load->view('templates/header_user', $this->data);
-        	$this->load->view('templates/navigation_user', $this->data);
-			$this->load->view('templates/sidebar_user', $this->data);
-            $this->load->view('user/user_homepage', $this->data);           
+			$this->_render_page('templates/header_user', $this->data);
+        	$this->_render_page('templates/navigation_user', $this->data);
+			$this->_render_page('templates/sidebar_user', $this->data);
+            $this->_render_page('user/user_homepage', $this->data);
+			$this->_render_page('templates/scripts_main');
+			$this->_render_page('templates/footer');            
         }
     }
     
@@ -78,10 +80,11 @@ class User extends CI_Controller
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             
-            $this->load->view('templates/header_login', $this->data);
-            $this->load->view('templates/navigation_login', $this->data);
-            $this->load->view('user/login', $this->data);    
-			$this->load->view('templates/footer', $this->data);    
+            $this->_render_page('templates/header_login', $this->data);
+            $this->_render_page('templates/navigation_login', $this->data);
+            $this->_render_page('user/login', $this->data);  
+			$this->_render_page('templates/scripts_main');   
+			$this->_render_page('templates/footer', $this->data);     
         }
         
     }
@@ -155,10 +158,12 @@ class User extends CI_Controller
 
             $this->data['options'] = $colleges;
             
-            $this->load->view('templates/header', $this->data);
-            $this->load->view('templates/navigation', $this->data);
+            $this->_render_page('templates/header', $this->data);
+            $this->_render_page('templates/navigation', $this->data);
             $this->_render_page('pages/home', $this->data);
-			$this->load->view('templates/footer', $this->data);
+			$this->_render_page('templates/scripts_main');  
+			$this->_render_page('templates/scripts_custom');
+			$this->_render_page('templates/footer', $this->data);
         }
     }
 	
@@ -178,7 +183,8 @@ class User extends CI_Controller
 			$this->_render_page('templates/header_login', $this->data);
 			$this->_render_page('templates/navigation_forgot', $this->data);
 			$this->_render_page('user/forgot-password', $this->data);
-			$this->_render_page('templates/footer', $this->data);
+			$this->_render_page('templates/scripts_main');
+			$this->_render_page('templates/footer', $this->data); 
 		}
 		else
 		{
@@ -246,6 +252,7 @@ class User extends CI_Controller
 				$this->_render_page('templates/header_login', $this->data);
 				$this->_render_page('templates/navigation_forgot', $this->data);
 				$this->_render_page('user/reset-password', $this->data);
+				$this->_render_page('templates/scripts_main'); 
 				$this->_render_page('templates/footer', $this->data);
 			}
 			else

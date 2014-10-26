@@ -5,7 +5,7 @@
               <h3 class="panel-title">Forgot password</h3>
             </div>
             <div class="panel-body">
-              <form method="post" accept-charset="utf-8" action="<?=site_url('auth/forgot_password')?>" id="forgot_password" role="form">
+              <form method="post" accept-charset="utf-8" action="<?=site_url('admin/forgot_password')?>" id="forgot_password" role="form">
                 <div class="form-group">
                   <label>Email</label>
                   <input name="email" id="email" type="email" class="form-control" placeholder="UNT Email">

@@ -40,8 +40,8 @@
 
 $route['user/(:any)'] = 'user/$1';
 $route['user'] = 'user';
-$route['auth/(:any)'] = 'auth/$1';
-$route['auth'] = 'auth';
+$route['admin/(:any)'] = 'admin/$1';
+$route['admin'] = 'admin';
 $route['default_controller'] = "pages/view";
 $route['(:any)'] = 'pages/view/$1';
 

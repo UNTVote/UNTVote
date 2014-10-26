@@ -15,7 +15,7 @@
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
-                <li><?=anchor('auth/logout', 'Logout')?></li>
+                <li><?=anchor('admin/logout', 'Logout')?></li>
               </ul>
             </div>
           </div>

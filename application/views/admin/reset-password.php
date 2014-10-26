@@ -9,7 +9,7 @@
                   <div id="message" class="alert alert-danger"><?php echo $message;?></div>
                 </div>
             <?php endif;?>
-              <form method="post" accept-charset="utf-8" action="<?=site_url('auth/reset_password/' . $code)?>" role="form" id="reset" data-parsley-validate>
+              <form method="post" accept-charset="utf-8" action="<?=site_url('admin/reset_password/' . $code)?>" role="form" id="reset" data-parsley-validate>
                 <div class="form-group">
                   <label>New password</label>
                   <input type="password" class="form-control" name ="newPassword" id="newPassword" placeholder="Minimum 8 characters" data-parsley-minlength="8" data-parsley-trigger="change" required>

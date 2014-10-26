@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Admin extends CI_Controller {
 
 	function __construct()
 	{
@@ -25,7 +25,7 @@ class Auth extends CI_Controller {
 		if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
-			redirect('auth/login', 'refresh');
+			redirect('admin/login', 'refresh');
 		}
 		elseif (!$this->ion_auth->is_admin())
 		{
@@ -38,10 +38,12 @@ class Auth extends CI_Controller {
         	$this->data['user'] = $this->ion_auth->user()->row();
         	$this->data['title'] = $firstName . " | UNTVote";
 			
-            $this->load->view('templates/header_user', $this->data);
-            $this->load->view('templates/navigation_admin', $this->data);
-			$this->load->view('templates/sidebar_admin', $this->data);
+            $this->_render_page('templates/header_user', $this->data);
+            $this->_render_page('templates/navigation_admin', $this->data);
+			$this->_render_page('templates/sidebar_admin', $this->data);
 			$this->_render_page('admin/admin-dashboard', $this->data);
+			$this->_render_page('templates/scripts_main');
+			$this->_render_page('templates/footer');
 		}
 	}
 
@@ -68,14 +70,14 @@ class Auth extends CI_Controller {
                 //if the login is successful
                 //redirect them to the users page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('auth/', 'refresh');
+                redirect('admin/', 'refresh');
             }
             else
             {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+                redirect('admin/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
             }
         }
         else
@@ -83,10 +85,11 @@ class Auth extends CI_Controller {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             
-            $this->load->view('templates/header_login', $this->data);
-            $this->load->view('templates/navigation_login', $this->data);
-            $this->load->view('admin/login', $this->data);    
-			$this->load->view('templates/footer', $this->data);    
+            $this->_render_page('templates/header_login', $this->data);
+            $this->_render_page('templates/navigation_login', $this->data);
+            $this->_render_page('admin/login', $this->data); 
+			$this->_render_page('templates/scripts_main');   
+			$this->_render_page('templates/footer', $this->data);    
         }
         
     }
@@ -101,7 +104,7 @@ class Auth extends CI_Controller {
 
 		//redirect them to the login page
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
-		redirect('auth/login', 'refresh');
+		redirect('admin/login', 'refresh');
 	}
 
 	//change password
@@ -113,7 +116,7 @@ class Auth extends CI_Controller {
 
 		if (!$this->ion_auth->logged_in())
 		{
-			redirect('auth/login', 'refresh');
+			redirect('admin/login', 'refresh');
 		}
 
 		$user = $this->ion_auth->user()->row();
@@ -150,7 +153,7 @@ class Auth extends CI_Controller {
 			);
 
 			//render
-			$this->_render_page('auth/change_password', $this->data);
+			$this->_render_page('admin/change_password', $this->data);
 		}
 		else
 		{
@@ -167,7 +170,7 @@ class Auth extends CI_Controller {
 			else
 			{
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('auth/change_password', 'refresh');
+				redirect('admin/change_password', 'refresh');
 			}
 		}
 	}
@@ -188,6 +191,7 @@ class Auth extends CI_Controller {
 			$this->_render_page('templates/header_login', $this->data);
 			$this->_render_page('templates/navigation_forgot', $this->data);
 			$this->_render_page('admin/forgot-password', $this->data);
+			$this->_render_page('templates/scripts_main');
 			$this->_render_page('templates/footer', $this->data);
 		}
 		else
@@ -265,7 +269,7 @@ class Auth extends CI_Controller {
 				$this->data['code'] = $code;
 
 				//render
-				$this->_render_page('auth/reset_password', $this->data);
+				$this->_render_page('admin/reset_password', $this->data);
 			}
 			else
 			{
@@ -295,7 +299,7 @@ class Auth extends CI_Controller {
 					else
 					{
 						$this->session->set_flashdata('message', $this->ion_auth->errors());
-						redirect('auth/reset_password/' . $code, 'refresh');
+						redirect('admin/reset_password/' . $code, 'refresh');
 					}
 				}
 			}
@@ -304,7 +308,7 @@ class Auth extends CI_Controller {
 		{
 			//if the code is invalid then send them back to the forgot password page
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
-			redirect("auth/forgot_password", 'refresh');
+			redirect("admin/forgot_password", 'refresh');
 		}
 	}
 
@@ -325,15 +329,13 @@ class Auth extends CI_Controller {
 		{
 			//redirect them to the auth page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect("admin", 'refresh');
 		}
 		else
 		{
 			//redirect them to the forgot password page
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/admin_navigation', $data);
-			redirect("auth/forgot_password", 'refresh');
+			redirect("admin/forgot_password", 'refresh');
 		}
 	}
 
@@ -353,7 +355,7 @@ class Auth extends CI_Controller {
 			$this->data['csrf'] = $this->_get_csrf_nonce();
 			$this->data['user'] = $this->ion_auth->user($id)->row();
 
-			$this->_render_page('auth/deactivate_user', $this->data);
+			$this->_render_page('admin/deactivate_user', $this->data);
 		}
 		else
 		{
@@ -372,11 +374,8 @@ class Auth extends CI_Controller {
 					$this->ion_auth->deactivate($id);
 				}
 			}
-            
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/admin_navigation', $data);
 			//redirect them back to the auth page
-			redirect('auth', 'refresh');
+			redirect('admin', 'refresh');
 		}
 	}
 
@@ -459,7 +458,7 @@ class Auth extends CI_Controller {
             );
             $this->load->view('templates/header', $data);
             $this->load->view('templates/admin_navigation', $data);
-			$this->_render_page('auth/create_user', $this->data);
+			$this->_render_page('admin/create_user', $this->data);
 		}
 	}
 	
@@ -481,10 +480,13 @@ class Auth extends CI_Controller {
             $this->data['users'][$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
 		}
 		
-		 $this->load->view('templates/header_user', $this->data);
-         $this->load->view('templates/navigation_admin', $this->data);
-		 $this->load->view('templates/sidebar_admin', $this->data);
-		 $this->_render_page('auth/manage_users', $this->data);
+		 $this->_render_page('templates/header_user', $this->data);
+         $this->_render_page('templates/navigation_admin', $this->data);
+		 $this->_render_page('templates/sidebar_admin', $this->data);
+		 $this->_render_page('admin/manage_users', $this->data);
+		 $this->_render_page('templates/scripts_main');
+		 $this->_render_page('templates/footer');
+		 
 	}
 
 	//edit a user
@@ -494,7 +496,7 @@ class Auth extends CI_Controller {
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
 		{
-			redirect('auth', 'refresh');
+			redirect('admin', 'refresh');
 		}
 
 		$user = $this->ion_auth->user($id)->row();
@@ -571,7 +573,7 @@ class Auth extends CI_Controller {
 				$this->session->set_flashdata('message', "User Saved");
 				if ($this->ion_auth->is_admin())
 				{
-					redirect('auth', 'refresh');
+					redirect('admin', 'refresh');
 				}
 				else
 				{
@@ -623,9 +625,9 @@ class Auth extends CI_Controller {
 			'type' => 'password'
 		);
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/admin_navigation', $data);
-		$this->_render_page('auth/edit_user', $this->data);
+        $this->_render_page('templates/header', $data);
+        $this->_render_page('templates/admin_navigation', $data);
+		$this->_render_page('admin/edit_user', $this->data);
 	}
 
 	// create a new group
@@ -635,7 +637,7 @@ class Auth extends CI_Controller {
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('admin', 'refresh');
 		}
 
 		//validate form input
@@ -650,7 +652,7 @@ class Auth extends CI_Controller {
 				// check to see if we are creating the group
 				// redirect them back to the admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth", 'refresh');
+				redirect("admin", 'refresh');
 			}
 		}
 		else
@@ -671,9 +673,9 @@ class Auth extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('description'),
 			);
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/admin_navigation', $data);
-			$this->_render_page('auth/create_group', $this->data);
+            $this->_render_page('templates/header', $data);
+            $this->_render_page('templates/admin_navigation', $data);
+			$this->_render_page('admin/create_group', $this->data);
 		}
 	}
 
@@ -683,14 +685,14 @@ class Auth extends CI_Controller {
 		// bail if no group id given
 		if(!$id || empty($id))
 		{
-			redirect('auth', 'refresh');
+			redirect('admin', 'refresh');
 		}
 
 		$data['title'] = $this->lang->line('edit_group_title');
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('admin', 'refresh');
 		}
 
 		$group = $this->ion_auth->group($id)->row();
@@ -713,7 +715,7 @@ class Auth extends CI_Controller {
 				{
 					$this->session->set_flashdata('message', $this->ion_auth->errors());
 				}
-				redirect("auth", 'refresh');
+				redirect("admin", 'refresh');
 			}
 		}
 
@@ -736,9 +738,9 @@ class Auth extends CI_Controller {
 			'value' => $this->form_validation->set_value('group_description', $group->description),
 		);
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/admin_navigation', $data);
-		$this->_render_page('auth/edit_group', $this->data);
+        $this->_render_page('templates/header', $data);
+        $this->_render_page('templates/admin_navigation', $data);
+		$this->_render_page('admin/edit_group', $this->data);
 	}
 	
 	// admin managing elections
@@ -748,11 +750,13 @@ class Auth extends CI_Controller {
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
 		
-		$this->load->view('templates/header_manage_elections', $this->data);
-		$this->load->view('templates/navigation_admin', $this->data);
-		$this->load->view('templates/sidebar_admin', $this->data);
+		$this->_render_page('templates/header_manage_elections', $this->data);
+		$this->_render_page('templates/navigation_admin', $this->data);
+		$this->_render_page('templates/sidebar_admin', $this->data);
 		$this->_render_page('admin/admin-elections-manage', $this->data);
-		$this->load->view('templates/footer_manage_elections', $this->data);
+		$this->_render_page('templates/scripts_main');
+		$this->_render_page('templates/scripts_custom');
+		$this->_render_page('templates/footer', $this->data);
 	}
 
 	function _get_csrf_nonce()
