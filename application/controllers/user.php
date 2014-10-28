@@ -37,8 +37,9 @@ class User extends CI_Controller
 			$this->_render_page('templates/header_user', $this->data);
         	$this->_render_page('templates/navigation_user', $this->data);
 			$this->_render_page('templates/sidebar_user', $this->data);
-            $this->_render_page('user/user_homepage', $this->data);
+            $this->_render_page('user/user-dashboard', $this->data);
 			$this->_render_page('templates/scripts_main');
+            $this->_render_page('templates/scripts_custom');
 			$this->_render_page('templates/footer');            
         }
     }
