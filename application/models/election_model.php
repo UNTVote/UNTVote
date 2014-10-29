@@ -36,7 +36,7 @@ class Election_Model extends CI_Model
 		return $query->result_array();
 	}
 
-	// CreateElection - Gets the input from the form and setups a new election in the database
+	// CreateElection - Gets the input from the form and setup a new election in the database
 	public function CreateElection()
 	{
 		$this->load->helper('url');

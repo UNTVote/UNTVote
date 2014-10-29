@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2014 at 07:52 PM
+-- Generation Time: Oct 29, 2014 at 06:00 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -67,14 +67,15 @@ CREATE TABLE IF NOT EXISTS `election` (
   `college_id` int(11) NOT NULL,
   `total_votes` int(11) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `election`
 --
 
 INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `start_time`, `end_time`, `college_id`, `total_votes`, `status`) VALUES
-(1, 'Test Election', 'This election is for testing an election out', 'test_election', '2014-10-23', '2014-10-31', 4, 0, 'a');
+(1, 'Test Election', 'This election is for testing an election out', 'test_election', '2014-10-23', '2014-10-31', 4, 0, 'active'),
+(8, 'Computer Science President', 'Who should be the present of Computer Science', 'computer-science-president', '2014-10-31', '2014-11-01', 4, 0, 'inactive');
 
 -- --------------------------------------------------------
 
@@ -142,8 +143,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1414033478, 1, 'Chad', 'Smith', 'None', '2147296420'),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414079881, 1, 'Chad', 'Smith', NULL, NULL),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1414091222, 1, 'Chad', 'Smith', 'None', '2147296420'),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414553612, 1, 'Chad', 'Smith', NULL, NULL),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL),
 (34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Chad', 'Smith', NULL, NULL),
 (35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Chad', 'Smith', NULL, NULL),
@@ -273,7 +274,7 @@ MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `election`
 --
 ALTER TABLE `election`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `groups`
 --
