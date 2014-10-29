@@ -5,18 +5,21 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		// library loads
 		$this->load->library('ion_auth');
 		$this->load->library('form_validation');
 		$this->load->helper('url');
+		$this->load->helper('language');
+
+		// languague file loads
+		$this->lang->load('auth');
+
+		// model loads
+		$this->load->model('election_model');
 
 		$this->load->database();
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
-		$this->lang->load('auth');
-		$this->load->helper('language');
-        $this->load->helper('url');
-        
 	}
 
 	// redirect if needed, otherwise display the user list
@@ -27,6 +30,7 @@ class Admin extends CI_Controller {
 			// redirect them to the login page
 			redirect('admin/login', 'refresh');
 		}
+		// a regular user tried to hack this, get him out of here
 		elseif (!$this->ion_auth->is_admin())
 		{
 			// redirect them to the home page because they must be an administrator to view this
@@ -35,8 +39,20 @@ class Admin extends CI_Controller {
 		else
 		{
 			$firstName = $this->ion_auth->user()->row()->first_name;
+
+        	// grab the election data
+        	$activeElections = $this->election_model->GetElectionsByStatus("active");
+        	$upcomingElections = $this->election_model->GetElectionsByStatus("inactive");
+        	$numberActiveElections = count($activeElections);
+        	$numberUpcomingElections = count($upcomingElections);
+
+        	// send everything to the data array
         	$this->data['user'] = $this->ion_auth->user()->row();
         	$this->data['title'] = $firstName . " | UNTVote";
+        	$this->data['activeElections'] = $activeElections;
+        	$this->data['upcomingElections'] = $upcomingElections;
+        	$this->data['numberActiveElections'] = $numberActiveElections;
+        	$this->data['numberUpcomingElections'] = $numberUpcomingElections;
 			
             $this->_render_page('templates/header_user', $this->data);
             $this->_render_page('templates/navigation_admin', $this->data);

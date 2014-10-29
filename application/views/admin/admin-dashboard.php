@@ -16,13 +16,13 @@
                       <h4><span class="info-circle info-circle-red">12</span> Approval requests</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-blue">3</span> Active elections</h4>
+                      <h4><span class="info-circle info-circle-blue"><?=$numberActiveElections?></span> Active elections</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                       <h4><span class="info-circle info-circle-green">83</span> Registered students</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-yellow">2</span> Upcoming elections</h4>
+                      <h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4>
                     </div>
                   </div>
                 </div>
@@ -44,33 +44,17 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Election 1</td>
-                          <td>10/02/14</td>
+                        <?php foreach ($activeElections as $activeElection) : ?>
+                          <tr>
+                          <td><?=$activeElection['election_name'] ?></td>
+                          <td><?=$activeElection['end_time'] ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">39 / 54</div>
+                              <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"><?=$activeElection['total_votes']?> / 54</div>
                             </div>
                           </td>
-                        </tr>
-                        <tr>
-                          <td>Election 2</td>
-                          <td>11/21/14</td>
-                          <td>
-                            <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">12 / 81</div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                        <td>Election 3</td>
-                          <td>12/02/14</td>
-                          <td>
-                            <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">5 / 73</div>
-                            </div>
-                          </td>
-                        </tr>
+                          </tr>
+                        <?php endforeach ?>
                       </tbody>
                     </table>
                   </div>
@@ -94,18 +78,14 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Election 1</td>
-                          <td>10/02/14</td>
-                          <td>2</td>
-                          <td>34</td>
-                        </tr>
-                        <tr>
-                          <td>Election 2</td>
-                          <td>11/21/14</td>
-                          <td>3</td>
-                          <td>53</td>
-                        </tr>
+                        <?php foreach ($upcomingElections as $upcomingElection) : ?>
+                          <tr>
+                          <td><?=$upcomingElection['election_name'] ?></td>
+                          <td><?=$upcomingElection['start_time'] ?></td>
+                          <td>0</td>
+                          <td>0</td>
+                          </tr>
+                        <?php endforeach ?>
                       </tbody>
                     </table>
                   </div>
