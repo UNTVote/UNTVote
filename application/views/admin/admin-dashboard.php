@@ -47,7 +47,7 @@
                         <?php foreach ($activeElections as $activeElection) : ?>
                           <tr>
                           <td><?=$activeElection['election_name'] ?></td>
-                          <td><?=$activeElection['end_time'] ?></td>
+                          <td><?=date("m-d-Y", strtotime($activeElection['end_time'])) ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
                               <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"><?=$activeElection['total_votes']?> / 54</div>
@@ -81,7 +81,7 @@
                         <?php foreach ($upcomingElections as $upcomingElection) : ?>
                           <tr>
                           <td><?=$upcomingElection['election_name'] ?></td>
-                          <td><?=$upcomingElection['start_time'] ?></td>
+                          <td><?=date("m-d-Y", strtotime($upcomingElection['start_time'])); ?></td>
                           <td>0</td>
                           <td>0</td>
                           </tr>
