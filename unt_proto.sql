@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2014 at 04:23 AM
+-- Generation Time: Oct 30, 2014 at 06:44 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,6 +19,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `unt_proto`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_notifications`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_notifications` (
+`id` int(10) NOT NULL,
+  `sender_id` int(10) NOT NULL COMMENT 'The User ID of who sent the notification',
+  `type` varchar(20) NOT NULL COMMENT 'candidate or vote'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -77,8 +89,8 @@ INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `
 (1, 'Test Election', 'This election is for testing an election out', 'test_election', '2014-10-23', '2014-10-31', 4, 0, 'active'),
 (8, 'Computer Science President', 'Who should be the present of Computer Science', 'computer-science-president', '2014-10-31', '2014-11-01', 4, 0, 'inactive'),
 (9, 'Test Election 3', 'This is yet another test election', 'test-election-3', '2014-12-30', '2016-02-02', 4, 0, 'inactive'),
-(10, 'College of Engineering Dean', 'Dean of the College of Engineering', 'college-of-engineering-dean', '2014-10-30', '2014-11-02', 0, 0, 'inactive'),
-(11, 'Testing Colleges', 'Testing Limiting Colleges', 'testing-colleges', '2014-10-30', '2014-10-31', 2, 0, 'inactive'),
+(10, 'College of Engineering Dean', 'Dean of the College of Engineering', 'college-of-engineering-dean', '2014-10-30', '2014-11-02', 0, 0, 'active'),
+(11, 'Testing Colleges', 'Testing Limiting Colleges', 'testing-colleges', '2014-10-30', '2014-10-31', 2, 0, 'active'),
 (12, 'Testing Dates', 'Testing to see if elections are updated', 'election-update', '2014-10-01', '2014-11-01', 1, 0, 'active');
 
 -- --------------------------------------------------------
@@ -161,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
 (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1414091222, 1, 'Chad', 'Smith', 'None', '2147296420'),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414626187, 1, 'Chad', 'Smith', NULL, NULL),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414682672, 1, 'Chad', 'Smith', NULL, NULL),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL),
 (34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Chad', 'Smith', NULL, NULL),
 (35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Chad', 'Smith', NULL, NULL),
@@ -262,6 +274,12 @@ CREATE TABLE IF NOT EXISTS `vote_log` (
 --
 
 --
+-- Indexes for table `admin_notifications`
+--
+ALTER TABLE `admin_notifications`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `colleges`
 --
 ALTER TABLE `colleges`
@@ -325,6 +343,11 @@ ALTER TABLE `vote_log`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `admin_notifications`
+--
+ALTER TABLE `admin_notifications`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `colleges`
 --
