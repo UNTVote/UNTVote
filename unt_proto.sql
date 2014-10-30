@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2014 at 06:00 AM
+-- Generation Time: Oct 30, 2014 at 04:23 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `election` (
   `college_id` int(11) NOT NULL,
   `total_votes` int(11) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `election`
@@ -75,7 +75,24 @@ CREATE TABLE IF NOT EXISTS `election` (
 
 INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `start_time`, `end_time`, `college_id`, `total_votes`, `status`) VALUES
 (1, 'Test Election', 'This election is for testing an election out', 'test_election', '2014-10-23', '2014-10-31', 4, 0, 'active'),
-(8, 'Computer Science President', 'Who should be the present of Computer Science', 'computer-science-president', '2014-10-31', '2014-11-01', 4, 0, 'inactive');
+(8, 'Computer Science President', 'Who should be the present of Computer Science', 'computer-science-president', '2014-10-31', '2014-11-01', 4, 0, 'inactive'),
+(9, 'Test Election 3', 'This is yet another test election', 'test-election-3', '2014-12-30', '2016-02-02', 4, 0, 'inactive'),
+(10, 'College of Engineering Dean', 'Dean of the College of Engineering', 'college-of-engineering-dean', '2014-10-30', '2014-11-02', 0, 0, 'inactive'),
+(11, 'Testing Colleges', 'Testing Limiting Colleges', 'testing-colleges', '2014-10-30', '2014-10-31', 2, 0, 'inactive'),
+(12, 'Testing Dates', 'Testing to see if elections are updated', 'election-update', '2014-10-01', '2014-11-01', 1, 0, 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `election_candidates`
+--
+
+CREATE TABLE IF NOT EXISTS `election_candidates` (
+`id` int(10) NOT NULL,
+  `candidate_id` int(10) NOT NULL,
+  `election_id` int(10) NOT NULL,
+  `votes` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -144,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
 (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1414091222, 1, 'Chad', 'Smith', 'None', '2147296420'),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414553612, 1, 'Chad', 'Smith', NULL, NULL),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1414626187, 1, 'Chad', 'Smith', NULL, NULL),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL),
 (34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Chad', 'Smith', NULL, NULL),
 (35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Chad', 'Smith', NULL, NULL),
@@ -215,6 +232,31 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (141, 38, 2),
 (142, 39, 2);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `voters`
+--
+
+CREATE TABLE IF NOT EXISTS `voters` (
+`id` int(10) NOT NULL,
+  `election_id` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vote_log`
+--
+
+CREATE TABLE IF NOT EXISTS `vote_log` (
+`id` int(11) NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `candidate_id` int(11) NOT NULL,
+  `voter_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 --
 -- Indexes for dumped tables
 --
@@ -230,6 +272,12 @@ ALTER TABLE `colleges`
 --
 ALTER TABLE `election`
  ADD PRIMARY KEY (`id`), ADD KEY `election_name` (`election_name`);
+
+--
+-- Indexes for table `election_candidates`
+--
+ALTER TABLE `election_candidates`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `groups`
@@ -262,6 +310,18 @@ ALTER TABLE `users_groups`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`), ADD KEY `fk_users_groups_users1_idx` (`user_id`), ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
 
 --
+-- Indexes for table `voters`
+--
+ALTER TABLE `voters`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `vote_log`
+--
+ALTER TABLE `vote_log`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -274,7 +334,12 @@ MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `election`
 --
 ALTER TABLE `election`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `election_candidates`
+--
+ALTER TABLE `election_candidates`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -300,6 +365,16 @@ MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
 --
 ALTER TABLE `users_groups`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=143;
+--
+-- AUTO_INCREMENT for table `voters`
+--
+ALTER TABLE `voters`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `vote_log`
+--
+ALTER TABLE `vote_log`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
