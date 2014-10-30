@@ -38,6 +38,9 @@
 |
 */
 
+$route['elections/create'] = 'elections/create';
+$route['elections/(:any)'] = 'elections/view/$1';
+$route['elections'] = 'elections';
 $route['user/(:any)'] = 'user/$1';
 $route['user'] = 'user';
 $route['admin/(:any)'] = 'admin/$1';

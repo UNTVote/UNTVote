@@ -19,7 +19,7 @@
                       <h4><span class="info-circle info-circle-blue"><?=$numberActiveElections?></span> Active elections</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-green">83</span> Registered students</h4>
+                      <h4><span class="info-circle info-circle-green"><?=$numberUsers?></span> Registered students</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                       <h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4>

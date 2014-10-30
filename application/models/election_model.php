@@ -2,10 +2,11 @@
 
 class Election_Model extends CI_Model
 {
-	// constructor - sets up the model, load the database
+	// constructor - sets up the model, load the database, and libraries
     public function __construct()
     {
         $this->load->database();
+        $this->load->library('ion_auth');
     }
 
     // GetElections - Returns all the elections, or a certain elections by its slug
@@ -31,6 +32,8 @@ class Election_Model extends CI_Model
 	// Closed - All elections that are finish
 	public function GetElectionsByStatus($status)
 	{
+		// update all the elections before getting them
+		$this->UpdateElections();
 		// query the database and get all elections based on a status
 		$query = $this->db->get_where('election', array('status' => $status));
 		return $query->result_array();
@@ -49,6 +52,8 @@ class Election_Model extends CI_Model
 		$electionDescription = $this->input->post('electionDescription');
 		$startDate = $this->input->post('electionStart');
 		$endDate = $this->input->post('electionEnd');
+		$college = $this->input->post('electionCollege');
+		
 		if($this->IsActive($startDate))
 		{
 			$status = "active";
@@ -64,7 +69,7 @@ class Election_Model extends CI_Model
 					  'slug' => $slug,
 					  'start_time' => $startDate,
 					  'end_time' => $endDate,
-					  'college_id' => '4',
+					  'college_id' => $college,
 					  'total_votes' => 0,
 					  'status' => $status);
 		// insert into the table
@@ -76,6 +81,8 @@ class Election_Model extends CI_Model
 	// Returns - returns true if start date is today or earlier, false otherwise
 	private function IsActive($startDate)
 	{
+		// set the timezone to central
+		date_default_timezone_set('America/Chicago');
 		if(strtotime($startDate) > time())
 		{
 			return false;
@@ -83,6 +90,31 @@ class Election_Model extends CI_Model
 		else
 		{
 			return true;
+		}
+	}
+
+	// UpdateElections - This checks whether each election needs to have their status updated, and if so update it
+	public function UpdateElections()
+	{
+		// if the start date is < the current date we update its status to active
+		//$query = $this->db->query('UPDATE election SET status="active" WHERE "start_date" < DATEADD(day, DATEDIFF(day,0');
+
+		// if the end date is < the current date we update its status to inactive
+		//$query = $this->db->query('UPDATE election SET status="inactive" WHERE "end_date" < CURDATE()');
+		$elections = $this->GetElections();
+
+		foreach($elections as $election)
+		{
+			if($this->IsActive($election['start_time']))
+			{
+				$this->db->where('id', $election['id']);
+				$this->db->update('election', array('status' => 'active'));
+			}
+			else
+			{
+				$this->db->where('id', $election['id']);
+				$this->db->update('election', array('status' => 'inactive'));
+			}
 		}
 	}
 

@@ -20,6 +20,8 @@ class Admin extends CI_Controller {
 		$this->load->database();
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+
+		$this->election_model->UpdateElections();
 	}
 
 	// redirect if needed, otherwise display the user list
@@ -46,6 +48,10 @@ class Admin extends CI_Controller {
         	$numberActiveElections = count($activeElections);
         	$numberUpcomingElections = count($upcomingElections);
 
+        	// grab how many users we have
+        	$users = $this->ion_auth->users()->result_array();
+        	$numberUsers = count($users);
+
         	// send everything to the data array
         	$this->data['user'] = $this->ion_auth->user()->row();
         	$this->data['title'] = $firstName . " | UNTVote";
@@ -53,6 +59,7 @@ class Admin extends CI_Controller {
         	$this->data['upcomingElections'] = $upcomingElections;
         	$this->data['numberActiveElections'] = $numberActiveElections;
         	$this->data['numberUpcomingElections'] = $numberUpcomingElections;
+        	$this->data['numberUsers'] = $numberUsers;
 			
             $this->_render_page('templates/header_user', $this->data);
             $this->_render_page('templates/navigation_admin', $this->data);
