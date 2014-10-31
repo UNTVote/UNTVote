@@ -21,6 +21,7 @@ class Elections extends CI_Controller
 		$elections = $this->election_model->GetElections();
 		// grab all active elections in the system
 		$activeElections = $this->election_model->GetElectionsByStatus("active");
+
 		$title = "Elections Archive";
 
 		$data['title'] = $title;
@@ -37,6 +38,10 @@ class Elections extends CI_Controller
 	{
 		// grab the election data for this one election
 		$election = $this->election_model->GetElections($slug);
+		// grab the candidates from the election
+		// first get the elections ID from the elections slug
+		$electionID = $this->election_model->GetElectionIDBySlug($slug);
+		$candidates = $this->election_model->GetElectionCandidates($electionID);
 
 		if(empty($election))
 		{
@@ -45,8 +50,9 @@ class Elections extends CI_Controller
 		$title = $election['election_name'];
 		$data['election'] = $election;
 		$data['title'] = $title;
+		$data['candidates'] = $candidates;
 
-		$this->load->view('templates/header', $data);
+		//$this->load->view('templates/header', $data);
 		$this->load->view('elections/view_election', $data);
 		//$this->load->view('templates/footer');
 

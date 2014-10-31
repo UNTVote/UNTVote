@@ -39,6 +39,25 @@ class Election_Model extends CI_Model
 		return $query->result_array();
 	}
 
+	// GetElectionCandidates - returns all candidates in a certain election
+	// Takes in the election id
+	public function GetElectionCandidates($electionID)
+	{
+		// query the database and get all candidates that are in the given election
+		$query = $this->db->query('SELECT first_name,last_name FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
+		return $query->result_array();
+	}
+
+	// GetElectionIDBySlug - returns the elections id when all you have is its slug
+	public function GetelectionIDBySlug($slug)
+	{
+		$this->db->select('id');
+		$this->db->where('slug', $slug);
+		$query = $this->db->get('election');
+		$row = $query->row_array();
+		return $row['id'];
+	}
+
 	// CreateElection - Gets the input from the form and setup a new election in the database
 	public function CreateElection()
 	{
@@ -96,11 +115,6 @@ class Election_Model extends CI_Model
 	// UpdateElections - This checks whether each election needs to have their status updated, and if so update it
 	public function UpdateElections()
 	{
-		// if the start date is < the current date we update its status to active
-		//$query = $this->db->query('UPDATE election SET status="active" WHERE "start_date" < DATEADD(day, DATEDIFF(day,0');
-
-		// if the end date is < the current date we update its status to inactive
-		//$query = $this->db->query('UPDATE election SET status="inactive" WHERE "end_date" < CURDATE()');
 		$elections = $this->GetElections();
 
 		foreach($elections as $election)

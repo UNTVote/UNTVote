@@ -16,10 +16,10 @@
                       <h4><span class="info-circle info-circle-red">12</span> Approval requests</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-blue"><?=$numberActiveElections?></span> Active elections</h4>
+                      <h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-green"><?=$numberUsers?></span> Registered students</h4>
+                      <h4><span class="info-circle info-circle-green"><?=$numberActiveElections?></span> Active elections</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                       <h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4>
@@ -50,7 +50,7 @@
                           <td><?=date("m-d-Y", strtotime($activeElection['end_time'])) ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"><?=$activeElection['total_votes']?> / 54</div>
+                              <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$activeElection['total_votes']?>%;"><?=$activeElection['total_votes']?> / <?=$numberVoters?></div>
                             </div>
                           </td>
                           </tr>
@@ -82,8 +82,8 @@
                           <tr>
                           <td><?=$upcomingElection['election_name'] ?></td>
                           <td><?=date("m-d-Y", strtotime($upcomingElection['start_time'])); ?></td>
-                          <td>0</td>
-                          <td>0</td>
+                          <td><?=count($this->election_model->GetElectionCandidates($upcomingElection['id'])); ?></td>
+                          <td><?=$numberVoters ?></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>

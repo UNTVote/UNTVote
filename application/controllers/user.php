@@ -9,11 +9,17 @@ class User extends CI_Controller
     function __construct()
     {
         parent::__construct();
+
         $this->load->library('ion_auth');
         $this->load->library('form_validation');
-        $this->load->helper('url');
-        $this->lang->load('auth');
         $this->load->helper('language');
+        $this->load->helper('url');
+
+        // language file loads
+        $this->lang->load('auth');
+
+        // model loads
+        $this->load->model('election_model');
 
         $this->load->database();
 
@@ -27,13 +33,16 @@ class User extends CI_Controller
         {
             redirect('user/login', 'refresh');
         }
-        // get the current logged in user to use on the page
         else
         {
-			// get the users first name
-			$firstName = $this->ion_auth->user()->row()->first_name;
+            $firstName = $this->ion_auth->user()->row()->first_name;
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['title'] = $firstName . " | UNTVote";
+            $this->data['numberActiveElections'] = count($this->election_model->GetElectionsByStatus("active"));
+            $this->data['numberInactiveElections'] = count($this->election_model->GetElectionsByStatus("inactive"));
+            // number of users in the voters group
+            $this->data['numberVoters'] = count($this->ion_auth->users(array(4))->result_array());
+
 			$this->_render_page('templates/header_user', $this->data);
         	$this->_render_page('templates/navigation_user', $this->data);
 			$this->_render_page('templates/sidebar_user', $this->data);

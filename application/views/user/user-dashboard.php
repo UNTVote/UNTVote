@@ -9,13 +9,13 @@
               <div class="panel-body">
                   <div class="row">
                         <div class="col-xs-6 col-md-4">
-                        <h4><span class = "info-circle info-circle-red">6</span> Going on elections</h4>
+                        <h4><span class = "info-circle info-circle-red"><?=$numberActiveElections?></span>Active Elections</h4>
                         </div>
                         <div class="col-xs-6 col-md-4">
-                        <h4><span class = "info-circle info-circle-blue">200</span> Voters </h4>
+                        <h4><span class = "info-circle info-circle-blue"><?=$numberInactiveElections?></span>Upcoming Elections</h4>
                         </div>
                         <div class="col-xs-6 col-md-4">
-                        <h4><span class = "info-circle info-circle-purple">2</span> Info</h4>
+                        <h4><span class = "info-circle info-circle-purple"><?=$numberVoters?></span>Voters</h4>
                         </div>
                     </div>
               </div>
