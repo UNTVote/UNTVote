@@ -77,6 +77,7 @@ class Admin extends CI_Controller {
 	// used for ajax to return the election data in a json formatted string
 	function ElectionData()
 	{
+		header('Content-Type: application/json');
 		// do we have an ajax request
 		if($this->input->is_ajax_request())
 		{
