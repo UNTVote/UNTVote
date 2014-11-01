@@ -2,4 +2,4 @@
 <script src="//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js"></script>
 <?=js('vendor/parsley.min.js')?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-<?=js('admin-elections.js')?>
+<?=js('admin-elections-manage.js')?>
