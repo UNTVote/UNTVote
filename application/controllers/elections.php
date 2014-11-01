@@ -36,12 +36,22 @@ class Elections extends CI_Controller
 	// view - takes in a slug which is the elections we need to view
 	public function view($slug)
 	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');
 		// grab the election data for this one election
 		$election = $this->election_model->GetElections($slug);
 		// grab the candidates from the election
 		// first get the elections ID from the elections slug
 		$electionID = $this->election_model->GetElectionIDBySlug($slug);
 		$candidates = $this->election_model->GetElectionCandidates($electionID);
+
+		foreach($candidates as $candidate)
+		{
+			if($this->input->post($candidate['candidate_id']))
+			{
+				redirect('user/', 'refresh');
+			}
+		}
 
 		if(empty($election))
 		{

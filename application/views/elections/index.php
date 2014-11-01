@@ -7,7 +7,7 @@
 	<br><li><strong>Number of Votes: </strong> <?php echo $election['total_votes'] ?></li>
 	<br><li><strong>Status: </strong> <?php echo $election['status'] ?></li>
 </ul>
-<a href = "elections/<?php echo $election['slug'] ?> ">View Election</a><br>
+<a href = "<?php echo $election['slug'] ?> ">View Election</a><br>
 <?php endforeach ?>
 <hr>
 <strong>Active Elections: </strong>
@@ -17,5 +17,5 @@
 	<br><li><strong>Election Description</strong>: <?php echo $activeElection['election_description'] ?></li>
 	<br><li><strong>Number of Votes: </strong> <?php echo $activeElection['total_votes'] ?></li>
 </ul>
-<a href = "elections/<?php echo $activeElection['slug'] ?> ">View Election</a></p><br>
+<a href = "<?php echo $activeElection['slug'] ?> ">View Election</a></p><br>
 <?php endforeach ?>

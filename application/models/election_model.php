@@ -44,7 +44,7 @@ class Election_Model extends CI_Model
 	public function GetElectionCandidates($electionID)
 	{
 		// query the database and get all candidates that are in the given election
-		$query = $this->db->query('SELECT first_name,last_name FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
+		$query = $this->db->query('SELECT election_candidates.candidate_id,first_name,last_name FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
 		return $query->result_array();
 	}
 
@@ -102,7 +102,7 @@ class Election_Model extends CI_Model
 	{
 		// set the timezone to central
 		date_default_timezone_set('America/Chicago');
-		if(strtotime($startDate) > time())
+		if(strtotime($startDate) >= time())
 		{
 			return false;
 		}
@@ -128,6 +128,11 @@ class Election_Model extends CI_Model
 			{
 				$this->db->where('id', $election['id']);
 				$this->db->update('election', array('status' => 'inactive'));
+			}
+			if($this->IsActive($election['end_time']))
+			{
+				$this->db->where('id', $election['id']);
+				$this->db->update('election', array('status' => 'closed'));
 			}
 		}
 	}

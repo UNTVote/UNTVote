@@ -1,10 +1,11 @@
-<?php
-echo '<h2>' . $election['election_name'] . '</h2>';
-echo '<h5>' . $election['election_description'] . '</h5>';
-echo '<h3> Candidates:</h3>';
-foreach($candidates as $candidate)
-{
-	echo 'First Name: ' . $candidate['first_name'];
-	echo '<br>Last Name: ' . $candidate['last_name'];
-	echo '<p>';
-}
+<strong><?=$election['election_name']?></strong>
+<strong><br><?=$election['election_description']?></strong>
+<br>Who would you like to vote for?
+<strong><br>Candidates: </strong>
+<form name="vote" action="<?=base_url($election['slug'])?>" method="post">
+	<?php foreach($candidates as $candidate): ?>
+		<br><?=$candidate['first_name']?> <?=$candidate['last_name']?>
+		<input type="radio" name="candidates[]" value="<?=$candidate['candidate_id'];?>">
+	<?php endforeach ?>
+	<br><input type="submit" value="Submit Vote">
+</form>
