@@ -73,6 +73,22 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	// ElectionData
+	// used for ajax to return the election data in a json formatted string
+	function ElectionData()
+	{
+		// do we have an ajax request
+		if($this->input->is_ajax_request())
+		{
+			// grab all the elections from the database
+			$elections = $this->election_model->GetElections();
+		
+			//encode it into json format
+			$return = json_encode($elections);
+			echo $return;
+		}
+	}
+
 	//log the user in
 	function login()
 	{
