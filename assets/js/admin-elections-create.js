@@ -10,6 +10,10 @@ $(function () {
 });
 
 $(document).ready(function (){
+  var startDate = $('#startDate');
+  var startDateInput = $('#startDateInput');
+  var endDate = $('#endDate');
+  var endDateInput = $('#endDateInput');
   
   // Initialize category list
   $('#categoryList').multiselect({
@@ -26,17 +30,26 @@ $(document).ready(function (){
   });
   
   // Initialize datepickers
-  $('#startDate, #endDate').datepicker();
+  startDate.datepicker();
+  endDate.datepicker();
   
   // When the start date changed by user
-  $('#startDate').on('changed.fu.datepicker dateClicked.fu.datepicker', function (evt, startDate) {
+  startDate.on('changed.fu.datepicker dateClicked.fu.datepicker', function (evt, startDateVal) {
     
-    $('#endDate').datepicker('setDate', startDate);
-    $('#endDate').datepicker({
-      restricted: [{ from: '01/01/1900', to: startDate }]
-    });
+    endDate.datepicker('setDate', startDateVal);
     
   });
-
   
+  // If the end date is before the start date
+  endDate.on('changed.fu.datepicker dateClicked.fu.datepicker', function (evt, endDateVal) {
+    
+    if(endDateInput.val() < startDateInput.val()){
+      window.ParsleyUI.addError(endDateInput.parsley(), "invalidDate" , "Please select a date after the start date");
+    }
+    
+    if(endDateInput.val() >= startDateInput.val()){
+      window.ParsleyUI.removeError(endDateInput.parsley(), "invalidDate"); 
+    }
+  });
+    
 });
