@@ -1,83 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    
-    <title>Template</title>
-    
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.2.0/css/fuelux.css">
-    <link rel="stylesheet" href="../../../assets/css/vendor/bootstrap-multiselect.css">
-
-    <!-- Custom styles -->
-    <link href="../../../assets/css/style-main.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <!-- Navigation -->
-    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-5">
-            <a href="#"><img class="navbar-brand" src="../../../assets/img/UNTVote-logo.png" alt="UNTVote"></a>
-          </div>
-          <div class="col-xs-7 text-right">
-            <label class="profile-name">Username</label>
-            <div class="btn-group">
-              <img src="../../../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
-              <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar -->
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar panel-group" id="menuAccordion">
-            <li class="panel"><a href="#"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Dashboard</a></li>
-            <li class="panel">
-              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
-              <div id="collapseElections" class="panel-collapse collapse">
-                <ul class="nav-sidebar-sub-menu">
-                  <li><a href="#">Manage</a></li>
-                  <li><a href="#">Results</a></li>
-                  <li><a href="#">Live Feed</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="panel">
-              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseUsers"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Users</a>
-              <div id="collapseUsers" class="panel-collapse collapse">
-                <ul class="nav-sidebar-sub-menu">
-                  <li><a href="#">Manage</a></li>
-                  <li><a href="#">Approvals</a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-        
         <!-- Main body content -->
+                <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Create election</h1>
             <br>
@@ -99,12 +21,10 @@
                       <!-- Category dropdown -->
                       <div class="col-xs-12 col-md-6">
                         <label>Category</label><br>
-                        <select name = "college" id="categoryList">
-                          <option value="All">All</option>
-                          <option value="1">College of engineering</option>
-                          <option value="2">College of business</option>
-                          <option value="3">College of arts &amp; science</option>
-                          <option value="4">College of journalism</option>
+                        <select name="colleges" id="categoryList">
+                          <?php foreach($colleges as $college):?>
+                           <option value="<?=$college['id']?>"><?=$college['description']?></option>
+                          <?php endforeach?>
                         </select>
                       </div>
                     </div>
@@ -118,22 +38,22 @@
                     </div>
                     <br>
                     
-                    <!-- Candidates dropdown -->
+                    <!-- Dropdown list of candidates -->
                     <div class="row">
                       <div class="col-xs-12">
-                        <label>Candidates</label><br>
-                        <select id="candidateList" multiple="multiple">
-                          <option value="Ludwig van Beethoven">Ludwig van Beethoven</option>
-                          <option value="Wolfgang Amadeus Mozart">Wolfgang Amadeus Mozart</option>
-                          <option value="George Frideric Handel">George Frideric Handel</option>
-                          <option value="Felix Mendelssohn-Bartholdy">Felix Mendelssohn-Bartholdy</option>
-                          <option value="Johann Sebastian Bach">Johann Sebastian Bach</option>
-                          <option value="Sergei Rachmaninoff">Sergei Rachmaninoff</option>
+                        <label>Candidates</label>
+                        <br>
+                        <select name="electionCandidates[]" id="candidateList" multiple="multiple">
+                          <?php foreach($candidates as $candidate):?>
+                            <option value="<?=$candidate['id']?>">
+                              <?= htmlspecialchars($candidate['first_name'] . ' ' . $candidate['last_name'], ENT_QUOTES, 'UTF-8');?>
+                            </option>
+                          <?php endforeach?>
                         </select>
                       </div>
                     </div>
                     <br>
-  
+                    
                     <!-- Datepickers -->
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 fuelux">
@@ -219,7 +139,6 @@
                           <div id="error-container-start-date"></div>
                         </div>
                       </div>
-                      <div class="col-xs-12 visible-xs">&nbsp;</div>
                       <div class="col-xs-12 col-sm-6 fuelux">
                         <label>End date</label>
                         
@@ -319,30 +238,3 @@
         </div>
       </div>
     </div>
-
-    <!-- Footer area -->
-    <div class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-6">
-            <p class="footer-text">&copy; 2014 UNT Vote</p>
-          </div>
-          <div class="col-xs-6 text-right">
-            <a href="#" class="footer-text">Contact</a>
-            &nbsp;
-            <a href="#" class="footer-text">Help</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- All scripts go below this area -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://www.fuelcdn.com/fuelux/3.2.0/js/fuelux.min.js"></script>
-    <script src="../../../assets/js/vendor/parsley.min.js"></script>
-    <script src="../../../assets/js/vendor/bootstrap-multiselect.js"></script>
-    <script src="../../../assets/js/admin-elections-create.js"></script>
-    <script src="../../../assets/js/app.js"></script>
-  </body>
-</html>

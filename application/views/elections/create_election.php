@@ -28,7 +28,7 @@
 
 	<label for="electionCandidates">Candidates: </label>
 	<select multiple name="electionCandidates[]">
-		<!-- every college that we have -->
+		<!-- every candidate that we have -->
 		<?php foreach($candidates as $candidate):?>
 			<option value="<?=$candidate['id']?>">
 				<?= htmlspecialchars($candidate['first_name'] . ' ' . $candidate['last_name'], ENT_QUOTES, 'UTF-8');?>

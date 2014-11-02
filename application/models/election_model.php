@@ -54,8 +54,8 @@ class Election_Model extends CI_Model
 		$this->db->select('id');
 		$this->db->where('slug', $slug);
 		$query = $this->db->get('election');
-		$row = $query->row_array();
-		return $row['id'];
+		$row = $query->row();
+		return $row->id;
 	}
 
 	// GetElectionsByUser - returns all the elections the specific user can see

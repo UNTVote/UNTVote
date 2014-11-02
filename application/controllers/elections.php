@@ -25,14 +25,13 @@ class Elections extends CI_Controller
 	public function index()
 	{
 		// grab all the elections in the system
-		$elections = $this->election_model->GetElections();
+		//$elections = $this->election_model->GetElections();
 		// grab all active elections in the system
 		$activeElections = $this->election_model->GetElectionsByStatus("Active");
-
 		$title = "Elections Archive";
 
 		$data['title'] = $title;
-		$data['elections'] = $elections;
+		//$data['elections'] = $elections;
 		$data['activeElections'] = $activeElections;
 
 		//$this->load->view('templates/header', $data);
@@ -43,35 +42,35 @@ class Elections extends CI_Controller
 	// view - takes in a slug which is the elections we need to view
 	public function view($slug)
 	{
-		$this->load->helper('form');
-		$this->load->library('form_validation');
 		// grab the election data for this one election
 		$election = $this->election_model->GetElections($slug);
-		// grab the candidates from the election
-		// first get the elections ID from the elections slug
-		$electionID = $this->election_model->GetElectionIDBySlug($slug);
-		$candidates = $this->election_model->GetElectionCandidates($electionID);
-
-		foreach($candidates as $candidate)
-		{
-			if($this->input->post($candidate['candidate_id']))
-			{
-				redirect('user/', 'refresh');
-			}
-		}
-
-		if(empty($election))
+		// we don't know what the election is, or it is not an election they can vote on
+		if(empty($election) || ($election['status'] != 'Active'))
 		{
 			show_404();
 		}
+
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		// validation that they picked a candidate
+		$this->form_validation->set_rules('candidates', 'Candidate Selection', 'required');
+		// grab the candidates from the election
+		$electionID = $election['id'];
+		$candidates = $this->election_model->GetElectionCandidates($electionID);
+
 		$title = $election['election_name'];
 		$data['election'] = $election;
 		$data['title'] = $title;
 		$data['candidates'] = $candidates;
 
-		//$this->load->view('templates/header', $data);
-		$this->load->view('elections/view_election', $data);
-		//$this->load->view('templates/footer');
+		// if the form failed to run
+		if($this->form_validation->run() === FALSE)
+		{
+			//$this->load->view('templates/header', $data);
+			$this->load->view('elections/view_election', $data);
+			//$this->load->view('templates/footer');
+		}
 
 	}
 
@@ -87,6 +86,8 @@ class Elections extends CI_Controller
 		// load the form helper and form validation library
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+
+		$user = $this->ion_auth->user()->row();
 
 		$title = "New Election";
 
@@ -104,6 +105,7 @@ class Elections extends CI_Controller
 		$this->form_validation->set_rules('electionCollege', 'College', 'required');
 		$this->form_validation->set_rules('electionCandidates', 'Candidates', 'required');
 
+		$data['user'] = $user;
 		$data['title'] = $title;
 		$data['colleges'] = $colleges;
 		$data['candidates'] = $candidates;
@@ -111,8 +113,12 @@ class Elections extends CI_Controller
 		// form was not submitted, show the form
 		if($this->form_validation->run() === FALSE)
 		{
-			$this->load->view('templates/header', $data);
-			$this->load->view('elections/create_election', $data);
+			$this->load->view('templates/header_create_election', $data);
+        	$this->load->view('templates/navigation_admin', $data);
+			$this->load->view('templates/sidebar_admin', $data);
+            $this->load->view('admin/admin-create-election', $data);
+			$this->load->view('templates/scripts_main');
+            $this->load->view('templates/scripts_custom');
 			$this->load->view('templates/footer');
 		}
 		// form was submitted - create the election, redirect to the admins page

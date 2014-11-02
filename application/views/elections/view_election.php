@@ -5,7 +5,7 @@
 <form name="vote" action="<?=base_url($election['slug'])?>" method="post">
 	<?php foreach($candidates as $candidate): ?>
 		<br><?=$candidate['first_name']?> <?=$candidate['last_name']?>
-		<input type="radio" name="candidates[]" value="<?=$candidate['candidate_id'];?>">
+		<input type="radio" name="candidate" value="<?=$candidate['candidate_id'];?>">
 	<?php endforeach ?>
 	<br><input type="submit" value="Submit Vote">
 </form>
