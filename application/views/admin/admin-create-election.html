@@ -122,7 +122,7 @@
                         <label>Start date</label>
                         <div class="datepicker" id="startDate">
                           <div class="input-group">
-                            <input class="form-control" id="startDateInput" type="text" data-parsley-trigger="change" required/>
+                            <input class="form-control" id="startDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-start-date" required/>
                             <div class="input-group-btn">
                               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -198,6 +198,7 @@
                               </div>
                             </div>
                           </div>
+                          <div id="error-container-start-date"></div>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6 fuelux">
@@ -205,7 +206,7 @@
                         
                         <div class="datepicker" id="endDate">
                           <div class="input-group">
-                            <input class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" required/>
+                            <input class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-end-date" required/>
                             <div class="input-group-btn">
                               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -281,6 +282,7 @@
                               </div>
                             </div>
                           </div>
+                          <div id="error-container-end-date"></div>
                         </div>
                         
                       </div>
