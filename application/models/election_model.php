@@ -66,7 +66,7 @@ class Election_Model extends CI_Model
 		// get all the colleges that the user currently passed in is apart of
 		$colleges = $this->ion_auth->get_users_colleges($user)->result_array();
 		
-		$userCollege = array();
+		$userColleges = array();
 		// build an array with all the college id's
 		foreach($colleges as $college)
 		{
