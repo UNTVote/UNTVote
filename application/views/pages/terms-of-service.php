@@ -20,7 +20,7 @@ Nunc suscipit dolor faucibus, gravida enim quis, convallis nulla. Suspendisse ve
         <br>
         <div class="col-xs-12 text-center">
           <form method="link" action="<?=site_url('/')?>">
-          	<button class="btn btn-default">Return to UNTVote</button>
+          	<button class="btn btn-default">Return to registration</button>
           </form>
         </div>
         
