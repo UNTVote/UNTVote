@@ -36,8 +36,8 @@ class Admin extends CI_Controller {
 		// a regular user tried to hack this, get him out of here
 		elseif (!$this->ion_auth->is_admin())
 		{
-			// redirect them to the home page because they must be an administrator to view this
-			return show_error('You must be an administrator to view this page.');
+			// redirect them to their user dashboardbecause they must be an administrator to view this
+			redirect('/', "refresh");
 		}
 		else
 		{

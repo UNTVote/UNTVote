@@ -12,6 +12,13 @@ class Elections extends CI_Controller
 		$this->load->model('election_model');
 
 		$this->election_model->UpdateElections();
+
+		// the user must be logged in the view the elections
+		if (!$this->ion_auth->logged_in())
+		{
+			// redirect them to the login page
+			redirect('user/login', 'refresh');
+		}
 	}
 
 	// index - default election page, shows all the elections
@@ -71,6 +78,12 @@ class Elections extends CI_Controller
 	// create - check whether the form was submitted and if it passed the validation rules.  Then create the election
 	public function create()
 	{
+		// must be an admin to create an election
+		if(!$this->ion_auth->is_admin())
+		{
+			// redirect them to their dashboard
+			redirect('/', 'refresh');
+		}
 		// load the form helper and form validation library
 		$this->load->helper('form');
 		$this->load->library('form_validation');
