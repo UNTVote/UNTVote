@@ -72,17 +72,18 @@ class Election_Model extends CI_Model
 		$startDate = $this->input->post('electionStart');
 		$endDate = $this->input->post('electionEnd');
 		$college = $this->input->post('electionCollege');
+		$candidates = $this->input->post('electionCandidates');
 		
 		if($this->IsActive($startDate))
 		{
-			$status = "active";
+			$status = "Active";
 		}
 		else
 		{
-			$status = "inactive";
+			$status = "Upcoming";
 		}
 
-		// data array to insert into the table
+		// data array to insert into the election table
 		$data = array('election_name' => $electionName,
 					  'election_description' => $electionDescription,
 					  'slug' => $slug,
@@ -91,8 +92,30 @@ class Election_Model extends CI_Model
 					  'college_id' => $college,
 					  'total_votes' => 0,
 					  'status' => $status);
-		// insert into the table
-		return $this->db->insert('election', $data);
+		// insert into the election table
+		$this->db->insert('election', $data);
+		// get the election id of the last insert into the table
+		$electionID = $this->db->insert_id();
+
+		// forevery candidate we have add them to the election
+		foreach($candidates as $candidate)
+		{
+			$this->AddCandidateToElection($candidate, $electionID);
+		}
+		
+	}
+
+	// AddCandidateToElection - Adds a candidate to a given election
+	// takes in a candidates ID and a election ID.
+	private function AddCandidateToElection($candidateID, $electionID)
+	{
+		// set the data array to insert into the table
+		$data = array('candidate_id' => $candidateID,
+					  'election_id' => $electionID,
+					  'votes' => 0);
+
+		// insert the candidate into the election_candidates table
+		$this->db->insert('election_candidates', $data);		
 	}
 
 	// IsActive - IsActive is a helper function that determines whether an election should be active
@@ -122,17 +145,17 @@ class Election_Model extends CI_Model
 			if($this->IsActive($election['start_time']))
 			{
 				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'active'));
+				$this->db->update('election', array('status' => 'Active'));
 			}
 			else
 			{
 				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'inactive'));
+				$this->db->update('election', array('status' => 'Upcoming'));
 			}
 			if($this->IsActive($election['end_time']))
 			{
 				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'closed'));
+				$this->db->update('election', array('status' => 'Closed'));
 			}
 		}
 	}

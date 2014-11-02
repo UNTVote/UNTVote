@@ -21,6 +21,7 @@ class Admin extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
+		// as soon as the controller starts, update all the elections automatically
 		$this->election_model->UpdateElections();
 	}
 
@@ -43,8 +44,8 @@ class Admin extends CI_Controller {
 			$firstName = $this->ion_auth->user()->row()->first_name;
 
         	// grab the election data
-        	$activeElections = $this->election_model->GetElectionsByStatus("active");
-        	$upcomingElections = $this->election_model->GetElectionsByStatus("inactive");
+        	$activeElections = $this->election_model->GetElectionsByStatus("Active");
+        	$upcomingElections = $this->election_model->GetElectionsByStatus("Upcoming");
         	$numberActiveElections = count($activeElections);
         	$numberUpcomingElections = count($upcomingElections);
 

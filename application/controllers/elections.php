@@ -20,7 +20,7 @@ class Elections extends CI_Controller
 		// grab all the elections in the system
 		$elections = $this->election_model->GetElections();
 		// grab all active elections in the system
-		$activeElections = $this->election_model->GetElectionsByStatus("active");
+		$activeElections = $this->election_model->GetElectionsByStatus("Active");
 
 		$title = "Elections Archive";
 
@@ -79,6 +79,8 @@ class Elections extends CI_Controller
 
 		// get all the colleges for the admin to select from
 		$colleges = $this->ion_auth->colleges()->result_array();
+		// get the users that can be candidates
+		$candidates = $this->ion_auth->users(3)->result_array();
 
 		// the rules of the form
 		// the title, description, start and end date, college are required
@@ -87,9 +89,11 @@ class Elections extends CI_Controller
 		$this->form_validation->set_rules('electionStart', 'Start Date', 'required');
 		$this->form_validation->set_rules('electionEnd', 'End Date', 'required');
 		$this->form_validation->set_rules('electionCollege', 'College', 'required');
+		$this->form_validation->set_rules('electionCandidates', 'Candidates', 'required');
 
 		$data['title'] = $title;
 		$data['colleges'] = $colleges;
+		$data['candidates'] = $candidates;
 
 		// form was not submitted, show the form
 		if($this->form_validation->run() === FALSE)

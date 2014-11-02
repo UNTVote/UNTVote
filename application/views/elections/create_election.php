@@ -26,5 +26,15 @@
 		<?php endforeach?>
 	</select>
 
+	<label for="electionCandidates">Candidates: </label>
+	<select multiple name="electionCandidates[]">
+		<!-- every college that we have -->
+		<?php foreach($candidates as $candidate):?>
+			<option value="<?=$candidate['id']?>">
+				<?= htmlspecialchars($candidate['first_name'] . ' ' . $candidate['last_name'], ENT_QUOTES, 'UTF-8');?>
+			</option>
+		<?php endforeach?>
+	</select>
+
 	<input type="submit" name="submit" value="Create Election">
 </form>
