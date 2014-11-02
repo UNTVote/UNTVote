@@ -35,12 +35,17 @@ class User extends CI_Controller
         }
         else
         {
-            $firstName = $this->ion_auth->user()->row()->first_name;
-            $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['title'] = $firstName . " | UNTVote";
-            $this->data['numberActiveElections'] = count($this->election_model->GetElectionsByStatus("active"));
-            $this->data['numberInactiveElections'] = count($this->election_model->GetElectionsByStatus("inactive"));
-            // number of users in the voters group
+            $user = $this->ion_auth->user()->row();
+            $title = $user->first_name . " | UNTVote";
+            $activeElections = $this->election_model->GetElectionsByUser($this->ion_auth->user()->row()->id, 'Active');
+            $upcomingElections = $this->election_model->GetElectionsByUser($this->ion_auth->user()->row()->id, 'Upcoming');
+            $this->data['user'] = $user;
+            $this->data['title'] = $title;
+            $this->data['activeElections'] = $activeElections;
+            $this->data['upcomingElections'] = $upcomingElections;
+            $this->data['numberActiveElections'] = count($activeElections);
+            $this->data['numberInactiveElections'] = count($upcomingElections);
+            // number of users in the group 'voters'
             $this->data['numberVoters'] = count($this->ion_auth->users(array(4))->result_array());
 
 			$this->_render_page('templates/header_user', $this->data);

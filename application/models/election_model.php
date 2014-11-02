@@ -58,6 +58,27 @@ class Election_Model extends CI_Model
 		return $row['id'];
 	}
 
+	// GetElectionsByUser - returns all the elections the specific user can see
+	// user - The user to use
+	// status - what status of elections are we looking for
+	public function GetElectionsByUser($user, $status)
+	{
+		// get all the colleges that the user currently passed in is apart of
+		$colleges = $this->ion_auth->get_users_colleges($user)->result_array();
+		
+		$userCollege = array();
+		// build an array with all the college id's
+		foreach($colleges as $college)
+		{
+			$userColleges[] = $college['id'];
+		}
+
+		$this->db->where('status', $status);
+		$this->db->where_in('college_id', $userColleges);
+		$query = $this->db->get('election');
+		return $query->result_array();
+	}
+
 	// CreateElection - Gets the input from the form and setup a new election in the database
 	public function CreateElection()
 	{
