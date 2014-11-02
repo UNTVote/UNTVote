@@ -50,7 +50,7 @@
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/register')?>" class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
                 <?php if($message != NULL):?>
                 <div class="row">
-                  <div id="message" class="alert alert-danger"><?php echo $message;?></div>
+                  <?php echo $message;?>
                 </div>
                 <?php endif;?>
                 <div class="row">
