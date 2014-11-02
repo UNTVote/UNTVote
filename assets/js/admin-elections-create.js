@@ -11,6 +11,13 @@ $(function () {
 
 $(document).ready(function (){
   
+  // Initialize category list
+  $('#categoryList').multiselect({
+    maxHeight: 200,
+    enableCaseInsensitiveFiltering: true,
+    disableIfEmpty: true 
+  });
+  
   // Initialize candidate list
   $('#candidateList').multiselect({
     maxHeight: 200,

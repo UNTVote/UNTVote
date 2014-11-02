@@ -82,7 +82,7 @@
           <h1 class="page-header">Create election</h1>
             <br>
           
-            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center">
+            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title" id="panelTitle">Untitled election</h3>
@@ -90,20 +90,38 @@
                 <div class="panel-body">
                   <!-- Form begins -->
                   <form role="form" data-parsley-validate>
-                    <div class="form-group">
-                      <label>Name</label>
-                      <input type="text" class="form-control" id="electionName" placeholder="Descriptive election name" data-parsley-trigger="change" required autofocus>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-6">
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="electionName" placeholder="Descriptive election name" data-parsley-trigger="change" required autofocus>
+                      </div>
+                      <div class="col-xs-12 visible-xs">&nbsp;</div>
+                      <!-- Category dropdown -->
+                      <div class="col-xs-12 col-md-6">
+                        <label>Category</label><br>
+                        <select id="categoryList">
+                          <option value="All">All</option>
+                          <option value="1">College of engineering</option>
+                          <option value="2">College of business</option>
+                          <option value="3">College of arts &amp; science</option>
+                          <option value="4">College of journalism</option>
+                        </select>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label>Description</label>
-                      <textarea class="form-control" rows="3" placeholder="Explain what the election is about" data-parsley-minlength="50" data-parsley-trigger="change" required></textarea>
-                    </div>
+                    <br>
                     
-                    <!-- Dropdown list of candidates -->
                     <div class="row">
                       <div class="col-xs-12">
-                        <label>Candidates</label>
-                        <br>
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Explain what the election is about" data-parsley-minlength="50" data-parsley-trigger="change" required></textarea>
+                      </div>
+                    </div>
+                    <br>
+                    
+                    <!-- Candidates dropdown -->
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <label>Candidates</label><br>
                         <select id="candidateList" multiple="multiple">
                           <option value="Ludwig van Beethoven">Ludwig van Beethoven</option>
                           <option value="Wolfgang Amadeus Mozart">Wolfgang Amadeus Mozart</option>
@@ -115,7 +133,7 @@
                       </div>
                     </div>
                     <br>
-                    
+  
                     <!-- Datepickers -->
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 fuelux">
@@ -201,6 +219,7 @@
                           <div id="error-container-start-date"></div>
                         </div>
                       </div>
+                      <div class="col-xs-12 visible-xs">&nbsp;</div>
                       <div class="col-xs-12 col-sm-6 fuelux">
                         <label>End date</label>
                         
@@ -324,5 +343,6 @@
     <script src="../../../assets/js/vendor/parsley.min.js"></script>
     <script src="../../../assets/js/vendor/bootstrap-multiselect.js"></script>
     <script src="../../../assets/js/admin-elections-create.js"></script>
+    <script src="../../../assets/js/app.js"></script>
   </body>
 </html>
