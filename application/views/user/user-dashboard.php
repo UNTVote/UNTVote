@@ -21,6 +21,8 @@
               </div>
             </div>   
             
+            <!-- only show the active elections if we have any -->
+            <?php if($numberActiveElections > 0):?>
             <!-- Overview Panel -->
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -54,6 +56,7 @@
                   </div>
                 </div>
               </div>
+            <?php endif?>
             
             <!-- Overview Panel -->
             <div class="panel panel-info">
