@@ -1,5 +1,5 @@
         <!-- Main body content -->
-        <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center">
+        <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
           <div class="panel-body">
             <h1>Web Site Terms and Conditions of Use</h1>
             <hr>
@@ -66,14 +66,16 @@ modify or copy the materials; use the materials for any commercial purpose, or f
             </ul>
             
           </div>
+          
+          <div class="col-xs-12 text-center">
+            <form method="link" action="<?=site_url('/')?>">
+              <br>
+              <button class="btn btn-default">Return to registration</button>
+              <br><br><br>
+            </form>
+          </div>
         </div> 
-        <br>
-        <div class="col-xs-12 text-center">
-          <form method="link" action="<?=site_url('/')?>">
-          	<button class="btn btn-default">Return to registration</button>
-          </form>
-        </div>
+
         
-        <br><br><br>
       </div>
     </div>
