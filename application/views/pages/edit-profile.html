@@ -92,16 +92,16 @@
                       </div>
                       <div class="col-xs-12 visible-xs visible-sm">&nbsp;</div>
                       <div class="col-xs-12 col-md-9">
-                        <form role="form">
+                        <form role="form" data-parsley-validate>
                           <div class="form-group">
                             <label>Name</label>
                             <div class="row">
                               <div class="col-sm-5">
-                                <input type="text" class="form-control" placeholder="First name">
+                                <input type="text" class="form-control" placeholder="First name" data-parsley-trigger="keyup" required autofocus>
                                 <div class="col-xs-12 visible-xs">&nbsp;</div>
                               </div>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" placeholder="Last name">
+                                <input type="text" class="form-control" placeholder="Last name" data-parsley-trigger="keyup" required>
                               </div>
                             </div>
                             
@@ -117,17 +117,18 @@
                           <div class="form-group">
                             <label>Email</label>
                             <div class="input-group">
-                              <input type="email" class="form-control" placeholder="Your UNT Email address">
+                              <input type="text" class="form-control" placeholder="Your UNT Email address" data-parsley-trigger="keyup" data-parsley-errors-container="#error-container-email" data-parsley-type="alphanum" required>
                               <span class="input-group-addon">@my.unt.edu</span>
                             </div>
+							<div id="error-container-email"></div>
                           </div>
                           <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Atleast 8 characters">
+                            <input type="password" class="form-control" id="password" placeholder="Atleast 8 characters" data-parsley-trigger="change keyup" data-parsley-minlength="8" required>
                           </div>
                           <div class="form-group" id="confirmPassGroup" hidden>
                             <label>Confirm password</label>
-                            <input type="password" class="form-control" id="confirmPass" placeholder="Re-type your new password">
+                            <input type="password" class="form-control" id="confirmPass" placeholder="Re-type your new password" data-parsley-trigger="keyup" data-parsley-equalto="#password" required>
                           </div>
                           <br>
                           <div class="row">
@@ -186,6 +187,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://www.fuelcdn.com/fuelux/3.0.2/js/fuelux.min.js"></script>
+	<script src="../../../assets/js/vendor/parsley.min.js"></script>
     <script src="../../../assets/js/app.js"></script>
     <script src="../../../assets/js/edit-profile.js"></script>
   </body>
