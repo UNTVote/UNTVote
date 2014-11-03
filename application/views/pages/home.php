@@ -60,7 +60,7 @@
                   <label>Name</label>
                   <div class="row">
                     <div class="col-sm-5">
-                      <input name="first_name" id="first_name" type="text" class="form-control" placeholder="First" required data-parsley-pattern="^[a-zA-Z]+$" data-parsley-pattern-message="Invalid name" data-parsley-required-message="Required field" data-parsley-trigger="change keyup">
+                      <input name="first_name" id="first_name" type="text" class="form-control" placeholder="First" required data-parsley-pattern="^[a-zA-Z]+$" data-parsley-pattern-message="Invalid name" data-parsley-required-message="Required field" data-parsley-trigger="change keyup" autofocus>
                     </div>
                     <div class="visible-xs col-xs-1">&nbsp;</div> <!-- This adds a space after textbox on small screens -->
                     <div class="col-sm-7">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input name="password" id="password" type="password" class="form-control" placeholder="Password" required data-parsley-minlength="8" data-parsley-minlength-message="Password should have 8 character or more." data-parsley-required-message="Required field" data-parsley-trigger="change focusout">
+                  <input name="password" id="password" type="password" class="form-control" placeholder="Password" required data-parsley-minlength="8" data-parsley-minlength-message="Password should have 8 character or more." data-parsley-required-message="Required field" data-parsley-trigger="keyup">
                 </div>
                 <div class="form-group">
                   <br>
