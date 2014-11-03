@@ -48,6 +48,9 @@ class User extends CI_Controller
             // number of users in the group 'voters'
             $this->data['numberVoters'] = count($this->ion_auth->users(array(4))->result_array());
 
+            // set the flash data error message if there is one
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
 			$this->_render_page('templates/header_user', $this->data);
         	$this->_render_page('templates/navigation_user', $this->data);
 			$this->_render_page('templates/sidebar_user', $this->data);

@@ -78,7 +78,8 @@ class Elections extends CI_Controller
 			// we now know the user tried to vote
 			// send the user who voted, and the election
 			$this->election_model->Vote($user->id, $electionID);
-			redirect('elections/');
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
+			redirect('user/');
 
 		}
 
