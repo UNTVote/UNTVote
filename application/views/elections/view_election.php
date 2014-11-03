@@ -2,7 +2,7 @@
 <strong><br><?=$election['election_description']?></strong>
 <br>Who would you like to vote for?
 <strong><br>Candidates: </strong>
-<form name="vote" action="<?=base_url($election['slug'])?>" method="post">
+<form name="vote" action="<?=site_url('elections/' . $election['slug'])?>" method="post">
 	<?php foreach($candidates as $candidate): ?>
 		<br><?=$candidate['first_name']?> <?=$candidate['last_name']?>
 		<input type="radio" name="candidate" value="<?=$candidate['candidate_id'];?>">

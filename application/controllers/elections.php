@@ -54,10 +54,12 @@ class Elections extends CI_Controller
 		$this->load->library('form_validation');
 
 		// validation that they picked a candidate
-		$this->form_validation->set_rules('candidates', 'Candidate Selection', 'required');
+		$this->form_validation->set_rules('candidate', 'Candidate Selection', 'required');
 		// grab the candidates from the election
 		$electionID = $election['id'];
 		$candidates = $this->election_model->GetElectionCandidates($electionID);
+		// the current user
+		$user = $this->ion_auth->user()->row();
 
 		$title = $election['election_name'];
 		$data['election'] = $election;
@@ -70,6 +72,14 @@ class Elections extends CI_Controller
 			//$this->load->view('templates/header', $data);
 			$this->load->view('elections/view_election', $data);
 			//$this->load->view('templates/footer');
+		}
+		else
+		{
+			// we now know the user tried to vote
+			// send the user who voted, and the election
+			$this->election_model->Vote($user->id, $electionID);
+			redirect('elections/');
+
 		}
 
 	}
