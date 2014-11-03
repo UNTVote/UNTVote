@@ -11,10 +11,9 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.0.2/css/fuelux.css">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="../../../assets/css/style-main.css">
+    <link href="../../../assets/css/style-main.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -36,9 +35,11 @@
             <div class="btn-group">
               <img src="../../../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
               <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Porfile</a></li>
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="#">Separated link</a></li>
               </ul>
             </div>
           </div>
@@ -56,26 +57,86 @@
               <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
               <div id="collapseElections" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
-                  <li><a href="#">Browse</a></li>
+                  <li><a href="#">Manage</a></li>
                   <li><a href="#">Results</a></li>
+                  <li><a href="#">Live Feed</a></li>
                 </ul>
               </div>
             </li>
             <li class="panel">
-              <a href="#"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a> 
+              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseUsers"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Users</a>
+              <div id="collapseUsers" class="panel-collapse collapse">
+                <ul class="nav-sidebar-sub-menu">
+                  <li><a href="#">Manage</a></li>
+                  <li><a href="#">Approvals</a></li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>
-
         
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<<<<<<< Updated upstream:application/views/feature/chart-test.html
+          <h1 class="page-header">Admin Template</h1>
+			<canvas id="testChart" width="600" height="400"></canvas>
+=======
           <h1 class="page-header">Elections</h1>
+            
+            <!-- Overview Panel -->
+            <div class="panel panel-info">
+                <div class="panel-heading">Overview</div>
+              <div class="panel-body">
+                  <div class="row">
+                        <div class="col-xs-6 col-md-4">
+                        <h4><span class = "info-circle info-circle-red">6</span> Going on elections</h4>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                        <h4><span class = "info-circle info-circle-blue">200</span> Voters </h4>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                        <h4><span class = "info-circle info-circle-purple">2</span> Info</h4>
+                        </div>
+                    </div>
+              </div>
+            </div>   
+            
+            <!-- Overview Panel -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">Item</div>
+              <div class="panel-body">
+                  <h4>Panel content</h4>
+                  <h4>Panel content</h4>
+                   <h4>Panel content</h4> 
+                  <h4>Panel content</h4>
+                  
+            
+              </div>
+            </div>   
+            
+            <!-- Overview Panel -->
+            <div class="panel panel-success">
+                <div class="panel-heading">Item</div>
+              <div class="panel-body">
+                  
+                  <h4>Panel content</h4>
+                  <h4>Panel content</h4>
+                  <h4>Panel content</h4> 
+                  <h4>Panel content</h4>
+                
+              </div>
+            </div>   
+            
         </div>
-   
+        
+    </div>
+ 
+            
+>>>>>>> Stashed changes:application/views/user/user-dashboard.html
+        </div>
       </div>
     </div>
-    
+
     <!-- Footer area -->
     <div class="footer">
       <div class="container-fluid">
@@ -95,6 +156,7 @@
     <!-- All scripts go below this area -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://www.fuelcdn.com/fuelux/3.0.2/js/fuelux.min.js"></script>
+	<script src="../../../assets/js/vendor/chart.min.js"></script>
+	<script src="../../../assets/js/testChart.js"></script>
   </body>
 </html>

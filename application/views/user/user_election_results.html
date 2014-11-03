@@ -11,10 +11,10 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.0.2/css/fuelux.css">
+    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.0.2/css/fuelux.min.css">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="../../../assets/css/style-main.css">
+    <link href="../../../assets/css/style-main.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -60,22 +60,55 @@
                   <li><a href="#">Results</a></li>
                 </ul>
               </div>
+            
             </li>
             <li class="panel">
-              <a href="#"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a> 
+              <a href="#"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a></li>
+              
+                </div>
             </li>
           </ul>
-        </div>
+    
 
         
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Elections</h1>
+          <h1 class="page-header">Elections Result</h1>
+            
+            
+            
+            
+            <!-- Overview Panel -->
+            <div class="panel panel-success">
+                <div class="panel-heading">XYZ Elections</div>
+              <div class="panel-body">
+                  
+                <!-- Result Chart -->
+                <canvas id="myChart" width="1000" height="400"></canvas>
+                  
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h1>1.</h1>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <h1>2.</h1>
+                    </div>
+                </div>
+                
+                
+            </div>
+            </div>
+                  
+            </div>   
         </div>
-   
+    </div>
+ 
+            
+        </div>
       </div>
     </div>
-    
+
     <!-- Footer area -->
     <div class="footer">
       <div class="container-fluid">
@@ -96,5 +129,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://www.fuelcdn.com/fuelux/3.0.2/js/fuelux.min.js"></script>
+    <script src="../../../assets/js/vendor/chart.min.js"></script>
+    <script src="../../../assets/js/myChart.js"></script>
+    
   </body>
 </html>
