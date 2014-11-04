@@ -8,7 +8,7 @@
               <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
               <div id="collapseElections" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
-                  <li><a href="#">Browse</a></li>
+                  <li><a href="<?=site_url('elections/')?>">Browse</a></li>
                   <li><a href="#">Results</a></li>
                 </ul>
               </div>
