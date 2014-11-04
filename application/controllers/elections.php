@@ -11,8 +11,6 @@ class Elections extends CI_Controller
 		$this->load->helper('url');
 		$this->load->model('election_model');
 
-		$this->election_model->UpdateElections();
-
 		// the user must be logged in the view the elections
 		if (!$this->ion_auth->logged_in())
 		{

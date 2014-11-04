@@ -27,14 +27,21 @@ class Election_Model extends CI_Model
 		return $query->row_array();
 	}
 
+	// GetElectionsUpdate - returns all the elections, but only the fields we need for a little faster query
+	public function GetElectionsUpdate()
+	{
+		$this->db->select('id, start_time, end_time');
+		$query = $this->db->get('election');
+
+		return $query->result_array();
+	}
+
 	// GetElectionByStatus - returns all the election of a certain status (active, inactive, closed)
 	// Active - All elections currently running
 	// Inactive - All elections not yet opened
 	// Closed - All elections that are finish
 	public function GetElectionsByStatus($status)
 	{
-		// update all the elections before getting them
-		$this->UpdateElections();
 		// query the database and get all elections based on a status
 		$query = $this->db->get_where('election', array('status' => $status));
 		return $query->result_array();
@@ -226,6 +233,37 @@ class Election_Model extends CI_Model
 		}
 	}
 
+	// IsTie - Checks to see if their is a tie in the elction
+	// electionID - the election to check against
+	// Returns - true if their is a tie, and false if not
+	private function IsTie($electionID)
+	{
+		// select the maximum amount of votes for this election
+		$query = $this->db->select_max('votes')->from('election_candidates')->where('election_id', $electionID)->get();
+		$result = $query->num_rows();
+
+		// if we returned more than one row, then at least two candidates are tied
+		if($result > 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	// ExtendElection - Extends an election one day
+	// electionID - the election that we will be extending
+	private function ExtendElection($electionID)
+	{
+		// only update for the election we need to update
+		$this->db->where('id', $electionID);
+		// do not protect the query with backticks (') to generate the correct query.
+		$this->db->set('end_time', 'DATE_ADD(end_time, INTERVAL 1 DAY)', FALSE);
+		$this->db->update('election');
+	}
+
 	// AddCandidateToElection - Adds a candidate to a given election
 	// takes in a candidates ID and a election ID.
 	private function AddCandidateToElection($candidateID, $electionID)
@@ -259,7 +297,7 @@ class Election_Model extends CI_Model
 	// UpdateElections - This checks whether each election needs to have their status updated, and if so update it
 	public function UpdateElections()
 	{
-		$elections = $this->GetElections();
+		$elections = $this->GetElectionsUpdate();
 
 		foreach($elections as $election)
 		{
@@ -277,8 +315,16 @@ class Election_Model extends CI_Model
 			}
 			if($this->IsActive($election['end_time']))
 			{
-				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'Closed'));
+				// chceck to see if we have a tie before we close the election
+				if(!$this->IsTie($election['id']))
+				{
+					$this->db->where('id', $election['id']);
+					$this->db->update('election', array('status' => 'Closed'));
+				}
+				else
+				{
+					ExtendElection($election['id']);
+				}
 			}
 		}
 	}
