@@ -71,40 +71,82 @@
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Elections Result</h1>
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
             
-            
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <label>Choose election</label>
+                      <select class="form-control">
+                        <option>XYZ Elections</option>
+                        <option>YZX Elections</option>
+                        <option>ZYX Elections</option>
+                      </select>
+                    </div>
+                  </div>
+                <br>
             
             
             <!-- Overview Panel -->
-            <div class="panel panel-success">
-                <div class="panel-heading">XYZ Elections</div>
-              <div class="panel-body">
-                  
-                <!-- Result Chart -->
-                <canvas id="myChart" width="1000" height="400"></canvas>
-                  
-                <div class="row">
-                    <div class="col-xs-6">
-                        <h1>1.</h1>
-                    </div>
-
-                    <div class="col-xs-6">
-                        <h1>2.</h1>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">XYZ Elections</div>
+                        <div class="panel-body">
+                            <!-- Result Chart -->
+                            <canvas id="user-result-chart" width="500" height="400"></canvas>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                  <h1 class="panel-title">Tops</h1>
+                                </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class ="col-xs-6 ">
+                                                <div class="row">
+                                                    <div class="col-xs-2"><h2>1.</h2></div>
+                                                    <div class="col-xs-4"><img src="../../../assets/img/user-default.png" class="img-circle result-pic" ></div>
+                                                    <div class="col-xs-5">
+                                                        <div class="row"><h5>XVD User</h5></div>
+                                                        <div class="row">100 Votes</div>
+                                                    </div>
+                                                    <div class="col-xs-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class ="col-xs-6 ">
+                                                <div class="row">
+                                                    <div class="col-xs-2"><h2>2.</h2></div>
+                                                    <div class="col-xs-4"><img src="../../../assets/img/user-default.png" class="img-circle result-pic" ></div>
+                                                    <div class="col-xs-5">
+                                                        <div class="row"><h5>PUE User</h5></div>
+                                                        <div class="row">47 Votes</div>
+                                                    </div>
+                                                    <div class="col-xs-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                  <h1 class="panel-title">Statistics</h1>
+                                                </div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class ="col-xs-6">Total Votes:    189</div>
+                                                            <div class ="col-xs-6">Total Candidates:   4</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class ="col-xs-6">Registered Votes:    202</div>
+                                                            <div class ="col-xs-6">Category:    Engineering</div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                
             </div>
-            </div>
-                  
-            </div>   
-        </div>
+        </div>   
     </div>
-        </div>
-   
-      </div>
-    </div>
-    
+ 
     <!-- Footer area -->
     <div class="footer">
       <div class="container-fluid">
@@ -126,6 +168,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://www.fuelcdn.com/fuelux/3.0.2/js/fuelux.min.js"></script>
     <script src="../../../assets/js/vendor/chart.min.js"></script>
-    <script src="../../../assets/js/myChart.js"></script>
+    <script src="../../../assets/js/user-result-chart.js"></script>
+    <script src="../../../assets/js/app.js"></script>
   </body>
 </html>
