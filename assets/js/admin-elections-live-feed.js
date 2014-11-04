@@ -1,7 +1,3 @@
-$(window).load(function() {
-  createChart();
-});
-
 function createChart() {
    var data = {
     labels: ["Steve Jobs", "Jim Carey", "Jony Ive"],
@@ -27,3 +23,7 @@ function createChart() {
     responsive: true
   }); 
 }
+
+$(window).load(function() {
+  createChart();
+});
