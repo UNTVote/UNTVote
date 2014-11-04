@@ -248,6 +248,10 @@ body {
   overflow: hidden;
 }
 
+.datepicker-calendar-open-up {
+  margin: -356px 0 0;
+}
+
 @media (min-width: 768px) {
   .pull-right-sm {
       float: right !important;
