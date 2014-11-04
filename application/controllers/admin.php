@@ -64,7 +64,9 @@ class Admin extends CI_Controller {
         	$this->data['numberUpcomingElections'] = $numberUpcomingElections;
         	$this->data['numberUsers'] = $numberUsers;
         	$this->data['numberVoters'] = $numberVoters;
-			
+			// set the flash data error message if there is one
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            
             $this->_render_page('templates/header_user', $this->data);
             $this->_render_page('templates/navigation_admin', $this->data);
 			$this->_render_page('templates/sidebar_admin', $this->data);

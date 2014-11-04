@@ -11,21 +11,12 @@
                 </div>
                 <div class="panel-body">
                   <!-- Form begins -->
-                  <form role="form" data-parsley-validate>
+                  <form method="post" accept-charset="utf-8" action="<?=site_url('elections/create')?>" role="form" data-parsley-validate>
+                  <?php echo $message;?>
                     <div class="row">
-                      <div class="col-xs-12 col-md-6">
+                      <div class="col-xs-12">
                         <label>Name</label>
-                        <input type="text" class="form-control" id="electionName" placeholder="Descriptive election name" data-parsley-trigger="change" required autofocus>
-                      </div>
-                      <div class="col-xs-12 visible-xs">&nbsp;</div>
-                      <!-- Category dropdown -->
-                      <div class="col-xs-12 col-md-6">
-                        <label>Category</label><br>
-                        <select name="colleges" id="categoryList">
-                          <?php foreach($colleges as $college):?>
-                           <option value="<?=$college['id']?>"><?=$college['description']?></option>
-                          <?php endforeach?>
-                        </select>
+                        <input name="electionName" type="text" class="form-control" id="electionName" placeholder="Descriptive election name" data-parsley-trigger="change" required autofocus>
                       </div>
                     </div>
                     <br>
@@ -33,16 +24,28 @@
                     <div class="row">
                       <div class="col-xs-12">
                         <label>Description</label>
-                        <textarea class="form-control" rows="3" placeholder="Explain what the election is about" data-parsley-minlength="50" data-parsley-trigger="change" required></textarea>
+                        <textarea name="electionDescription" class="form-control" rows="3" placeholder="Explain what the election is about" data-parsley-minlength="50" data-parsley-trigger="change" required></textarea>
                       </div>
                     </div>
                     <br>
-                    
-                    <!-- Dropdown list of candidates -->
+
+                    <!-- Category dropdown -->
+                    <div class="row">
+                      <div class="col-xs-12 col-md-6">
+                        <label>Category</label><br>
+                        <select name="electionCollege" id="categoryList">
+                          <?php foreach($colleges as $college):?>
+                           <option value="<?=$college['id']?>"><?=$college['description']?></option>
+                          <?php endforeach?>
+                        </select>
+                      </div>
+                    </div>
+                    <br>
+
+                    <!-- Candidates dropdown -->
                     <div class="row">
                       <div class="col-xs-12">
-                        <label>Candidates</label>
-                        <br>
+                        <label>Candidates</label><br>
                         <select name="electionCandidates[]" id="candidateList" multiple="multiple">
                           <?php foreach($candidates as $candidate):?>
                             <option value="<?=$candidate['id']?>">
@@ -60,7 +63,7 @@
                         <label>Start date</label>
                         <div class="datepicker" id="startDate">
                           <div class="input-group">
-                            <input class="form-control" id="startDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-start-date" required/>
+                            <input name="electionStart" class="form-control" id="startDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-start-date" required/>
                             <div class="input-group-btn">
                               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -144,7 +147,7 @@
                         
                         <div class="datepicker" id="endDate">
                           <div class="input-group">
-                            <input class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-end-date" required/>
+                            <input name="electionEnd" class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-end-date" required/>
                             <div class="input-group-btn">
                               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-calendar"></span>

@@ -130,6 +130,8 @@ class Elections extends CI_Controller
 		// form was not submitted, show the form
 		if($this->form_validation->run() === FALSE)
 		{
+			$data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
 			$this->load->view('templates/header_create_election', $data);
         	$this->load->view('templates/navigation_admin', $data);
 			$this->load->view('templates/sidebar_admin', $data);
@@ -142,6 +144,7 @@ class Elections extends CI_Controller
 		else
 		{
 			$this->election_model->CreateElection();
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect('admin/');
 		}
 	}

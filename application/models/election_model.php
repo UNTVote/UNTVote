@@ -95,6 +95,10 @@ class Election_Model extends CI_Model
 		$endDate = $this->input->post('electionEnd');
 		$college = $this->input->post('electionCollege');
 		$candidates = $this->input->post('electionCandidates');
+
+		// format the dates to SQL date format
+		$newStartDate = date('Y-m-d', strtotime($startDate));
+		$newEndDate = date('Y-m-d', strtotime($endDate));
 		
 		if($this->IsActive($startDate))
 		{
@@ -109,8 +113,8 @@ class Election_Model extends CI_Model
 		$data = array('election_name' => $electionName,
 					  'election_description' => $electionDescription,
 					  'slug' => $slug,
-					  'start_time' => $startDate,
-					  'end_time' => $endDate,
+					  'start_time' => $newStartDate,
+					  'end_time' => $newEndDate,
 					  'college_id' => $college,
 					  'total_votes' => 0,
 					  'status' => $status);
@@ -125,6 +129,7 @@ class Election_Model extends CI_Model
 			$this->AddCandidateToElection($candidate, $electionID);
 		}
 		
+		$this->ion_auth_model->set_message('create_election_successful');
 	}
 
 	// Vote - Takes in who the user voted for and deals with the total votes

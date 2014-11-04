@@ -5,7 +5,7 @@
           
           <div class="row">
             <div class="col-xs-12 text-right">
-              <button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create new</button>
+              <a href="<?=site_url('elections/create')?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create New</a>
             </div>
           </div>
           
