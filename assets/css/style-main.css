@@ -247,3 +247,9 @@ body {
   white-space: nowrap;
   overflow: hidden;
 }
+
+@media (min-width: 768px) {
+  .pull-right-sm {
+      float: right !important;
+  }
+}
