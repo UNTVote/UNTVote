@@ -82,5 +82,6 @@ $lang['email_new_password_heading']    = 'New Password for %s';
 $lang['email_new_password_subheading'] = 'Your password has been reset to: %s';
 
 // Voting 
-$lang['vote_successful'] = 'Your vote has been successfully submitted!';
-$lang['vote_already_voted'] = 'Your vote was not submitted, as you have already voted for this candidate.';
+$lang['vote_successful'] = 'Thank you, your vote has been successfully submitted';
+$lang['vote_already_voted'] = 'Your vote was not submitted, as you have already voted for this candidate';
+$lang['vote_changed'] = 'Your vote has been successfully changed';

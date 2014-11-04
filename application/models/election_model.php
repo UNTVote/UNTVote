@@ -147,8 +147,8 @@ class Election_Model extends CI_Model
 			// voting for same candidate, if so, do nothing
 			if($candidate == $result['candidate_id'])
 			{
-				$this->ion_auth_model->set_message('vote_already_voted');
-				return;
+				$this->ion_auth_model->set_error('vote_already_voted');
+				return false;
 			}
 			// otherwise, take a vote away from the other candidate
 			else
@@ -163,6 +163,7 @@ class Election_Model extends CI_Model
 				$this->db->where('voter_id', $userID);
 				$this->db->where('election_id', $electionID);
 				$this->db->delete('vote_log');
+				$this->ion_auth_model->set_message('vote_changed');
 				// next query run will add one to the candidate they voted for
 			}
 		}
@@ -180,6 +181,7 @@ class Election_Model extends CI_Model
 		// add to the vote log
 		$this->db->insert('vote_log', array('election_id' => $electionID, 'candidate_id' => $candidate, 'voter_id' => $userID));
 		$this->ion_auth_model->set_message('vote_successful');
+		return true;
 	}
 
 	// UpdateElectionVotes - updates the election tables total number of votes

@@ -77,10 +77,16 @@ class Elections extends CI_Controller
 		{
 			// we now know the user tried to vote
 			// send the user who voted, and the election
-			$this->election_model->Vote($user->id, $electionID);
-			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect('user/');
-
+			if(!$this->election_model->Vote($user->id, $electionID))
+			{
+				$this->session->set_flashdata('message', $this->ion_auth->errors());
+				redirect('user/');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				redirect('user/');
+			}
 		}
 
 	}

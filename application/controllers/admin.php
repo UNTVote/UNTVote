@@ -113,7 +113,6 @@ class Admin extends CI_Controller {
             {
                 //if the login is successful
                 //redirect them to the users page
-                $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('admin/', 'refresh');
             }
             else
