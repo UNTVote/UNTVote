@@ -1,6 +1,6 @@
         <!-- Main body content -->
         <div class="col-xs-12">
-          <div class="panel panel-default panel-user-auth block-center">
+          <div class="panel panel-default panel-user-auth block-center fade-on-load" hidden>
             <div class="panel-heading">
               <h3 class="panel-title">Reset password</h3>
             </div>
