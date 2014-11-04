@@ -1,6 +1,6 @@
     <!-- Main body content -->
     <div class="container-fluid">
-      <div class="row">
+      <div class="row fade-on-load" hidden>
         <br>
         <div class="col-xs-12">
           <div class="row">
