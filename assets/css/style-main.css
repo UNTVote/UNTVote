@@ -192,6 +192,8 @@ body {
  * Components
  */
 
+/* Info circles */
+
 .info-circle {
   display: inline-block;
   width:45px;
@@ -233,6 +235,30 @@ body {
   background-color: #9b59b6;
 }
 
+/* Charts */
+
+.bar-chart {
+  padding-right: 25px;
+}
+
+/* Election winners */
+
+.election-winners {
+  padding-bottom: 10px;
+}
+
+.election-winners > li:first-child {
+  width: 40px;
+}
+
+.election-winners h1 {
+  margin-top: -10px;
+}
+
+.election-winners img {
+  margin-top: -25px;
+}
+
 /*
  * Helper classes
  */
@@ -254,8 +280,8 @@ body {
 }
 
 @media (min-width: 768px) {
-  .pull-right-sm {
-      float: right !important;
+  .text-right-sm {
+      text-align: right;
   }
 }
 
