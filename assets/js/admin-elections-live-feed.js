@@ -3,7 +3,7 @@ function createChart() {
     labels: ["Steve Jobs", "Jim Carey", "Jony Ive"],
     datasets: [
         {
-            label: "My First dataset",
+            label: "Election live feed",
             fillColor: "rgba(151,187,205,0.5)",
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
