@@ -40,6 +40,12 @@ body {
   margin-top: 7px;
 }
 
+@media (max-width: 768px) {
+  .navbar-brand {
+    padding-left: 0px; 
+  }
+}
+
 /*
  * User, Admin and Candidate Pages
  */
