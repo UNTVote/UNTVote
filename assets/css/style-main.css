@@ -281,10 +281,6 @@ body {
   overflow: hidden;
 }
 
-.datepicker-calendar-open-up {
-  margin: -356px 0 0;
-}
-
 @media (min-width: 768px) {
   .text-right-sm {
       text-align: right;
