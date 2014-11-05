@@ -4,8 +4,6 @@
 // What all the general users can do
 class User extends CI_Controller 
 {
-	private $errorMessage = false;
-	
     function __construct()
     {
         parent::__construct();
@@ -39,8 +37,8 @@ class User extends CI_Controller
         {
             $user = $this->ion_auth->user()->row();
             $title = $user->first_name . " | UNTVote";
-            $activeElections = $this->election_model->GetElectionsByUser($this->ion_auth->user()->row()->id, 'Active');
-            $upcomingElections = $this->election_model->GetElectionsByUser($this->ion_auth->user()->row()->id, 'Upcoming');
+            $activeElections = $this->election_model->GetElectionsByUser($user->id, 'Active');
+            $upcomingElections = $this->election_model->GetElectionsByUser($user->id, 'Upcoming');
             $this->data['user'] = $user;
             $this->data['title'] = $title;
             $this->data['activeElections'] = $activeElections;

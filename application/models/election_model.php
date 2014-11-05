@@ -233,6 +233,26 @@ class Election_Model extends CI_Model
 		}
 	}
 
+	// IsUserRegistered - Checks to see if the logged in user is registered to vote in that election
+	// electionID - The election we are seeing if they have voted
+	// Returns - true if the user can vote, false otherwise
+	public function IsUserRegistered($electionID)
+	{
+		$userID = $this->ion_auth->user()->row()->id;
+		$query = $this->db->select('id')->from('voters')->where('election_id', $electionID)->where('user_id', $userID)->get();
+		$result = $query->num_rows();
+
+		// if we have an empty set then they are not registered
+		if($result > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	// IsTie - Checks to see if their is a tie in the elction
 	// electionID - the election to check against
 	// Returns - true if their is a tie, and false if not

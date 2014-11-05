@@ -38,6 +38,8 @@
 |
 */
 
+$route['notifications/(:any)'] = 'notifications/$1';
+$route['notifications'] = 'notifications';
 $route['elections/create'] = 'elections/create';
 $route['elections/(:any)'] = 'elections/view/$1';
 $route['elections'] = 'elections';

@@ -10,6 +10,7 @@ class Elections extends CI_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('election_model');
+		$this->load->model('notification_model');
 
 		// the user must be logged in the view the elections
 		if (!$this->ion_auth->logged_in())
@@ -22,14 +23,14 @@ class Elections extends CI_Controller
 	// index - default election page, shows all the elections
 	public function index()
 	{
-		// grab all the elections in the system
-		//$elections = $this->election_model->GetElections();
-		// grab all active elections in the system
-		$activeElections = $this->election_model->GetElectionsByStatus("Active");
+		$user = $this->ion_auth->user()->row_array();
+		$userID = $user['id'];
+		// grab all elections the user can vote on
+		$activeElections = $this->election_model->GetElectionsByUser($user['id'], 'Active');
 		$title = "Elections Archive";
 
 		$data['title'] = $title;
-		//$data['elections'] = $elections;
+		$data['user'] = $userID;
 		$data['activeElections'] = $activeElections;
 
 		//$this->load->view('templates/header', $data);

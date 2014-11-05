@@ -14,7 +14,7 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-red">12</span> Approval requests</h4>
+                      <h4><span class="info-circle info-circle-red"><?=$numberNotifications?></span> Approval requests</h4>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                       <h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4>
