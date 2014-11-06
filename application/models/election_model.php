@@ -34,8 +34,8 @@ class Election_Model extends CI_Model
 		$query = $this->db->get('election');
 
 		return $query->result_array();
-	}
-
+	
+}
 	// GetElectionByStatus - returns all the election of a certain status (active, inactive, closed)
 	// Active - All elections currently running
 	// Inactive - All elections not yet opened
@@ -259,11 +259,27 @@ class Election_Model extends CI_Model
 	private function IsTie($electionID)
 	{
 		// select the maximum amount of votes for this election
-		$query = $this->db->select_max('votes')->from('election_candidates')->where('election_id', $electionID)->get();
-		$result = $query->num_rows();
+		$queryVotes = $this->db->select_max('votes', 'most_votes')->from('election_candidates')->where('election_id', $electionID)->get();
+		$resultVotes = $queryVotes->row_array();
+		// get the most amount of votes a candidate has.
+		$mostVotes = $resultVotes['most_votes'];
+		// store how many candidates we have that have the most amount of votes
+		$numerCandidates = 0;
 
-		// if we returned more than one row, then at least two candidates are tied
-		if($result > 1)
+		// go through every candidate to see if the amount of votes they have is the same as most_votes
+		$queryCandidates = $this->db->select('votes')->from('election_candidates')->where('election_id', $electionID)->get();
+		$resultCandidates = $queryCandidates->result_array();
+
+		foreach($resultCandidates as $candidate)
+		{
+			if($candidate['votes'] == $mostVotes)
+			{
+				// we found a candidate with the same amount of votes as the max
+				$numerCandidates++;
+			}
+		}
+		// if the number of candidates found with the same votes is greater than one, than we have a tie
+		if($numerCandidates > 1)
 		{
 			return true;
 		}
@@ -271,6 +287,7 @@ class Election_Model extends CI_Model
 		{
 			return false;
 		}
+
 	}
 
 	// ExtendElection - Extends an election one day
@@ -343,7 +360,7 @@ class Election_Model extends CI_Model
 				}
 				else
 				{
-					ExtendElection($election['id']);
+					$this->ExtendElection($election['id']);
 				}
 			}
 		}
