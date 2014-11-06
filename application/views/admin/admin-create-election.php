@@ -61,7 +61,7 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 fuelux">
                         <label>Start date</label>
-                        <div class="datepicker" id="startDate">
+                        <div class="datepicker dropup" id="startDate">
                           <div class="input-group">
                             <input name="electionStart" class="form-control" id="startDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-start-date" required/>
                             <div class="input-group-btn">
@@ -145,7 +145,7 @@
                       <div class="col-xs-12 col-sm-6 fuelux">
                         <label>End date</label>
                         
-                        <div class="datepicker" id="endDate">
+                        <div class="datepicker dropup" id="endDate">
                           <div class="input-group">
                             <input name="electionEnd" class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-end-date" required/>
                             <div class="input-group-btn">

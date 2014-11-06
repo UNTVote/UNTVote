@@ -19,11 +19,18 @@ class Notification_Model extends CI_Model
 		return $query->result_array();
 	}
 
-	// GetNotificationsByType - Returns all the notifications for that type
-	public function GetNotificationsByType($type)
+	// GetElectionNotifications - Returns all the notifications for elections
+	public function GetElectionNotifications()
 	{
-		$query = $this->db->query('SELECT first_name, last_name, type, election_name  FROM users, admin_notifications, election WHERE type="'. $type . '" AND users.id=admin_notifications.sender_id 
+		$query = $this->db->query('SELECT admin_notifications.id, first_name, last_name, type, election_name  FROM users, admin_notifications, election WHERE type="Vote" AND users.id=admin_notifications.sender_id 
 									AND admin_notifications.election_id=election.id');
+		return $query->result_array();
+	}
+
+	// GetElectionNotifications - Returns all the notifications for elections
+	public function GetCandidateNotifications()
+	{
+		$query = $this->db->query('SELECT admin_notifications.id, first_name, last_name, type FROM users, admin_notifications WHERE type="Candidate" AND users.id=admin_notifications.sender_id');
 		return $query->result_array();
 	}
 
@@ -35,7 +42,7 @@ class Notification_Model extends CI_Model
 		$query = $this->db->select('id')->from('admin_notifications')->where('election_id', $electionID)->where('sender_id', $userID)->get();
 		$result = $query->num_rows();
 
-		if($result > 0)
+		if($result >= 1)
 		{
 			return true;
 		}
@@ -64,5 +71,38 @@ class Notification_Model extends CI_Model
 		$data = array('sender_id' => $userID,
 					  'type' => 'Candidate');
 		$this->db->insert('admin_notifications', $data);
+	}
+
+	// AcceptElectionRequest - allows a user to vote on an election and deletes their notification from the table
+	// notificationID - the notification that we are accepting and deleting from the table.
+	public function AcceptElectionRequest($notificationID)
+	{
+		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));
+		$result = $query->row_array();
+
+		// store who sender and the election they will vote on
+		$sender = $result['sender_id'];
+		$election = $result['election_id'];
+
+		// adds the user to the voters table
+		$data = array('user_id' => $sender,
+					  'election_id' => $election);
+		$this->db->insert('voters', $data);
+
+		// deletes the notification from the table
+		$this->db->delete('admin_notifications', array('id' => $notificationID));
+	}
+
+	public function AcceptCandidateRequest($notificationID)
+	{
+		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));
+		$result = $query->row_array();
+
+		// store the sender and add the user to the candidates group
+		$sender = $result['sender_id'];
+		$this->ion_auth->add_to_group('3', $sender);
+
+		// deletes the notification from the table
+		$this->db->delete('admin_notifications', array('id' => $notificationID));
 	}
 }

@@ -1,10 +1,17 @@
 <!-- displays all the elections -->
+<strong>Candiate Approvals: </strong>
+
+<?php foreach($candidateNotifications as $notification):?>
+	<br><strong>User</strong>: <?=$notification['first_name'] . ' ' . $notification['last_name']?>
+	<br><strong>Type:</strong> <?=$notification['type']?>
+	<br><a href="<?=site_url('notifications/AcceptCandidateNotification/' . $notification['id'])?>">Accept</a> | 
+		<a href="#">Reject</a>
+<?php endforeach?>
 <hr>
-<strong>Number Notifications: </strong> <?=$numberNotifications?>
-<?php foreach($notifications as $notification): ?>
-<ul>
-	<br><li><strong>Notification Sender</strong>: <?php echo $notification['first_name'] . ' ' . $notification['last_name'] ?></li>
-	<br><li><strong>Notification Type</strong>: <?php echo $notification['type'] ?></li>
-	<br><li><strong>Election</strong>: <?php echo $notification['election_name'] ?></li>
-</ul>
-<?php endforeach ?>
+<strong>Election Approvals </strong>
+<?php foreach($electionNotifications as $notification):?>
+	<br><strong>User</strong>: <?=$notification['first_name'] . ' ' . $notification['last_name']?>
+	<br><strong>Type:</strong> <?=$notification['election_name']?>
+	<br><a href="<?=site_url('notifications/AcceptElectionNotification/' . $notification['id'])?>">Accept</a> | 
+		<a href="#">Reject</a>
+<?php endforeach?>
