@@ -34,8 +34,18 @@ class Election_Model extends CI_Model
 		$query = $this->db->get('election');
 
 		return $query->result_array();
-	
-}
+	}
+
+	// GetElectionVoters - gets how many voters their are in a given election
+	// electionID - the election we need to know
+	// Returns - an integer value of how many voters are in an election
+	public function GetElectionVoters($electionID)
+	{
+		$query = $this->db->get_where('voters', array('election_id' => $electionID));
+		$result = $query->num_rows();
+
+		return $result;
+	}
 	// GetElectionByStatus - returns all the election of a certain status (active, inactive, closed)
 	// Active - All elections currently running
 	// Inactive - All elections not yet opened

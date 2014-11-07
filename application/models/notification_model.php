@@ -62,6 +62,7 @@ class Notification_Model extends CI_Model
 					  'type' => 'Vote',
 					  'election_id' => $electionID);
 		$this->db->insert('admin_notifications', $data);
+		$this->ion_auth_model->set_message('notification_approval_sent');
 	}
 
 	// SendCandidateNotification - Adds an candidate request notification to the admins for the current user
@@ -77,12 +78,14 @@ class Notification_Model extends CI_Model
 		if($result > 0)
 		{
 			// we have the request already, just return and do nothing
+			$this->ion_auth_model->set_message('notification_approval_notsent');
 			return;
 		}
 
 		$data = array('sender_id' => $userID,
 					  'type' => 'Candidate');
 		$this->db->insert('admin_notifications', $data);
+		$this->ion_auth_model->set_message('notification_approval_sent');
 	}
 
 	// AcceptElectionRequest - allows a user to vote on an election and deletes their notification from the table

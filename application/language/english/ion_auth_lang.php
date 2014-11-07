@@ -88,3 +88,7 @@ $lang['vote_changed'] = 'Your vote has been successfully changed';
 
 // Creating Election
 $lang['create_election_successful'] = 'The election has been successfully created';
+
+// Notification and Approvals
+$lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and will receive an email soon';
+$lang['notification_approval_notsent'] = 'We already have your request; You will receive an email soon';

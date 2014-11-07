@@ -41,14 +41,15 @@ class Notifications extends CI_Controller
 	public function SendElectionNotification($electionID)
 	{
 		$this->notification_model->SendElectionNotification($electionID);
-		redirect('elections/', 'refresh');
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect('user/', 'refresh');
 	}
 
 	// send candidate notification to the admins, then redirects them back to the elections page
 	public function SendCandidateNotification()
 	{
 		$this->notification_model->SendCandidateNotification();
-		redirect('elections/', 'refresh');
+		redirect('user/', 'refresh');
 	}
 
 	// AcceptElectionNotification - Accepts a users request to vote in an election

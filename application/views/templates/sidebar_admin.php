@@ -17,7 +17,7 @@
               <div id="collapseUsers" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
                   <li><?=anchor('admin/manage_users', 'Manage Users')?></li>
-                  <li><a href="#">Approvals</a></li>
+                  <li><?=anchor('notifications/', 'Approvals')?></li>
                 </ul>
               </div>
             </li>

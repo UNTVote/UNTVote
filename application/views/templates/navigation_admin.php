@@ -11,9 +11,7 @@
             <div class="btn-group">
               <img src="<?=asset_url()?>img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
               <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+                <li><a href="#">Profile</a></li>
                 <li class="divider"></li>
                 <li><?=anchor('admin/logout', 'Logout')?></li>
               </ul>

@@ -51,7 +51,9 @@
                           <td><?=date("m-d-Y", strtotime($activeElection['end_time'])) ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$activeElection['total_votes']?>%;"><?=$activeElection['total_votes']?> / <?=$numberVoters?></div>
+                              <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" 
+                                style="width: <?=$activeElection['total_votes']?>%;">
+                                <?=$activeElection['total_votes']?> / <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                             </div>
                           </td>
                           </tr>
