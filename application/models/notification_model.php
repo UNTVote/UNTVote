@@ -67,7 +67,19 @@ class Notification_Model extends CI_Model
 	// SendCandidateNotification - Adds an candidate request notification to the admins for the current user
 	public function SendCandidateNotification()
 	{
+		// the current logged on user is the user sending the request
 		$userID = $this->ion_auth->user()->row()->id;
+
+		// checks to see if we have this users approval request, if so, we do nothing.
+		$query = $this->db->get_where('admin_notifications', array('sender_id' => $userID,
+																   'type' => 'Candidate'));
+		$result = $query->num_rows();
+		if($result > 0)
+		{
+			// we have the request already, just return and do nothing
+			return;
+		}
+
 		$data = array('sender_id' => $userID,
 					  'type' => 'Candidate');
 		$this->db->insert('admin_notifications', $data);
@@ -91,6 +103,8 @@ class Notification_Model extends CI_Model
 
 		// deletes the notification from the table
 		$this->db->delete('admin_notifications', array('id' => $notificationID));
+
+		// TODO: SEND EMAIL TO THE USER HERE
 	}
 
 	public function AcceptCandidateRequest($notificationID)
@@ -103,6 +117,15 @@ class Notification_Model extends CI_Model
 		$this->ion_auth->add_to_group('3', $sender);
 
 		// deletes the notification from the table
+		$this->db->delete('admin_notifications', array('id' => $notificationID));
+
+		// TODO: SEND EMAIL TO THE USER HERE
+	}
+
+	// RejectRequest - The admin rejects the users reques to be a candidate or vote on an election
+	// notificationID - the notification we need to remove
+	public function RejectRequest($notificationID)
+	{
 		$this->db->delete('admin_notifications', array('id' => $notificationID));
 	}
 }

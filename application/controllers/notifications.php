@@ -66,4 +66,12 @@ class Notifications extends CI_Controller
 		$this->notification_model->AcceptCandidateRequest($notificationID);
 		redirect('notifications/', 'refresh');
 	}
+
+	// RejectRequest - Denies a user from voting or being a candidate
+	// notificationID - the approval we are rejecting
+	public function RejectRequest($notificationID)
+	{
+		$this->notification_model->RejectRequest($notificationID);
+		redirect('notifications', 'refresh');
+	}
 }
