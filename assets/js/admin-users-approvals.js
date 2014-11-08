@@ -1,0 +1,3 @@
+$(function() {
+  $("#tableUserApprovals").tablesorter();
+});
