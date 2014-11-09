@@ -22,7 +22,7 @@
                       </div>
                       <div class="col-xs-12 visible-xs visible-sm">&nbsp;</div>
                       <div class="col-xs-12 col-md-9">
-                        <form method="post" accept-charset="utf-8" action="<?=uri_string()?>" role="form" data-parsley-validate>
+                        <form method="post" accept-charset="utf-8" action="<?=site_url('user/edit_user/' . $user->id)?>" role="form" data-parsley-validate>
                           <div class="form-group">
                             <label>Name</label>
                             <div class="row">
