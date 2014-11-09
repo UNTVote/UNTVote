@@ -11,7 +11,7 @@
             <div class="btn-group">
               <img src="<?=asset_url()?>img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
               <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Profile</a></li>
+                <li><?=anchor("user/edit_user/".$user->id, 'Profile') ;?></li>
                 <li class="divider"></li>
                 <li><?=anchor('user/logout', 'Logout')?></li>
               </ul>

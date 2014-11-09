@@ -183,6 +183,180 @@ class User extends CI_Controller
 			$this->_render_page('templates/footer', $this->data);
         }
     }
+
+    // edits the current logged in users profile
+    public function edit_profile()
+    {
+        // if the user is not logged in take them to the log in page
+        if(!$this->ion_auth->logged_in())
+        {
+            redirect('user/login', 'refresh');
+        }
+        else
+        {
+            $user = $this->ion_auth->user()->row();
+            $title = $user->first_name . " | UNTVote";
+            // create a substring from the email, don't include the "@my.unt.edu"
+            $userEmail = substr($user->email, 0, -11);
+            // get all the colleges from the database
+            $colleges = $this->ion_auth->colleges()->result_array();
+            $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
+
+            // if the form was ran, update the user
+            if($this->form_validation->run() === false)
+            {
+                $this->data['user'] = $user;
+                $this->data['title'] = $title;
+                $this->data['userEmail'] = $userEmail;
+                $this->data['colleges'] = $colleges;
+                $this->data['collegeDefault'] = $currentCollege;
+                $this->_render_page('templates/header_user', $this->data);
+                $this->_render_page('templates/navigation_user');
+                $this->_render_page('templates/sidebar_user');
+                $this->_render_page('pages/edit-profile', $this->data);
+                $this->_render_page('templates/scripts_main');  
+                $this->_render_page('templates/scripts_custom');
+                $this->_render_page('templates/footer');
+            }
+            else
+            {
+                // add the @my.unt.edu to the email
+                $email = $this->input->post('email');
+                $email .= '@my.unt.edu';
+                $userData = array('first_name' => $this->input->post('firstName'),
+                                  'last_name'  => $this->input->post('lastName'),
+                                  'email'      => $email);
+
+                // if the user edited the college they are in
+                $collegeData = $this->input->post('colleges');
+                if (isset($collegeData) && !empty($collegeData)) 
+                {
+                    $this->ion_auth->remove_from_college('', $user->id);
+
+                    foreach ($collegeData as $clg) 
+                    {
+                        $this->ion_auth->add_to_college($clg, $user->id);
+                    }
+                }
+                //update the password if it was posted
+                if ($this->input->post('password'))
+                {
+                    $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+                    $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+
+                    $userData['password'] = $this->input->post('password');
+                }
+                $this->ion_auth->update($user->id, $userData);
+                $this->session->set_flashdata('message', "User Saved");
+                redirect('user/', 'refresh');
+            }
+
+        }
+    }
+
+    //edit a user
+    function edit_user($id)
+    {
+        $this->data['title'] = "Edit User";
+        $user = $this->ion_auth->user()->row();
+        $title = $user->first_name . " | UNTVote";
+        // create a substring from the email, don't include the "@my.unt.edu"
+        $userEmail = substr($user->email, 0, -11);
+        // get all the colleges from the database
+        $colleges = $this->ion_auth->colleges()->result_array();
+        $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('admin', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups = $this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $colleges = $this->ion_auth->colleges()->result_array();
+        $currentCollege = $this->ion_auth->get_users_colleges($id)->result();
+
+        //validate form input
+        $this->form_validation->set_rules('firstName', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('lastName', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'), 'xss_clean');
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+
+            $data = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name'  => $this->input->post('last_name'),
+            );
+
+            $collegeData = $this->input->post('colleges');
+
+            if (isset($collegeData) && !empty($collegeData)) 
+            {
+                $this->ion_auth->remove_from_college('', $id);
+
+                foreach ($collegeData as $clg) 
+                {
+                    $this->ion_auth->add_to_college($clg, $id);
+                }
+            }
+
+            //update the password if it was posted
+            if ($this->input->post('password'))
+            {
+                $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+                $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+
+                $data['password'] = $this->input->post('password');
+            }
+
+            if ($this->form_validation->run() === TRUE)
+            {
+                $this->ion_auth->update($user->id, $data);
+
+                //check to see if we are creating the user
+                //redirect them back to the admin page
+                $this->session->set_flashdata('message', "User Saved");
+                if ($this->ion_auth->is_admin())
+                {
+                    redirect('admin', 'refresh');
+                }
+                else
+                {
+                    redirect('/', 'refresh');
+                }
+            }
+        }
+
+        //display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        //set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        // sets the options for the dropdown box
+        $this->data['options'] = $colleges;
+        $this->data['collegeDefault'] = $currentCollege;
+        $this->data['userEmail'] = $userEmail;
+        
+        $this->_render_page('templates/header_user', $this->data);
+        $this->_render_page('templates/navigation_user');
+        $this->_render_page('templates/sidebar_user');
+        $this->_render_page('pages/edit-profile', $this->data);
+        $this->_render_page('templates/scripts_main');  
+        $this->_render_page('templates/scripts_custom');
+        $this->_render_page('templates/footer');
+    }
 	
 	//forgot password
 	public function forgot_password()

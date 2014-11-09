@@ -5,3 +5,5 @@
 <?=js('admin-elections-manage.js')?>
 <?=js('vendor/bootstrap-multiselect.js')?>
 <?=js('admin-elections-create.js')?>
+<?=js('app.js')?>
+<?=js('edit-profile.js')?>
