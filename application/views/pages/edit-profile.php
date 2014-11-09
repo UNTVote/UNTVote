@@ -75,7 +75,7 @@
                           </div>
                           <div class="form-group" id="confirmPassGroup" hidden>
                             <label>Confirm password</label>
-                            <input name="password_confirm" type="password" class="form-control" id="confirmPass" placeholder="Re-type your new password" data-parsley-trigger="keyup" data-parsley-equalto="#password" required>
+                            <input name="password_confirm" type="password" class="form-control" id="confirmPass" placeholder="Re-type your new password" data-parsley-trigger="keyup" data-parsley-equalto="#password">
                           </div>
                           <br>
                           <div class="row">
