@@ -37,7 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
+$route['candidates'] = 'candidates';
 $route['notifications/(:any)'] = 'notifications/$1';
 $route['notifications'] = 'notifications';
 $route['elections/create'] = 'elections/create';

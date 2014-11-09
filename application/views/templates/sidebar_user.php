@@ -15,7 +15,7 @@
             
             </li>
             <li class="panel">
-              <a href="#"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a></li>
+              <a href="<?=site_url('candidates/')?>"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a></li>
               
                 </div>
             </li>
