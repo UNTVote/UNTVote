@@ -40,9 +40,26 @@ class Candidates extends CI_Controller
 		$this->load->view('templates/header_user', $data);
         $this->load->view('templates/navigation_user', $data);
 		$this->load->view('templates/sidebar_user', $data);
-        $this->load->view('user/user-candidate-browse', $data);
+        $this->load->view('candidate/user-candidate-browse', $data);
 	    $this->load->view('templates/scripts_main');
         $this->load->view('templates/scripts_custom');
 		$this->load->view('templates/footer'); 
+	}
+
+	// View - Views the candidates personal profile
+	// Displays their name, what college they are apart of
+	// candidateID - The candidate they are viewing
+	public function View($candidateID)
+	{
+		// get the candidate they want to view
+		$candidate = $this->ion_auth->user($candidateID)->row();
+		$title = $candidate->first_name . "'s Candidate Profile | UNTVote";
+		$colleges = $this->ion_auth->get_users_colleges($candidateID)->result();
+
+		$data['title'] = $title;
+		$data['candidate'] = $candidate;
+		$data['colleges'] = $colleges;
+
+		$this->load->view('candidate/candidate-view', $data);
 	}
 }
