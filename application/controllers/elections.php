@@ -61,10 +61,34 @@ class Elections extends CI_Controller
 		$user = $this->ion_auth->user()->row();
 
 		$title = $election['election_name'];
+
+		$viewElection = '';
+		$requestSent = '';
+		$requestVote = '';
+
+		if($this->election_model->IsUserRegistered($electionID))
+		{
+			$requestSent = 'hidden';
+			$requestVote = 'hidden';
+		}
+		else if($this->notification_model->IsElectionNotificationSent($electionID))
+		{
+			$viewElection = 'hidden';
+			$requestVote = 'hidden';
+		}
+		else
+		{
+			$viewElection = 'hidden';
+			$requestSent = 'hidden';
+		}
+
 		$data['election'] = $election;
 		$data['title'] = $title;
 		$data['candidates'] = $candidates;
 		$data['user'] = $user;
+		$data['requestSent'] = $requestSent;
+		$data['requestVote'] = $requestVote;
+		$data['viewElection'] = $viewElection;
 
 		// if the form failed to run
 		if($this->form_validation->run() === FALSE)

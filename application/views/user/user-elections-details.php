@@ -35,13 +35,13 @@
                   <br><br>
 
                   <div class="row">
-                    <div class="col-xs-12" hidden>
-                      <a href="#" class="btn btn-primary btn-block">Request to vote</a>
+                    <div class="col-xs-12" <?=$requestVote?>>
+                      <a href="<?=site_url('notifications/SendElectionNotification/' . $election['id'])?>" class="btn btn-primary btn-block">Request to vote</a>
                     </div>
-                    <div class="col-xs-12" hidden>
+                    <div class="col-xs-12" <?=$requestSent?>>
                       <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote..</a>
                     </div>
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" <?=$viewElection?>>
                       <h4>Cast your vote:</h4>
                       <form name="vote" action="<?=site_url('elections/' . $election['slug'])?>" method="post" role="form">
                         <ul class="list-inline">
