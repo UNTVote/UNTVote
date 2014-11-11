@@ -10,7 +10,10 @@
                   <!-- Nav tabs -->
                   <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#general" role="tab" data-toggle="tab">General</a></li>
-                    <li role="presentation"><a href="#candidate" role="tab" data-toggle="tab">Candidate</a></li>
+                    <!-- only display the candidate tab if they are a candidate -->
+                    <?php if($isCandidate):?>
+                      <li role="presentation"><a href="#candidate" role="tab" data-toggle="tab">Candidate</a></li>
+                    <?php endif?>
                   </ul>
 
                   <!-- Tab panes -->

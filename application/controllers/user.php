@@ -195,6 +195,16 @@ class User extends CI_Controller
         // get all the colleges from the database
         $colleges = $this->ion_auth->colleges()->result_array();
         $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
+        $isCanddate = true;
+        // check to see if the current user is a candidate to know to dispay that form or not
+        if($this->ion_auth->in_group('candidates'))
+        {
+            $isCandidate = true;
+        }
+        else
+        {
+            $isCandidate = false;
+        }
 
         if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
         {
@@ -274,6 +284,7 @@ class User extends CI_Controller
         $this->data['user'] = $user;
         $this->data['groups'] = $groups;
         $this->data['currentGroups'] = $currentGroups;
+        $this->data['isCandidate'] = $isCandidate;
         // sets the options for the dropdown box
         $this->data['options'] = $colleges;
         $this->data['collegeDefault'] = $currentCollege;
