@@ -1,3 +1,4 @@
 $(function() {
-  $("#tableUserApprovals").tablesorter();
+  $("#tableVotingApprovals").tablesorter();
+  $("#tableCandidacyApprovals").tablesorter();
 });
