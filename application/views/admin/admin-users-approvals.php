@@ -2,8 +2,10 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Approvals</h1>
           <?php if($numberNotifications == 0):?>
-            <h3 class='text-muted text-center'>Their are currently zero approval requests.</h3>
-          <?php endif ?> 
+            <div class="col-xs-12 fade-on-load" hidden>
+              <h3 class='text-muted text-center'>Their are currently zero approval requests.</h3>
+            </div>
+          <?php endif ?>
             <div class="row">
               <div class="col-xs-12 fade-on-load" hidden>
               <?php if($numberElectionNotifications > 0):?>
