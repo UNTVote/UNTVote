@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2014 at 01:19 AM
+-- Generation Time: Nov 11, 2014 at 03:15 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admin_notifications` (
   `type` varchar(20) NOT NULL COMMENT 'candidate or vote',
   `election_id` int(10) NOT NULL,
   `response` varchar(10) NOT NULL DEFAULT 'No'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -97,8 +97,8 @@ INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `
 (12, 'Testing Dates', 'Testing to see if elections are updated', 'election-update', '2014-10-01', '2014-11-01', 1, 0, 'Closed'),
 (15, 'Candidates Election', 'Testing Adding Candidates to an Election', 'candidates-election', '2014-11-02', '2014-11-03', 1, 0, 'Closed'),
 (16, 'Adding Candidates', 'Testing Adding Candidates to an Election', 'adding-candidates', '2014-11-02', '2014-11-03', 1, 0, 'Closed'),
-(17, 'Creating Candidates', 'Testing Adding Candidates to an Election', 'creating-candidates', '2014-11-02', '2014-11-07', 4, 0, 'Active'),
-(19, 'Testing New Create Election', 'Testing the new new Create Election form and date format', 'testing-new-create-election', '2014-11-04', '2014-11-07', 4, 20, 'Active'),
+(17, 'Creating Candidates', 'Testing Adding Candidates to an Election', 'creating-candidates', '2014-11-02', '2014-11-10', 4, 1, 'Closed'),
+(19, 'Testing New Create Election', 'Testing the new new Create Election form and date format', 'testing-new-create-election', '2014-11-04', '2014-11-07', 4, 20, 'Closed'),
 (20, 'Testing Views', 'Testing whether or not the new create election form is working', 'testing-views', '2014-11-05', '2014-11-06', 4, 1, 'Closed');
 
 -- --------------------------------------------------------
@@ -122,7 +122,7 @@ INSERT INTO `election_candidates` (`id`, `candidate_id`, `election_id`, `votes`)
 (1, 5, 1, 0),
 (2, 6, 8, 2),
 (3, 5, 8, 0),
-(4, 5, 17, 0),
+(4, 5, 17, 1),
 (5, 39, 17, 0),
 (6, 5, 18, 0),
 (7, 39, 18, 0),
@@ -189,23 +189,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL
+  `phone` varchar(20) DEFAULT NULL,
+  `about_me` varchar(500) DEFAULT NULL,
+  `goals` text
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1415318727, 1, 'Chad', 'Smith', 'None', '2147296420'),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1415319149, 1, 'Chad', 'Smith', NULL, NULL),
-(6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Kieth', '', NULL, NULL),
-(34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL),
-(35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Jony', 'Ive', NULL, NULL),
-(36, '::1', 'cs1', '$2y$08$Pooyam.gF/K00NNfDVS3z.fI07rCPmCSLiFw/XjoptIIPcJP5PKwe', NULL, 'testing@test.com', NULL, NULL, NULL, NULL, 1412909291, 1412909291, 1, 'Bill', 'Gates', NULL, NULL),
-(37, '::1', 'ej123', '$2y$08$FmiA9AF55Y3KIKaZownv6O0Sh5ztVxZ.EPHqGNcXEUSjeEFmW/LVy', NULL, 'rootemail@my.unt.edu', NULL, NULL, NULL, NULL, 1412916249, 1412916249, 1, 'Steve', 'Balmer', NULL, NULL),
-(38, '::1', 'ts123', '$2y$08$x7Xh41vMRNDo3pLuyq96iu5e6RezqsVxTUSgsHyR85PRXbHPss292', NULL, 'rootadmin@my.unt.edu', NULL, NULL, NULL, NULL, 1413269983, 1413269983, 1, 'Tim', 'Cook', NULL, NULL),
-(39, '::1', 'ccf0056', '$2y$08$JqomlPbvNtdoZ9kx6JeJf.S3Xbs6HK/prDipzKPFTnzdH8UgLeZcW', NULL, 'christianfitch@my.unt.edu', NULL, NULL, NULL, NULL, 1413300223, 1413300242, 1, 'Christian', 'Fitch', NULL, NULL);
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `about_me`, `goals`) VALUES
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1415664632, 1, 'Chad', 'Smith', 'None', '2147296420', NULL, NULL),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1415664658, 1, 'Chad', 'Smith', NULL, NULL, 'I am such a great person!', 'Free Books!'),
+(6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Kieth', '', NULL, NULL, NULL, NULL),
+(34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL, NULL, NULL),
+(35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Jony', 'Ive', NULL, NULL, NULL, NULL),
+(36, '::1', 'cs1', '$2y$08$Pooyam.gF/K00NNfDVS3z.fI07rCPmCSLiFw/XjoptIIPcJP5PKwe', NULL, 'testing@test.com', NULL, NULL, NULL, NULL, 1412909291, 1412909291, 1, 'Bill', 'Gates', NULL, NULL, NULL, NULL),
+(37, '::1', 'ej123', '$2y$08$FmiA9AF55Y3KIKaZownv6O0Sh5ztVxZ.EPHqGNcXEUSjeEFmW/LVy', NULL, 'rootemail@my.unt.edu', NULL, NULL, NULL, NULL, 1412916249, 1412916249, 1, 'Steve', 'Balmer', NULL, NULL, NULL, NULL),
+(38, '::1', 'ts123', '$2y$08$x7Xh41vMRNDo3pLuyq96iu5e6RezqsVxTUSgsHyR85PRXbHPss292', NULL, 'rootadmin@my.unt.edu', NULL, NULL, NULL, NULL, 1413269983, 1413269983, 1, 'Tim', 'Cook', NULL, NULL, NULL, NULL),
+(39, '::1', 'ccf0056', '$2y$08$JqomlPbvNtdoZ9kx6JeJf.S3Xbs6HK/prDipzKPFTnzdH8UgLeZcW', NULL, 'christianfitch@my.unt.edu', NULL, NULL, NULL, NULL, 1413300223, 1413300242, 1, 'Christian', 'Fitch', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -217,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `users_colleges` (
 `id` mediumint(5) NOT NULL,
   `user_id` mediumint(5) NOT NULL,
   `college_id` mediumint(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 --
 -- Dumping data for table `users_colleges`
@@ -227,7 +229,6 @@ INSERT INTO `users_colleges` (`id`, `user_id`, `college_id`) VALUES
 (28, 6, 2),
 (29, 11, 3),
 (30, 7, 1),
-(31, 5, 4),
 (35, 17, 2),
 (36, 31, 1),
 (37, 32, 1),
@@ -241,7 +242,8 @@ INSERT INTO `users_colleges` (`id`, `user_id`, `college_id`) VALUES
 (46, 39, 4),
 (47, 1, 4),
 (48, 1, 15),
-(49, 8, 15);
+(49, 8, 15),
+(55, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -253,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=148 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=150 ;
 
 --
 -- Dumping data for table `users_groups`
@@ -264,7 +266,7 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (22, 1, 2),
 (145, 1, 3),
 (107, 5, 2),
-(147, 5, 3),
+(149, 5, 3),
 (14, 6, 2),
 (136, 34, 2),
 (138, 35, 2),
@@ -284,16 +286,16 @@ CREATE TABLE IF NOT EXISTS `voters` (
 `id` int(10) NOT NULL,
   `election_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `voters`
 --
 
 INSERT INTO `voters` (`id`, `election_id`, `user_id`) VALUES
-(12, 8, 5),
 (13, 19, 5),
-(14, 17, 5);
+(14, 17, 5),
+(15, 8, 5);
 
 -- --------------------------------------------------------
 
@@ -306,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `vote_log` (
   `election_id` int(11) NOT NULL,
   `candidate_id` int(11) NOT NULL,
   `voter_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `vote_log`
@@ -317,7 +319,8 @@ INSERT INTO `vote_log` (`id`, `election_id`, `candidate_id`, `voter_id`) VALUES
 (24, 8, 6, 1),
 (26, 20, 5, 5),
 (28, 8, 6, 5),
-(29, 19, 5, 5);
+(29, 19, 5, 5),
+(32, 17, 5, 5);
 
 --
 -- Indexes for dumped tables
@@ -397,7 +400,7 @@ ALTER TABLE `vote_log`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `colleges`
 --
@@ -432,22 +435,22 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
 -- AUTO_INCREMENT for table `users_colleges`
 --
 ALTER TABLE `users_colleges`
-MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=148;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=150;
 --
 -- AUTO_INCREMENT for table `voters`
 --
 ALTER TABLE `voters`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `vote_log`
 --
 ALTER TABLE `vote_log`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- Constraints for dumped tables
 --

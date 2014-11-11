@@ -262,7 +262,6 @@ class User extends CI_Controller
 
                 //check to see if we are creating the user
                 //redirect them back to the admin page
-                $this->session->set_flashdata('message', "User Saved");
                 if ($this->ion_auth->is_admin())
                 {
                     redirect('user', 'refresh');

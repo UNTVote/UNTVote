@@ -5,6 +5,7 @@
           
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
+            <?php echo $message;?>
               <div class="panel panel-default">
                 <div class="panel-body">
                   <!-- Nav tabs -->
@@ -93,13 +94,14 @@
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="candidate">
                       <br>
+                      <form method="post" accept-charset="utf-8" action="<?=site_url('candidates/Edit')?>" role="form" data-parsley-validate>
                       <div class="form-group">
                         <label>About me</label>
-                        <textarea class="form-control" rows="3" placeholder="Explain a little bit about your self"></textarea>
+                        <textarea name="aboutMe" class="form-control" rows="3" placeholder="Explain a little bit about your self"><?=$user->about_me?></textarea>
                       </div>
                       <div class="form-group">
                         <label>What to expect</label>
-                        <textarea class="form-control" rows="3" placeholder="Describe your goals, contributing and services you can offer"></textarea>
+                        <textarea name="candidateGoals" class="form-control" rows="3" placeholder="Describe your goals, contributing and services you can offer"><?=$user->goals?></textarea>
                       <br>
                       <div class="row">
                         <div class="col-xs-12">
@@ -108,6 +110,7 @@
                       </div>
                       </div>
                     </div>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ class Candidates extends CI_Controller
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('ion_auth');
-
+		$this->load->model('candidate_model');
 		// the user must be logged in the view the candidates
 		if (!$this->ion_auth->logged_in())
 		{
@@ -61,5 +61,22 @@ class Candidates extends CI_Controller
 		$data['colleges'] = $colleges;
 
 		$this->load->view('candidate/candidate-view', $data);
+	}
+
+	// Edit - edits the candidate information
+	public function Edit()
+	{
+		// load the form helper and form validation library
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		// get the candidates information
+		$candidate = $this->ion_auth->user()->row();
+
+		// update the users candidate information
+		$this->candidate_model->UpdateCandidate($candidate->id);
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		// redirect the user back to their dashboard
+		redirect('user', 'refresh');
 	}
 }

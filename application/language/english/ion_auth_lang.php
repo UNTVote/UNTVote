@@ -92,3 +92,6 @@ $lang['create_election_successful'] = 'The election has been successfully create
 // Notification and Approvals
 $lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and will receive an email soon';
 $lang['notification_approval_notsent'] = 'We already have your request; You will receive an email soon';
+
+// Candidate profile
+$lang['candidate_profile_updated'] = 'Your candidate information has been updated';
