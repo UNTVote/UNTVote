@@ -22,15 +22,23 @@ class Notification_Model extends CI_Model
 	// GetElectionNotifications - Returns all the notifications for elections
 	public function GetElectionNotifications()
 	{
-		$query = $this->db->query('SELECT admin_notifications.id, first_name, last_name, type, election_name  FROM users, admin_notifications, election WHERE type="Vote" AND users.id=admin_notifications.sender_id 
-									AND admin_notifications.election_id=election.id');
+		$query = $this->db->query('SELECT admin_notifications.id, colleges.description, first_name, last_name, election_name 
+								FROM users, colleges, users_colleges, admin_notifications, election WHERE type="Vote" 
+								AND users.id=admin_notifications.sender_id 
+								AND admin_notifications.election_id=election.id 
+								AND users_colleges.college_id=colleges.id 
+								AND users_colleges.user_id=admin_notifications.sender_id');
 		return $query->result_array();
 	}
 
 	// GetElectionNotifications - Returns all the notifications for elections
 	public function GetCandidateNotifications()
 	{
-		$query = $this->db->query('SELECT admin_notifications.id, first_name, last_name, type FROM users, admin_notifications WHERE type="Candidate" AND users.id=admin_notifications.sender_id');
+		$query = $this->db->query('SELECT admin_notifications.id, colleges.description, first_name, last_name
+								FROM users, colleges, users_colleges, admin_notifications WHERE type="Candidate" 
+								AND users.id=admin_notifications.sender_id 
+								AND users_colleges.college_id=colleges.id 
+								AND users_colleges.user_id=admin_notifications.sender_id');
 		return $query->result_array();
 	}
 

@@ -21,20 +21,30 @@ class Notifications extends CI_Controller
 			// redirect them to the login page
 			redirect('user/', 'refresh');
 		}
+		$user = $this->ion_auth->user()->row();
 		// grab all the notifications for the admin
 		$candidateNotifications = $this->notification_model->GetCandidateNotifications();
 		$electionNotifications = $this->notification_model->GetElectionNotifications();
 		$numberNotifications = count($candidateNotifications) + count($electionNotifications);
+		$numberElectionNotifications = count($electionNotifications);
+		$numberCandidateNotifications = count($candidateNotifications);
 		$title = "Notifications | UNTVote";
 
+		$data['user'] = $user;
 		$data['title'] = $title;
 		$data['candidateNotifications'] = $candidateNotifications;
 		$data['electionNotifications'] = $electionNotifications;
 		$data['numberNotifications'] = $numberNotifications;
+		$data['numberElectionNotifications'] = $numberElectionNotifications;
+		$data['numberCandidateNotifications'] = $numberCandidateNotifications;
 
-		//$this->load->view('templates/header', $data);
-		$this->load->view('notifications/index', $data);
-		//$this->load->view('templates/footer');
+		$this->load->view('templates/header_user', $data);
+		$this->load->view('templates/navigation_admin', $data);
+		$this->load->view('templates/sidebar_admin');
+		$this->load->view('admin/admin-users-approvals', $data);
+		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/scripts_custom');
+		$this->load->view('templates/footer');
 	}
 
 	// SendElectionNotification - sends the notification to the admins, then redirects them back to the elections page
