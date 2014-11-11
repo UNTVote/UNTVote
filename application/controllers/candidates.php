@@ -23,18 +23,20 @@ class Candidates extends CI_Controller
 	public function index()
 	{
 		$user = $this->ion_auth->user()->row();
+		$users = $this->ion_auth->user()->row();
 		$title = "Candidates";
 
 		// All the users that are candidates
 		$candidates = $this->ion_auth->users(3)->result();
 
-		foreach ($candidates as $k => $user)
+		foreach ($candidates as $k => $users)
 		{
             $candidates[$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
 		}
 
 		$data['title'] = $title;
 		$data['user'] = $user;
+		$data['users'] = $users;
 		$data['candidates'] = $candidates;
 
 		$this->load->view('templates/header_user', $data);
