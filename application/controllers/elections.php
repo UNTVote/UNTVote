@@ -44,7 +44,7 @@ class Elections extends CI_Controller
 		// grab the election data for this one election
 		$election = $this->election_model->GetElections($slug);
 		// we don't know what the election is, or it is not an election they can vote on
-		if(empty($election) || ($election['status'] != 'Active'))
+		if(empty($election))
 		{
 			show_404();
 		}
@@ -64,13 +64,17 @@ class Elections extends CI_Controller
 		$data['election'] = $election;
 		$data['title'] = $title;
 		$data['candidates'] = $candidates;
+		$data['user'] = $user;
 
 		// if the form failed to run
 		if($this->form_validation->run() === FALSE)
 		{
-			//$this->load->view('templates/header', $data);
-			$this->load->view('elections/view_election', $data);
-			//$this->load->view('templates/footer');
+			$this->load->view('templates/header_user', $data);
+			$this->load->view('templates/navigation_user', $data);
+			$this->load->view('templates/sidebar_user');
+			$this->load->view('user/user-elections-details', $data);
+			$this->load->view('templates/scripts_main');
+			$this->load->view('templates/footer');
 		}
 		else
 		{

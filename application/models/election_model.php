@@ -62,7 +62,7 @@ class Election_Model extends CI_Model
 	public function GetElectionCandidates($electionID)
 	{
 		// query the database and get all candidates that are in the given election
-		$query = $this->db->query('SELECT election_candidates.candidate_id,first_name,last_name FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
+		$query = $this->db->query('SELECT election_candidates.candidate_id,first_name,last_name,about_me FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
 		return $query->result_array();
 	}
 
