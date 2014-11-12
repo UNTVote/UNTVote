@@ -88,10 +88,24 @@ class Admin extends CI_Controller {
 		if($this->input->is_ajax_request())
 		{
 			// grab all the elections from the database
-			$elections = $this->election_model->GetElections();
+			$elections = $this->election_model->GetElectionsAjax();
+
+			$electionData = array();
+			foreach($elections as $election)
+			{
+				$editURL = site_url('elections/edit/' . $election['id']);
+				$actionButtons = "<a href='$editURL' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='#' class='btn btn-xs btn-danger'>Delete</a>";
+				$electionData[] = array(
+										  'election_name' => $election['election_name'],
+							 			  'college' => $election['description'],
+							  			  'start_date' => date("m-d-Y", strtotime($election['start_time'])),
+							  			  'end_date' => date("m-d-Y", strtotime($election['end_time'])),
+							  			  'actionButtons' => $actionButtons
+										);
+			}
 		
 			//encode it into json format
-			$return = json_encode($elections);
+			$return = json_encode($electionData);
 			echo $return;
 		}
 	}

@@ -27,6 +27,14 @@ class Election_Model extends CI_Model
 		return $query->row_array();
 	}
 
+	// GetElectionsAjax - Gets all the elections
+	// -Used for Ajax
+	public function GetElectionsAjax()
+	{
+		$query = $this->db->query('SELECT *, colleges.description FROM election JOIN colleges ON colleges.id=election.college_id');
+		return $query->result_array();
+	}
+
 	// GetElection - Returns the election we are looking for
 	// electionID - the Elections ID we are looking for
 	public function GetElection($electionID)
@@ -81,7 +89,7 @@ class Election_Model extends CI_Model
 	// $electionID - the election we will get the college for
 	public function GetElectionCollege($electionID)
 	{
-		$query = $this->db->query('SELECT description, colleges.id 
+		$query = $this->db->query('SELECT colleges.description, colleges.id 
 								   FROM election JOIN colleges 
 								   ON colleges.id=election.college_id 
 								   WHERE election.id=' . $electionID);
