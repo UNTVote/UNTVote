@@ -39,6 +39,9 @@ class User extends CI_Controller
             $title = $user->first_name . " | UNTVote";
             $activeElections = $this->election_model->GetElectionsByUser($user->id, 'Active');
             $upcomingElections = $this->election_model->GetElectionsByUser($user->id, 'Upcoming');
+            // number of users in the voters group
+            $numberVoters = $this->election_model->GetTotalVoters();
+            
             $this->data['user'] = $user;
             $this->data['title'] = $title;
             $this->data['activeElections'] = $activeElections;
@@ -46,7 +49,7 @@ class User extends CI_Controller
             $this->data['numberActiveElections'] = count($activeElections);
             $this->data['numberInactiveElections'] = count($upcomingElections);
             // number of users in the group 'voters'
-            $this->data['numberVoters'] = count($this->ion_auth->users(array(4))->result_array());
+            $this->data['numberVoters'] = $numberVoters;
 
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');

@@ -62,6 +62,15 @@ class Election_Model extends CI_Model
 
 		return $result;
 	}
+
+	// GetTotalVoters - returns how many total registered voters we have
+	public function GetTotalVoters()
+	{
+		$query = $this->db->query('SELECT DISTINCT election_id, user_id FROM voters');
+		$result = $query->num_rows();
+
+		return $result;
+	}
 	// GetElectionByStatus - returns all the election of a certain status (active, inactive, closed)
 	// Active - All elections currently running
 	// Inactive - All elections not yet opened

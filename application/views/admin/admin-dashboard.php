@@ -29,6 +29,7 @@
                 </div>
               </div>
 
+              <?php if($numberActiveElections > 0):?>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Active elections</h3>
@@ -52,7 +53,7 @@
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
                               <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" 
-                                style="width: <?=$activeElection['total_votes']?>%;">
+                                style="width: <?=($this->election_model->GetElectionVoters($activeElection['id'])/$activeElection['total_votes'])*100?>%;">
                                 <?=$activeElection['total_votes']?> / <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                             </div>
                           </td>
@@ -63,7 +64,9 @@
                   </div>
                 </div>
               </div>
+            <?php endif?>
               
+              <?php if($numberUpcomingElections > 0):?>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Upcoming elections</h3>
@@ -86,7 +89,7 @@
                           <td><?=$upcomingElection['election_name'] ?></td>
                           <td><?=date("m-d-Y", strtotime($upcomingElection['start_time'])); ?></td>
                           <td><?=count($this->election_model->GetElectionCandidates($upcomingElection['id'])); ?></td>
-                          <td><?=$numberVoters ?></td>
+                          <td><?=$this->election_model->GetElectionVoters($upcomingElection['id']) ?></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>
@@ -94,6 +97,7 @@
                   </div>
                 </div>
               </div>
+            <?php endif?>
               
             </div>
           </div>

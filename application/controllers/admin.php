@@ -54,8 +54,6 @@ class Admin extends CI_Controller {
         	// grab how many users we have
         	$users = $this->ion_auth->users()->result_array();
         	$numberUsers = count($users);
-        	// number of users in the voters group
-            $numberVoters = count($this->ion_auth->users(array(4))->result_array());
 
         	// send everything to the data array
         	$this->data['user'] = $this->ion_auth->user()->row();
@@ -65,7 +63,6 @@ class Admin extends CI_Controller {
         	$this->data['numberActiveElections'] = $numberActiveElections;
         	$this->data['numberUpcomingElections'] = $numberUpcomingElections;
         	$this->data['numberUsers'] = $numberUsers;
-        	$this->data['numberVoters'] = $numberVoters;
         	$this->data['numberNotifications'] = $numberNotifications;
 			// set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');

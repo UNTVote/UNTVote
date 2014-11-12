@@ -70,6 +70,7 @@ class Notification_Model extends CI_Model
 					  'type' => 'Vote',
 					  'election_id' => $electionID);
 		$this->db->insert('admin_notifications', $data);
+
 		$this->ion_auth_model->set_message('notification_approval_sent');
 	}
 
@@ -100,6 +101,8 @@ class Notification_Model extends CI_Model
 	// notificationID - the notification that we are accepting and deleting from the table.
 	public function AcceptElectionRequest($notificationID)
 	{
+		$this->load->library('email');
+
 		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));
 		$result = $query->row_array();
 
@@ -111,6 +114,15 @@ class Notification_Model extends CI_Model
 		$data = array('user_id' => $sender,
 					  'election_id' => $election);
 		$this->db->insert('voters', $data);
+
+		$userEmail = $this->ion_auth->user($sender)->row()->email;
+
+		$this->email->from('UNTVote@gmail.com', 'UNTVote');
+		$this->email->to($userEmail);
+		$this->email->subject('UNTVote: Election Approval Request');
+		$this->email->message('We are sending you this email to let you know that you have been 
+								approved to vote in an election you requested.');
+		$this->email->send();
 
 		// deletes the notification from the table
 		$this->db->delete('admin_notifications', array('id' => $notificationID));
