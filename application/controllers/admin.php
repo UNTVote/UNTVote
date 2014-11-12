@@ -100,6 +100,7 @@ class Admin extends CI_Controller {
 							 			  'college' => $election['description'],
 							  			  'start_date' => date("m-d-Y", strtotime($election['start_time'])),
 							  			  'end_date' => date("m-d-Y", strtotime($election['end_time'])),
+							  			  'status' => $election['status'],
 							  			  'actionButtons' => $actionButtons
 										);
 			}
