@@ -57,12 +57,19 @@ class Candidates extends CI_Controller
 		$candidate = $this->ion_auth->user($candidateID)->row();
 		$title = $candidate->first_name . "'s Candidate Profile | UNTVote";
 		$colleges = $this->ion_auth->get_users_colleges($candidateID)->result();
+		$user = $this->ion_auth->user()->row();
 
 		$data['title'] = $title;
 		$data['candidate'] = $candidate;
 		$data['colleges'] = $colleges;
+		$data['user'] = $user;
 
-		$this->load->view('candidate/candidate-view', $data);
+		$this->load->view('templates/header_user', $data);
+		$this->load->view('templates/navigation_user', $data);
+		$this->load->view('templates/sidebar_user');
+		$this->load->view('candidate/user-candidate-info', $data);
+		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/footer');
 	}
 
 	// Edit - edits the candidate information

@@ -86,8 +86,9 @@ $lang['vote_successful'] = 'Thank you, your vote has been successfully submitted
 $lang['vote_already_voted'] = 'Your vote was not submitted, as you have already voted for this candidate';
 $lang['vote_changed'] = 'Your vote has been successfully changed';
 
-// Creating Election
+// Elections
 $lang['create_election_successful'] = 'The election has been successfully created';
+$lang['edit_election_successful'] = 'The election has been successfully updated';
 
 // Notification and Approvals
 $lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and will receive an email soon';

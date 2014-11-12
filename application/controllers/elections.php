@@ -11,6 +11,7 @@ class Elections extends CI_Controller
 		$this->load->helper('url');
 		$this->load->model('election_model');
 		$this->load->model('notification_model');
+		$this->load->model('college_model');
 
 		// the user must be logged in the view the elections
 		if (!$this->ion_auth->logged_in())
@@ -38,6 +39,63 @@ class Elections extends CI_Controller
 		//$this->load->view('templates/footer');
 	}
 
+	// Edit - Edits/updates a certain election
+	// electionID - the Election we are editing/updating
+	public function edit($electionID)
+	{
+		// must be an admin to update an election
+		if(!$this->ion_auth->is_admin())
+		{
+			// redirect them to their dashboard
+			redirect('/', 'refresh');
+		}
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$user = $this->ion_auth->user()->row();
+		$title = 'Edit Election | UNTVote';
+		// the election data
+		$election = $this->election_model->GetElection($electionID);
+		$colleges = $this->college_model->GetColleges();
+		$selectedCollege = $this->election_model->GetElectionCollege($electionID);
+		// get the users that can be candidates
+		$candidates = $this->ion_auth->users(3)->result_array();
+		$selectedCandidates = $this->election_model->GetElectionCandidates($electionID);
+
+		// convert the MySQL date to a date better for the user
+		$startDate = date("m-d-Y", strtotime($election['start_time']));
+		$endDate = date("m-d-Y", strtotime($election['end_time']));
+
+		$data['user'] = $user;
+		$data['title'] = $title;
+		$data['election'] = $election;
+		$data['colleges'] = $colleges;
+		$data['selectedCollege'] = $selectedCollege;
+		$data['candidates'] = $candidates;
+		$data['selectedCandidates'] = $selectedCandidates;
+		$data['startDate'] = $startDate;
+		$data['endDate'] = $endDate;
+
+		$this->load->view('templates/header_create_election', $data);
+		$this->load->view('templates/navigation_admin', $data);
+		$this->load->view('templates/sidebar_admin');
+		$this->load->view('admin/admin-edit-election', $data);
+		$this->load->view('templates/scripts_main');
+        $this->load->view('templates/scripts_custom');
+		$this->load->view('templates/footer');	
+	}
+
+	// the script that runs when an election gets edited
+	public function ElectionEdit()
+	{
+		// the election we are going to edid
+		$electionID = $this->input->post('electionID');
+
+		$this->election_model->UpdateElection($electionID);
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect('admin/', 'refresh');
+	}
+
 	// view - takes in a slug which is the elections we need to view
 	public function view($slug)
 	{
@@ -60,7 +118,7 @@ class Elections extends CI_Controller
 		// the current user
 		$user = $this->ion_auth->user()->row();
 
-		$title = $election['election_name'];
+		$title = $election['election_name'] . ' | UNTVote';
 
 		$viewElection = '';
 		$requestSent = '';

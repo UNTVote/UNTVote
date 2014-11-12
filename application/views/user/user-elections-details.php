@@ -28,7 +28,8 @@
                     <div class="col-xs-12">
                       <h4>Candidates:</h4>
                       <?php foreach($candidates as $candidate): ?>
-                        <img src="<?=asset_url()?>img/user-default.png" class="img-circle img-thumbnail" width="70" data-toggle="popover" data-trigger="hover" data-placement="top" title="<?=$candidate['first_name']?> <?=$candidate['last_name']?>" data-content="<?=$candidate['about_me']?>">
+                        <img src="<?=asset_url()?>img/user-default.png" class="img-circle img-thumbnail" width="70" data-toggle="popover" data-trigger="hover"
+                         data-placement="top" title="<?=$candidate['first_name']?> <?=$candidate['last_name']?>" data-content="<?=$candidate['about_me']?>">
                       <?php endforeach?>
                     </div>
                   </div>
@@ -39,7 +40,7 @@
                       <a href="<?=site_url('notifications/SendElectionNotification/' . $election['id'])?>" class="btn btn-primary btn-block">Request to vote</a>
                     </div>
                     <div class="col-xs-12" <?=$requestSent?>>
-                      <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote..</a>
+                      <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote...</a>
                     </div>
                     <div class="col-xs-12" <?=$viewElection?>>
                       <h4>Cast your vote:</h4>

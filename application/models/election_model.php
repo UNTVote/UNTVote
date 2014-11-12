@@ -27,6 +27,14 @@ class Election_Model extends CI_Model
 		return $query->row_array();
 	}
 
+	// GetElection - Returns the election we are looking for
+	// electionID - the Elections ID we are looking for
+	public function GetElection($electionID)
+	{
+		$query = $this->db->get_where('election', array('id' => $electionID));
+		return $query->row_array();
+	}
+
 	// GetElectionsUpdate - returns all the elections, but only the fields we need for a little faster query
 	public function GetElectionsUpdate()
 	{
@@ -62,8 +70,22 @@ class Election_Model extends CI_Model
 	public function GetElectionCandidates($electionID)
 	{
 		// query the database and get all candidates that are in the given election
-		$query = $this->db->query('SELECT election_candidates.candidate_id,first_name,last_name,about_me FROM users,election_candidates WHERE election_id='. $electionID . ' AND users.id=election_candidates.candidate_id');
+		$query = $this->db->query('SELECT election_candidates.candidate_id,first_name,last_name,about_me 
+								   FROM users,election_candidates 
+								   WHERE election_id='. $electionID . ' 
+								   AND users.id=election_candidates.candidate_id');
 		return $query->result_array();
+	}
+
+	// GetElectionCollege - returns the college a particular election is apart of
+	// $electionID - the election we will get the college for
+	public function GetElectionCollege($electionID)
+	{
+		$query = $this->db->query('SELECT description, colleges.id 
+								   FROM election JOIN colleges 
+								   ON colleges.id=election.college_id 
+								   WHERE election.id=' . $electionID);
+		return $query->row_array();
 	}
 
 	// GetElectionIDBySlug - returns the elections id when all you have is its slug
@@ -147,6 +169,63 @@ class Election_Model extends CI_Model
 		}
 		
 		$this->ion_auth_model->set_message('create_election_successful');
+	}
+
+	// UpdateElection - Updates the given election
+	// electionID - The election to update
+	public function UpdateElection($electionID)
+	{
+		$this->load->helper('url');
+
+		// get the input from the form
+		// create the slug based on the name of the election
+		$slug = url_title($this->input->post('electionName'), 'dash', TRUE);
+		$electionName = $this->input->post('electionName');
+		$electionDescription = $this->input->post('electionDescription');
+		$startDate = $this->input->post('electionStart');
+		$endDate = $this->input->post('electionEnd');
+		$college = $this->input->post('electionCollege');
+		$candidates = $this->input->post('electionCandidates');
+
+		// format the dates to SQL date format
+		$newStartDate = date('Y-m-d', strtotime($startDate));
+		$newEndDate = date('Y-m-d', strtotime($endDate));
+		
+		if($this->IsActive($startDate))
+		{
+			$status = "Active";
+		}
+		else
+		{
+			$status = "Upcoming";
+		}
+
+		// data array to update the election table
+		$data = array('election_name' => $electionName,
+					  'election_description' => $electionDescription,
+					  'slug' => $slug,
+					  'start_time' => $newStartDate,
+					  'end_time' => $newEndDate,
+					  'college_id' => $college,
+					  'status' => $status);
+		$this->db->where('id', $electionID);
+		$this->db->update('election', $data);
+
+		// for every candidate selected, add them to the election
+		foreach($candidates as $candidate)
+		{
+			$this->AddCandidateToElection($candidate, $electionID);
+		}
+		$this->ion_auth_model->set_message('edit_election_successful');
+	}
+
+	// RemoveCandidate - Removes the given candidate from the given election
+	// candidateID - the candidate to remove from the election
+	// electionID - the election to remove the candidate from
+	public function RemoveCandidate($candidateID, $electionID)
+	{
+		$this->db->delete('election_candidates', array('candidate_id' => $candidateID,
+													   'election_ID' => $electionID));
 	}
 
 	// Vote - Takes in who the user voted for and deals with the total votes
@@ -312,16 +391,24 @@ class Election_Model extends CI_Model
 	}
 
 	// AddCandidateToElection - Adds a candidate to a given election
-	// takes in a candidates ID and a election ID.
+	// takes in a candidates ID and a election ID
 	private function AddCandidateToElection($candidateID, $electionID)
 	{
-		// set the data array to insert into the table
-		$data = array('candidate_id' => $candidateID,
-					  'election_id' => $electionID,
-					  'votes' => 0);
+		$this->db->where('candidate_id', $candidateID);
+		$this->db->where('election_id', $electionID);
+		$query = $this->db->get('election_candidates');
 
-		// insert the candidate into the election_candidates table
-		$this->db->insert('election_candidates', $data);		
+		// only insert the candidate if we don't have the record
+		if($query->num_rows() <= 0)
+		{
+			// set the data array to insert into the table
+			$data = array('candidate_id' => $candidateID,
+					  	  'election_id' => $electionID,
+					      'votes' => 0);
+
+			// insert the candidate into the election_candidates table
+			$this->db->insert('election_candidates', $data);	
+		}	
 	}
 
 	// IsActive - IsActive is a helper function that determines whether an election should be active
