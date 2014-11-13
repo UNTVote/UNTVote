@@ -25,6 +25,38 @@ class User extends CI_Controller
 
         $this->election_model->UpdateElections();
     }
+
+    // UserElectionData - used for ajax to return the users election data in JSON format
+    public function UserElectionData()
+    {
+        header('Content-Type: application/json');
+        // do we have an ajax request
+        if($this->input->is_ajax_request())
+        {
+            // grab all the elections from the database
+            $elections = $this->election_model->GetElectionUsersAjax();
+            $viewURL = null;
+
+            $electionData = array();
+            foreach($elections as $election)
+            {
+                $viewURL = site_url('elections/' . $election['slug']);
+                $actionButtons = "<a href='" . $viewURL . "' class='btn btn-xs btn-primary'>View Election</a>";
+                $electionData[] = array(
+                                          'election_name' => $election['election_name'],
+                                          'college' => $election['description'],
+                                          'start_date' => date("m-d-Y", strtotime($election['start_time'])),
+                                          'end_date' => date("m-d-Y", strtotime($election['end_time'])),
+                                          'status' => $election['status'],
+                                          'actionButtons' => $actionButtons
+                                        );
+            }
+        
+            //encode it into json format
+            $return = json_encode($electionData);
+            echo $return;
+        }
+    }
     
     public function index()
     {
@@ -223,6 +255,7 @@ class User extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('firstName', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
         $this->form_validation->set_rules('lastName', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'required|xss_clean');
         $this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'), 'xss_clean');
 
         if (isset($_POST) && !empty($_POST))
@@ -233,9 +266,14 @@ class User extends CI_Controller
                // show_error($this->lang->line('error_csrf'));
             //}
 
+            $email    = strtolower($this->input->post('email'));
+            // append @my.unt.edu to the email
+            $email   .= '@my.unt.edu'; 
+
             $data = array(
                 'first_name' => $this->input->post('firstName'),
                 'last_name'  => $this->input->post('lastName'),
+                'email'      => $email
             );
 
             $collegeData = $this->input->post('colleges');
@@ -277,7 +315,7 @@ class User extends CI_Controller
         }
 
         //display the edit user form
-        $this->data['csrf'] = $this->_get_csrf_nonce();
+        //$this->data['csrf'] = $this->_get_csrf_nonce();
 
         //set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

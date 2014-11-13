@@ -137,6 +137,29 @@ class Election_Model extends CI_Model
 		return $query->result_array();
 	}
 
+	// GetElectionUsersAjax - the AJAX method of getting the users colleges
+	public function GetElectionUsersAjax()
+	{
+		$user = $this->ion_auth->user()->row();
+		// get all the colleges that the user currently passed in is apart of
+		$colleges = $this->ion_auth->get_users_colleges($user->id)->result_array();
+		
+		$userColleges = array();
+		// build an array with all the college id's
+		foreach($colleges as $college)
+		{
+			$userColleges[] = $college['id'];
+		}
+
+		$this->db->select('election.slug,election.election_name,election.start_time,election.end_time,election.status,colleges.description', FALSE);
+		$this->db->from('election');
+		$this->db->join('colleges', 'colleges.id=election.college_id');
+		$this->db->where_in('college_id', $userColleges);
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	// CreateElection - Gets the input from the form and setup a new election in the database
 	public function CreateElection()
 	{

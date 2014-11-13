@@ -132,12 +132,26 @@ class Notification_Model extends CI_Model
 
 	public function AcceptCandidateRequest($notificationID)
 	{
+		$this->load->helper('url');
+
 		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));
 		$result = $query->row_array();
 
 		// store the sender and add the user to the candidates group
 		$sender = $result['sender_id'];
 		$this->ion_auth->add_to_group('3', $sender);
+
+		$userName = $this->ion_auth->user($sender)->row()->first_name;
+		$userEmail = $this->ion_auth->user($sender)->row()->email;
+		$profileURL = anchor('user/edit_user/' . $sender . '#candidate', "HERE");
+		$emailMessage = 'Congratulations <strong>' . $userName . '</strong>, you have been approved to be a candidate!<br>
+						You may click '. $profileURL . ' to edit your profile.  You can click the Candidate Tab to edit your candidate information!';
+
+		$this->email->from('UNTVote@gmail.com', 'UNTVote');
+		$this->email->to($userEmail);
+		$this->email->subject('UNTVote: Candidate Approval Request');
+		$this->email->message($emailMessage);
+		$this->email->send();
 
 		// deletes the notification from the table
 		$this->db->delete('admin_notifications', array('id' => $notificationID));
