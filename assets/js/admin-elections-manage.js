@@ -1,95 +1,45 @@
-// Dependencies: Fuelux, underscore
+// Dependencies: Fuelux, underscore.js
 
-function electionData() {
-  
-  //These are the buttons that go inside each row
-  var actionButtons = "<button class='btn btn-xs btn-primary'>Edit</button>&nbsp;<button class='btn btn-xs btn-danger'>Delete</button>";
-  
-  // All data from the database goes here
-  return [
-        {
-			"name": "Election XYZ",
-			"category": "Engineering",
-            "start": "09-11-2014",
-            "end": "11-12-2014",
-			"actions": actionButtons,
-            "status": "Active"
-		},
-		{
-			"name": "Election DFK",
-			"category": "Journalism",
-            "start": "08-23-2014",
-            "end": "09-15-2014",
-			"actions": actionButtons,
-            "status": "Active"
-		},
-		{
-			"name": "Election EIR",
-			"category": "Arts & Science",
-            "start": "10-21-2014",
-            "end": "12-12-2014",
-			"actions": actionButtons,
-            "status": "Active"
-		},
-        {
-			"name": "Election SPD",
-			"category": "TV & Radio",
-            "start": "12-01-2014",
-            "end": "12-31-2014",
-			"actions": actionButtons,
-            "status": "Upcoming"
-		},
-        {
-			"name": "Election SPD",
-			"category": "Business",
-            "start": "09-14-2014",
-            "end": "11-04-2014",
-			"actions": actionButtons,
-            "status": "Upcoming"
-		},
-		{
-			"name": "Election WEY",
-			"category": "Engineering",
-            "start": "08-25-2014",
-            "end": "09-08-2014",
-			"actions": actionButtons,
-            "status": "Active"
-		}
-  ];
-}
+// This variable holds JSON data retrieved from AJAX call
+var electionData;
 
 function populateElectionTable() {
-  
+
   var columns = [
 		{
 			label: 'Election Name',
-			property: 'name',
+			property: 'election_name',
 			sortable: true
 		},
 		{
 			label: 'Category',
-			property: 'category',
+			property: 'college',
 			sortable: true
 		},
         {
 			label: 'Start Date',
-			property: 'start',
+			property: 'start_date',
 			sortable: true
 		},
         {
 			label: 'End Date',
-			property: 'end',
+			property: 'end_date',
+			sortable: true
+		},
+        {
+			label: 'Status',
+			property: 'status',
 			sortable: true
 		},
 		{
 			label: 'Actions',
-			property: 'actions',
+			property: 'actionButtons',
 			sortable: false
 		}
 	];
-    
-    var elections = electionData();
-	
+
+    var elections = electionData;
+
     var delays = ['50', '100', '200', '500', '800'];
 
 	var dataSource, filtering;
@@ -134,9 +84,9 @@ function populateElectionTable() {
 			search = options.search.toLowerCase();
 			items = _.filter(items, function(item){
 				return (
-					(item.name.toLowerCase().search(options.search)>=0) ||
-                    (item.category.toLowerCase().search(options.search)>=0) ||
-                    (item.status.toLowerCase().search(options.search)>=0) 
+					(item.election_name.toLowerCase().search(options.search)>=0) ||
+                    (item.college.toLowerCase().search(options.search)>=0) ||
+                    (item.status.toLowerCase().search(options.search)>=0)
 				);
 			});
 		}
@@ -156,9 +106,23 @@ function populateElectionTable() {
 	$('#electionTable').repeater({
 		dataSource: dataSource
 	});
-   
 }
 
 $(document).ready(function() {
+  $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "ElectionData",
+      success: function(data) {
+        electionData = data;
+      },
+      error: function() {
+       console.log("Error getting JSON data from 'ElectionData' page");
+      }
+  });
+});
+
+// Runs after the all ajax calls are done
+$(document).ajaxStop(function() {
   populateElectionTable();
 });

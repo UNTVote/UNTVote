@@ -2,15 +2,15 @@
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Manage elections</h1>
-          
+
           <div class="row">
             <div class="col-xs-12 text-right">
               <a href="<?=site_url('elections/create')?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create New</a>
             </div>
           </div>
-          
+
           <br>
-          
+
           <div class="row">
             <div class="col-xs-12 fuelux">
               <div class="repeater" id="electionTable">
@@ -37,6 +37,7 @@
                         <li data-value="All" data-selected="true"><a href="#">All</a></li>
                         <li data-value="Active"><a href="#">Active</a></li>
                         <li data-value="Upcoming"><a href="#">Upcoming</a></li>
+                        <li data-value="Closed"><a href="#">Closed</a></li>
                       </ul>
                       <input class="hidden hidden-field" name="filterSelection" readonly aria-hidden="true" type="text"/>
                     </div>
@@ -97,10 +98,10 @@
                   </div>
                 </div>
               </div>
+              <br>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
-    
