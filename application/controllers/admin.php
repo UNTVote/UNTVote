@@ -86,12 +86,13 @@ class Admin extends CI_Controller {
 		{
 			// grab all the elections from the database
 			$elections = $this->election_model->GetElectionsAjax();
+			$editURL = null;
 
 			$electionData = array();
 			foreach($elections as $election)
 			{
 				$editURL = site_url('elections/edit/' . $election['id']);
-				$actionButtons = "<a href='$editURL' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='#' class='btn btn-xs btn-danger'>Delete</a>";
+				$actionButtons = "<a href='" . $editURL . "' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='#' class='btn btn-xs btn-danger'>Delete</a>";
 				$electionData[] = array(
 										  'election_name' => $election['election_name'],
 							 			  'college' => $election['description'],

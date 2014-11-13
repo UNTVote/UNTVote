@@ -1,4 +1,4 @@
-        <!-- Main body content -->
+32        <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Edit profile</h1>
           <br>
@@ -85,7 +85,6 @@
                           <div class="row">
                             <div class="col-xs-12">
                               <?php echo form_hidden('id', $user->id);?>
-                              <?php echo form_hidden($csrf); ?>
                               <button name="submit" id="submit" type="submit" class="btn btn-primary btn-block">Save changes</button>
                             </div>
                           </div>
