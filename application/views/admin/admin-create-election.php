@@ -3,7 +3,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Create election</h1>
             <br>
-          
+
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="panel-body">
                   <!-- Form begins -->
-                  <form method="post" accept-charset="utf-8" action="<?=site_url('elections/create')?>" role="form" data-parsley-validate>
+                  <form method="post" accept-charset="utf-8" action="<?=site_url('elections/create')?>" role="form" id="formCreateElection" data-parsley-validate>
                   <?php echo $message;?>
                     <div class="row">
                       <div class="col-xs-12">
@@ -20,7 +20,7 @@
                       </div>
                     </div>
                     <br>
-                    
+
                     <div class="row">
                       <div class="col-xs-12">
                         <label>Description</label>
@@ -56,7 +56,7 @@
                       </div>
                     </div>
                     <br>
-                    
+
                     <!-- Datepickers -->
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 fuelux">
@@ -144,7 +144,7 @@
                       </div>
                       <div class="col-xs-12 col-sm-6 fuelux">
                         <label>End date</label>
-                        
+
                         <div class="datepicker dropup" id="endDate">
                           <div class="input-group">
                             <input name="electionEnd" class="form-control" id="endDateInput" type="text" data-parsley-trigger="change" data-parsley-errors-container="#error-container-end-date" required/>
@@ -225,7 +225,7 @@
                           </div>
                           <div id="error-container-end-date"></div>
                         </div>
-                        
+
                       </div>
                     </div>
                     <br>
@@ -237,7 +237,7 @@
                 </div>
               </div>
             </div>
-          
+
         </div>
       </div>
     </div>
