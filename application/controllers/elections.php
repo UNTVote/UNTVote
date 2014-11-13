@@ -24,19 +24,17 @@ class Elections extends CI_Controller
 	// index - default election page, shows all the elections
 	public function index()
 	{
-		$user = $this->ion_auth->user()->row_array();
-		$userID = $user['id'];
-		// grab all elections the user can vote on
-		$activeElections = $this->election_model->GetElectionsByUser($user['id'], 'Active');
-		$title = "Elections Archive";
-
-		$data['title'] = $title;
-		$data['user'] = $userID;
-		$data['activeElections'] = $activeElections;
-
-		//$this->load->view('templates/header', $data);
-		$this->load->view('elections/index', $data);
-		//$this->load->view('templates/footer');
+		$firstName = $this->ion_auth->user()->row()->first_name;
+        $this->data['user'] = $this->ion_auth->user()->row();
+        $this->data['title'] = $firstName . " | UNTVote";
+		
+		$this->load->view('templates/header_manage_elections', $this->data);
+		$this->load->view('templates/navigation_user', $this->data);
+		$this->load->view('templates/sidebar_user', $this->data);
+		$this->load->view('user/user-elections-browse', $this->data);
+		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/scripts_custom');
+		$this->load->view('templates/footer', $this->data);
 	}
 
 	// Edit - Edits/updates a certain election
