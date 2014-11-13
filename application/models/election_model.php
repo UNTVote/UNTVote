@@ -31,7 +31,8 @@ class Election_Model extends CI_Model
 	// -Used for Ajax
 	public function GetElectionsAjax()
 	{
-		$query = $this->db->query('SELECT *, colleges.description FROM election JOIN colleges ON colleges.id=election.college_id');
+		$query = $this->db->query('SELECT election.id,election.election_name,election.start_time,election.end_time,election.status,colleges.description 
+								  FROM election JOIN colleges ON colleges.id=election.college_id');
 		return $query->result_array();
 	}
 
