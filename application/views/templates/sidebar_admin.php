@@ -16,11 +16,10 @@
               <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseUsers"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Users</a>
               <div id="collapseUsers" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
-                  <li><?=anchor('admin/manage_users', 'Manage Users')?></li>
+                  <li><?=anchor('admin/manage_users', 'Manage')?></li>
                   <li><?=anchor('notifications/', 'Approvals')?></li>
                 </ul>
               </div>
             </li>
           </ul>
         </div>
-        

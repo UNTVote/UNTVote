@@ -51,7 +51,7 @@
                   <div class="repeater-footer-left">
                     <div class="repeater-itemization">
                       <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> elections. </span>
-                      <div class="btn-group selectlist" data-resize="auto">
+                      <div class="btn-group selectlist dropup" data-resize="auto">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                           <span class="selected-label">&nbsp;</span>
                           <span class="caret"></span>
@@ -77,7 +77,7 @@
                       </button>
                       <label class="page-label" id="myPageLabel">Page</label>
                       <div class="repeater-primaryPaging active">
-                        <div class="input-group input-append dropdown combobox">
+                        <div class="input-group input-append dropdown dropup combobox">
                           <input type="text" class="form-control" aria-labelledby="myPageLabel">
                           <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -98,7 +98,7 @@
                   </div>
                 </div>
               </div>
-              <br>
+              <br><br>
             </div>
           </div>
 
