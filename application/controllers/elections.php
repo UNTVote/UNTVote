@@ -137,6 +137,10 @@ class Elections extends CI_Controller
 			$viewElection = 'hidden';
 			$requestSent = 'hidden';
 		}
+		if($election['status'] == 'Upcoming' || $election['status'] == 'Closed')
+		{
+			$viewElection = 'hidden';
+		}
 
 		$data['election'] = $election;
 		$data['title'] = $title;
