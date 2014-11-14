@@ -17,6 +17,7 @@ class Admin extends CI_Controller {
 		// model loads
 		$this->load->model('election_model');
 		$this->load->model('notification_model');
+		$this->load->model('user_model');
 
 		$this->load->database();
 
@@ -73,6 +74,24 @@ class Admin extends CI_Controller {
 			$this->_render_page('admin/admin-dashboard', $this->data);
 			$this->_render_page('templates/scripts_main');
 			$this->_render_page('templates/footer');
+		}
+	}
+
+	// UserData
+	// used for ajax to return all the users in a json formatted string
+	function UserData()
+	{
+		header('Content-Type: application/json');
+
+		// do we have an ajax request
+		if($this->input->is_ajax_request())
+		{
+			// grab all the users
+			$users = $this->user_model->GetsUsersAjax();
+
+			// encode this array into json
+			$return = json_encode($users);
+			echo $return;
 		}
 	}
 
