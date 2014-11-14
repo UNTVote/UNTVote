@@ -12,7 +12,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-12 fuelux">
+            <div class="col-xs-12 fuelux fade-on-load" hidden>
               <div class="repeater" id="electionTable">
                 <div class="repeater-header">
                   <div class="repeater-header-left">
