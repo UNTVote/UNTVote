@@ -47,13 +47,25 @@
                       </thead>
                       <tbody>
                         <?php foreach ($activeElections as $activeElection) : ?>
+                          <?php 
+                            $totalVotes = $activeElection['total_votes'];
+                            $percentage = 0;
+                            if($totalVotes == 0)
+                            {
+                              $percentage = 0;
+                            }
+                            else
+                            {
+                              $percentage = ($this->election_model->GetElectionVoters($activeElection['id'])/$totalVotes) * 100;
+                            }
+                          ?>
                           <tr>
                           <td><?=$activeElection['election_name'] ?></td>
                           <td><?=date("m-d-Y", strtotime($activeElection['end_time'])) ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
                               <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" 
-                                style="width: <?=($this->election_model->GetElectionVoters($activeElection['id'])/$activeElection['total_votes'])*100?>%;">
+                                style="width:<?=$percentage?>%;">
                                 <?=$activeElection['total_votes']?> / <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                             </div>
                           </td>
