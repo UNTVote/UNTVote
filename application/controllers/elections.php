@@ -113,6 +113,7 @@ class Elections extends CI_Controller
 		// grab the candidates from the election
 		$electionID = $election['id'];
 		$candidates = $this->election_model->GetElectionCandidates($electionID);
+		$college = $this->election_model->GetElectionCollege($electionID);
 		// the current user
 		$user = $this->ion_auth->user()->row();
 
@@ -121,6 +122,7 @@ class Elections extends CI_Controller
 		$viewElection = '';
 		$requestSent = '';
 		$requestVote = '';
+		$electionClosed = 'hidden';
 
 		if($this->election_model->IsUserRegistered($electionID))
 		{
@@ -140,6 +142,7 @@ class Elections extends CI_Controller
 		if($election['status'] == 'Upcoming' || $election['status'] == 'Closed')
 		{
 			$viewElection = 'hidden';
+			$electionClosed = '';
 		}
 
 		$data['election'] = $election;
@@ -149,6 +152,8 @@ class Elections extends CI_Controller
 		$data['requestSent'] = $requestSent;
 		$data['requestVote'] = $requestVote;
 		$data['viewElection'] = $viewElection;
+		$data['electionClosed'] = $electionClosed;
+		$data['college'] = $college;
 
 		// if the form failed to run
 		if($this->form_validation->run() === FALSE)

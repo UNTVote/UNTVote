@@ -19,7 +19,7 @@
                   <div class="row">
                     <div class="col-xs-12">
                       <span class="label label-success"><?=date("m-d-Y", strtotime($election['start_time'])) ?> - <?=date("m-d-Y", strtotime($election['end_time'])) ?></span>
-                      <span class="label label-primary">College of engineering</span>
+                      <span class="label label-primary"><?=$college['description']?></span>
                     </div>
                   </div>
                   <br>
@@ -41,6 +41,9 @@
                     </div>
                     <div class="col-xs-12" <?=$requestSent?>>
                       <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote...</a>
+                    </div>
+                    <div class="col-xs-12" <?=$electionClosed?>>
+                      <h5 class='text-muted text-center'>Please come back on <?=date("m-d-Y", strtotime($election['start_time'])) ?> to cast your vote</h5>
                     </div>
                     <div class="col-xs-12" <?=$viewElection?>>
                       <h4>Cast your vote:</h4>
