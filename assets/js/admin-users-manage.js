@@ -1,44 +1,44 @@
 // Dependencies: Fuelux, underscore.js
 
 // This variable holds JSON data retrieved from AJAX call
-var electionData;
+var userData;
 
-function populateElectionTable() {
+function populateUserTable() {
 
   var columns = [
 		{
-			label: 'Election Name',
-			property: 'election_name',
+			label: 'First name',
+			property: 'first_name',
 			sortable: true
 		},
 		{
+			label: 'Last name',
+			property: 'last_name',
+			sortable: true
+		},
+        {
 			label: 'College',
 			property: 'college',
 			sortable: true
 		},
         {
-			label: 'Start Date',
-			property: 'start_date',
+			label: 'Role',
+			property: 'role',
 			sortable: true
 		},
-        {
-			label: 'End Date',
-			property: 'end_date',
-			sortable: true
-		},
-        {
-			label: 'Status',
-			property: 'status',
-			sortable: true
-		},
-		{
-			label: 'Actions',
-			property: 'actionButtons',
-			sortable: false
-		}
+//        {
+//			label: 'Status',
+//			property: 'status',
+//			sortable: true
+//		},
+//		{
+//			label: 'Actions',
+//			property: 'actionButtons',
+//			sortable: false
+//		}
 	];
 
-    var elections = electionData;
+    var users = userData;
 
     var delays = ['50', '100', '200', '500', '800'];
 
@@ -72,21 +72,22 @@ function populateElectionTable() {
 	};
 
 	filtering = function(options){
-		var items = $.extend([], elections);
+		var items = $.extend([], users);
 		var search;
 
 		if(options.filter.value!=='All'){
 			items = _.filter(items, function(item){
-				return (item.status.search(options.filter.value)>=0);
+				return (item.role.search(options.filter.value)>=0);
 			});
 		}
 		if(options.search){
 			search = options.search.toLowerCase();
 			items = _.filter(items, function(item){
 				return (
-					(item.election_name.toLowerCase().search(options.search)>=0) ||
+					(item.first_name.toLowerCase().search(options.search)>=0) ||
+                    (item.last_name.toLowerCase().search(options.search)>=0) ||
                     (item.college.toLowerCase().search(options.search)>=0) ||
-                    (item.status.toLowerCase().search(options.search)>=0)
+                    (item.role.toLowerCase().search(options.search)>=0)
 				);
 			});
 		}
@@ -103,7 +104,7 @@ function populateElectionTable() {
 	};
 
 	// Repeater initialize
-	$('#electionTable').repeater({
+	$('#userTable').repeater({
 		dataSource: dataSource
 	});
 }
@@ -112,17 +113,17 @@ $(document).ready(function() {
   $.ajax({
       type: "GET",
       dataType: "json",
-      url: "ElectionData",
+      url: "UserData",
       success: function(data) {
-        electionData = data;
+        userData = data;
       },
       error: function() {
-       console.log("Error getting JSON data from 'ElectionData' page");
+       console.log("Error getting JSON data from 'UserData' page");
       }
   });
 });
 
 // Runs after the all ajax calls are done
 $(document).ajaxStop(function() {
-  populateElectionTable();
+  populateUserTable();
 });

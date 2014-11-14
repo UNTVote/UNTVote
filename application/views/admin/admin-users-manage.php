@@ -2,10 +2,10 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Manage users</h1>
           <br>
-          
+
           <div class="row">
             <div class="col-xs-12 fuelux fade-on-load" hidden>
-              <div class="repeater" id="usersTable">
+              <div class="repeater" id="userTable">
                 <div class="repeater-header">
                   <div class="repeater-header-left">
                     <div class="repeater-search">
@@ -27,9 +27,9 @@
                       </button>
                       <ul class="dropdown-menu dropdown-menu-open-left" role="menu">
                         <li data-value="All" data-selected="true"><a href="#">All</a></li>
-                        <li data-value="Member"><a href="#">Member</a></li>
-                        <li data-value="Candidate"><a href="#">Candidate</a></li>
-                        <li data-value="Admin"><a href="#">Admin</a></li>
+                        <li data-value="member"><a href="#">Member</a></li>
+                        <li data-value="candidate"><a href="#">Candidate</a></li>
+                        <li data-value="admin"><a href="#">Admin</a></li>
                       </ul>
                       <input class="hidden hidden-field" name="filterSelection" readonly aria-hidden="true" type="text"/>
                     </div>
@@ -43,7 +43,7 @@
                   <div class="repeater-footer-left">
                     <div class="repeater-itemization">
                       <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> users. </span>
-                      <div class="btn-group selectlist" data-resize="auto">
+                      <div class="btn-group selectlist dropup" data-resize="auto">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                           <span class="selected-label">&nbsp;</span>
                           <span class="caret"></span>
@@ -69,7 +69,7 @@
                       </button>
                       <label class="page-label" id="myPageLabel">Page</label>
                       <div class="repeater-primaryPaging active">
-                        <div class="input-group input-append dropdown combobox">
+                        <div class="input-group input-append dropdown dropup combobox">
                           <input type="text" class="form-control" aria-labelledby="myPageLabel">
                           <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>

@@ -4,13 +4,13 @@
             <div class="fade-on-load" hidden>
                 <div class="text-right">
                 <?php
-                  $candidateLink = (!$this->ion_auth->in_group('candidates')) ? '<a href="' . site_url('notifications/SendCandidateNotification/') . '" class="btn btn-info btn-lg active" role="button">Become a Candidate</a>' : ' ';
+                  $candidateLink = (!$this->ion_auth->in_group('candidates')) ? '<a href="' . site_url('notifications/SendCandidateNotification/') . '" class="btn btn-info" role="button">Become a Candidate</a>' : ' ';
                 ?>
                 <?=$candidateLink?>
                 <!--<a href="#" class="btn btn-info btn-lg active" role="button">Become a Candidate</a>-->
                 </div>
                 <br>
-                 
+
                 <div class="well well-sm">
                     <div class="row">
                     <?php foreach($candidates as $candidate):?>
@@ -26,11 +26,11 @@
                           </div>
                         </div>
                       </div>
-                    <?php endforeach?>    
+                    <?php endforeach?>
                     </div>
                 </div>
-                
-            </div>            
+
+            </div>
         </div>
       </div>
     </div>
