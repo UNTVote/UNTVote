@@ -545,28 +545,23 @@ class Admin extends CI_Controller {
 	// manage all the users
 	function manage_users()
 	{
+		if (!$this->ion_auth->is_admin())
+		{
+			// show them an error message, they can't be here
+			show_error("You must be an admin to view this page.");
+		}
+
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
 		
-		//set the flash data error message if there is one
-		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-		//list the users
-		$this->data['users'] = $this->ion_auth->users()->result();
-		foreach ($this->data['users'] as $k => $user)
-		{
-			$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-            $this->data['users'][$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
-		}
-		
-		 $this->_render_page('templates/header_user', $this->data);
-         $this->_render_page('templates/navigation_admin', $this->data);
-		 $this->_render_page('templates/sidebar_admin', $this->data);
-		 $this->_render_page('admin/manage_users', $this->data);
-		 $this->_render_page('templates/scripts_main');
-		 $this->_render_page('templates/footer');
-		 
+		$this->_render_page('templates/header_manage_elections', $this->data);
+		$this->_render_page('templates/navigation_admin', $this->data);
+		$this->_render_page('templates/sidebar_admin', $this->data);
+		$this->_render_page('admin/admin-users-manage', $this->data);
+		$this->_render_page('templates/scripts_main');
+		$this->_render_page('templates/scripts_custom');
+		$this->_render_page('templates/footer', $this->data);
 	}
 
 	//edit a user
