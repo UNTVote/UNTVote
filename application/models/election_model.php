@@ -155,6 +155,7 @@ class Election_Model extends CI_Model
 		$this->db->from('election');
 		$this->db->join('colleges', 'colleges.id=election.college_id');
 		$this->db->where_in('college_id', $userColleges);
+		$this->db->not_like('status', 'Closed');
 		$query = $this->db->get();
 
 		return $query->result_array();
