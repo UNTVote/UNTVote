@@ -6,6 +6,7 @@
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
             <?php echo $message;?>
+            <?php echo $errors;?>
               <div class="panel panel-default">
                 <div class="panel-body">
                   <!-- Nav tabs -->
@@ -22,12 +23,15 @@
                     <div role="tabpanel" class="tab-pane fade in active" id="general">
                       <br>
                       <div class="col-xs-12 col-md-3 text-center">
-                        <img class="img-circle img-thumbnail" width="100" src="<?=asset_url()?>img/user-default.png" alt="My picture">
+                        <!--<img class="img-circle img-thumbnail" width="100" src="<?=asset_url()?>img/user-default.png" alt="My picture">-->
+                        <img class="img-circle img-thumbnail" width="100" src="<?=base_url() . $user->avatar?>" alt="My picture">
                       </div>
                       <div class="col-xs-12 visible-xs visible-sm">&nbsp;</div>
                       <div class="col-xs-12 col-md-9">
-                        <form method="post" accept-charset="utf-8" action="<?=site_url('user/edit_user/' . $user->id)?>" role="form" data-parsley-validate>
+                        <form method="post" accept-charset="utf-8" action="<?=site_url('user/edit_user/' . $user->id)?>" role="form" enctype="multipart/form-data" data-parsley-validate>
                           <div class="form-group">
+                          <label>User Avatar</label>
+                            <input type="file" name="avatar" id="avatar">
                             <label>Name</label>
                             <div class="row">
                               <div class="col-sm-5">

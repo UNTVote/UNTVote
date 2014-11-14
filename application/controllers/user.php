@@ -222,6 +222,17 @@ class User extends CI_Controller
     //edit a user
     function edit_user($id)
     {
+        // user avatar details
+        $config['upload_path'] = './assets/upload/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '100';
+        $config['max_width']  = '1024';
+        $config['max_height']  = '768';
+        $this->load->library('upload', $config);
+
+        $avatarUploaded = true;
+        $errors = null;
+
         $this->data['title'] = "Edit User";
         $user = $this->ion_auth->user()->row();
         $title = $user->first_name . " | UNTVote";
@@ -297,8 +308,29 @@ class User extends CI_Controller
                 $data['password'] = $this->input->post('password');
             }
 
+            if(isset($_FILES['avatar']['tmp_name']))
+            {
+                if(!$this->upload->do_upload('avatar'))
+                {
+                    $userAvatar = false;
+                }
+            }
+
             if ($this->form_validation->run() === TRUE)
             {
+                if($userAvatar)
+                {
+                    // get the user avatar file path
+                    $uploadData = $this->upload->data();
+                    $relative_url = 'assets/upload/' . $uploadData['file_name'];
+                    $data['avatar'] = $relative_url;
+                }
+                else
+                {
+                    $errors = $this->upload->display_errors(
+                        '<div id="message" class="alert alert-danger">', '</div>');
+                }
+
                 $this->ion_auth->update($user->id, $data);
 
                 //check to see if we are creating the user
@@ -329,6 +361,7 @@ class User extends CI_Controller
         $this->data['options'] = $colleges;
         $this->data['collegeDefault'] = $currentCollege;
         $this->data['userEmail'] = $userEmail;
+        $this->data['errors'] = $errors;
         
         $this->_render_page('templates/header_user', $this->data);
         $this->_render_page('templates/navigation_user');

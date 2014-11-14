@@ -16,7 +16,7 @@
                     <?php foreach($candidates as $candidate):?>
                       <div class="col-sm-3 col-md-2">
                         <div class="thumbnail">
-                          <img class="candidate-pic" src="<?=asset_url()?>img/user-default.png" alt="xxx">
+                          <img class="candidate-pic" src="<?=base_url() . $candidate->avatar?>" alt="xxx">
                           <div class="caption text-center">
                             <h5><?=$candidate->first_name?> <?=$candidate->last_name?></h5>
                               <?php foreach($users->colleges as $college):?>

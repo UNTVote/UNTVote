@@ -9,7 +9,7 @@
           <div class="col-xs-7 text-right">
             <label class="profile-name"><?=$user->first_name?></label>
             <div class="btn-group">
-              <img src="<?=asset_url()?>img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
+              <img src="<?=base_url() . $user->avatar?>" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
               <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
                 <li><a href="#">Profile</a></li>
                 <li class="divider"></li>

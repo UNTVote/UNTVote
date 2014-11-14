@@ -28,7 +28,7 @@
                     <div class="col-xs-12">
                       <h4>Candidates:</h4>
                       <?php foreach($candidates as $candidate): ?>
-                        <img src="<?=asset_url()?>img/user-default.png" class="img-circle img-thumbnail" width="70" data-toggle="popover" data-trigger="hover"
+                        <img src="<?=base_url() . $candidate->avatar?>" class="img-circle img-thumbnail" width="70" data-toggle="popover" data-trigger="hover"
                          data-placement="top" title="<?=$candidate['first_name']?> <?=$candidate['last_name']?>" data-content="<?=$candidate['about_me']?>">
                       <?php endforeach?>
                     </div>

@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 block-center">
-                            <img src="<?=asset_url()?>img/user-default.png" alt="..." class="img-circle center-block">
+                            <img src="<?=base_url() . $candidate->avatar?>" alt="..." class="img-circle center-block">
                             <br>
                              <p><?=$candidate->about_me?></p>
                             <h3>Participating Election(s):</h3>
