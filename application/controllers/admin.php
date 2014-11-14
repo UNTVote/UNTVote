@@ -37,8 +37,8 @@ class Admin extends CI_Controller {
 		// a regular user tried to hack this, get him out of here
 		elseif (!$this->ion_auth->is_admin())
 		{
-			// redirect them to their user dashboardbecause they must be an administrator to view this
-			redirect('/', "refresh");
+			// show an error message, they can't be here
+			show_error("You must be an admin to view this page.");
 		}
 		else
 		{
@@ -807,6 +807,12 @@ class Admin extends CI_Controller {
 	// admin managing elections
 	function manage_elections()
 	{
+		if (!$this->ion_auth->is_admin())
+		{
+			// show them an error message, they can't be here
+			show_error("You must be an admin to view this page.");
+		}
+
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
