@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"electio",
+				"electionClosed"
+			],
+			[
+				"election",
+				"electionID"
+			],
+			[
+				"GetE",
+				"GetElectionCollege"
+			],
+			[
+				"Avatar",
+				"avatarUploaded"
+			],
+			[
 				"total",
 				"totalVotes"
 			],
@@ -62,10 +78,6 @@
 			[
 				"GetElec",
 				"GetElectionCandidates"
-			],
-			[
-				"election",
-				"election_model"
 			],
 			[
 				"end",
@@ -176,10 +188,6 @@
 				"ExtendElection"
 			],
 			[
-				"electio",
-				"electionID"
-			],
-			[
 				"elec",
 				"electionID"
 			],
@@ -228,30 +236,6 @@
 			}
 		},
 		{
-			"file": "application/controllers/admin.php",
-			"settings":
-			{
-				"buffer_size": 31067,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/views/admin/admin-dashboard.php",
-			"settings":
-			{
-				"buffer_size": 5462,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/views/user/user-dashboard.php",
-			"settings":
-			{
-				"buffer_size": 5393,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "application/views/pages/edit-profile.php",
 			"settings":
 			{
@@ -260,66 +244,34 @@
 			}
 		},
 		{
-			"file": "application/views/templates/navigation_admin.php",
-			"settings":
-			{
-				"buffer_size": 1024,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/views/templates/navigation_user.php",
-			"settings":
-			{
-				"buffer_size": 1063,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "application/views/user/user-elections-details.php",
 			"settings":
 			{
-				"buffer_size": 3416,
+				"buffer_size": 3672,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/candidate/user-candidate-browse.php",
+			"file": "application/controllers/elections.php",
 			"settings":
 			{
-				"buffer_size": 1896,
+				"buffer_size": 8174,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/controllers/user.php",
+			"file": "application/views/admin/admin-users-approvals.php",
 			"settings":
 			{
-				"buffer_size": 21745,
+				"buffer_size": 3301,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/candidate/user-candidate-info.php",
+			"file": "application/models/election_model.php",
 			"settings":
 			{
-				"buffer_size": 1870,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/config/ion_auth.php",
-			"settings":
-			{
-				"buffer_size": 8648,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/config/asset.php",
-			"settings":
-			{
-				"buffer_size": 1926,
+				"buffer_size": 17097,
 				"line_ending": "Windows"
 			}
 		}
@@ -353,8 +305,10 @@
 	[
 		"/C/xampp/htdocs/UNTVote",
 		"/C/xampp/htdocs/UNTVote/application",
-		"/C/xampp/htdocs/UNTVote/application/config",
+		"/C/xampp/htdocs/UNTVote/application/controllers",
+		"/C/xampp/htdocs/UNTVote/application/models",
 		"/C/xampp/htdocs/UNTVote/application/views",
+		"/C/xampp/htdocs/UNTVote/application/views/admin",
 		"/C/xampp/htdocs/UNTVote/application/views/candidate",
 		"/C/xampp/htdocs/UNTVote/application/views/pages",
 		"/C/xampp/htdocs/UNTVote/application/views/templates",
@@ -363,6 +317,16 @@
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/UNTVote/application/controllers/admin.php",
+		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-dashboard.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
+		"/C/xampp/htdocs/UNTVote/application/controllers/user.php",
+		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-browse.php",
+		"/C/xampp/htdocs/UNTVote/application/views/templates/navigation_user.php",
+		"/C/xampp/htdocs/UNTVote/application/views/templates/navigation_admin.php",
+		"/C/xampp/htdocs/UNTVote/application/config/asset.php",
+		"/C/xampp/htdocs/UNTVote/application/config/ion_auth.php",
+		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-info.php",
 		"/C/xampp/htdocs/UNTVote/application/logs/index.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-users-manage.html",
 		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-browse.php",
@@ -372,16 +336,12 @@
 		"/C/xampp/htdocs/UNTVote/application/controllers/elections.php",
 		"/C/xampp/htdocs/UNTVote/application/models/election_model.php",
 		"/C/xampp/htdocs/UNTVote/application/models/user_model.php",
-		"/C/xampp/htdocs/UNTVote/application/controllers/admin.php",
-		"/C/xampp/htdocs/UNTVote/application/controllers/user.php",
 		"/C/xampp/htdocs/UNTVote/application/views/pages/edit-profile.php",
 		"/C/xampp/htdocs/UNTVote/application/libraries/Ion_auth.php",
 		"/C/xampp/htdocs/UNTVote/application/models/ion_auth_model.php",
 		"/C/xampp/htdocs/UNTVote/application/models/notification_model.php",
 		"/C/xampp/htdocs/UNTVote/assets/js/admin-elections-manage.js",
-		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-dashboard.php",
 		"/C/xampp/htdocs/UNTVote/application/views/auth/email/forgot_password.tpl.php",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-details.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-edit-election.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-edit-election.php",
@@ -392,12 +352,9 @@
 		"/C/xampp/htdocs/UNTVote/application/language/english/ion_auth_lang.php",
 		"/C/xampp/htdocs/UNTVote/application/config/routes.php",
 		"/C/xampp/htdocs/UNTVote/application/models/college_model.php",
-		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-info.php",
-		"/C/xampp/htdocs/UNTVote/application/views/templates/navigation_user.php",
 		"/C/xampp/htdocs/UNTVote/application/views/candidate/candidate-view.php",
 		"/C/xampp/htdocs/UNTVote/application/views/elections/index.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/notifications.php",
-		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-browse.php",
 		"/C/xampp/htdocs/UNTVote/application/views/elections/view_election.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/header_user.php",
 		"/C/xampp/htdocs/UNTVote/application/views/notifications/index.php",
@@ -408,10 +365,8 @@
 		"/C/xampp/htdocs/UNTVote/application/views/admin/manage_users.php",
 		"/C/xampp/htdocs/UNTVote/application/views/pages/home.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/edit_user.php",
-		"/C/xampp/htdocs/UNTVote/application/views/templates/navigation_admin.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/sidebar_admin.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/admin_navigation.php",
-		"/C/xampp/htdocs/UNTVote/application/config/asset.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-create-election.html",
 		"/C/xampp/htdocs/UNTVote/application/views/pages/edit-profile.html",
 		"/C/xampp/htdocs/UNTVote/application/views/pages/terms-of-service.php",
@@ -423,7 +378,6 @@
 		"/C/xampp/htdocs/UNTVote/assets/js/admin-elections.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/header.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-election-test.html",
-		"/C/xampp/htdocs/UNTVote/application/config/ion_auth.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/user_homepage.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/reset-password.php",
 		"/C/Users/twigman08/AppData/Roaming/Sublime Text 3/Packages/User/Plain text.sublime-settings"
@@ -469,7 +423,7 @@
 	"groups":
 	[
 		{
-			"selected": 10,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -499,100 +453,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/controllers/admin.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 31067,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20465,
-								20465
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 7420.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "application/views/admin/admin-dashboard.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5462,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2328,
-								2861
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "application/views/user/user-dashboard.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3235,
-								3235
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "application/views/pages/edit-profile.php",
 					"semi_transient": false,
 					"settings":
@@ -618,174 +483,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "application/views/templates/navigation_admin.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1024,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1024,
-								1024
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "application/views/templates/navigation_user.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1063,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								554,
-								554
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 13.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "application/views/user/user-elections-details.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3416,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1278,
-								1278
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 70.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "application/views/candidate/user-candidate-browse.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1896,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1896,
-								1896
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "application/controllers/user.php",
+					"buffer": 2,
+					"file": "application/views/user/user-elections-details.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21745,
+						"buffer_size": 3672,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14604,
-								14604
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3780.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "application/views/candidate/user-candidate-info.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1870,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1870,
-								1870
+								537,
+								537
 							]
 						],
 						"settings":
@@ -794,64 +509,96 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.x": 0.0,
+						"translation.y": 95.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "application/config/ion_auth.php",
+					"buffer": 3,
+					"file": "application/controllers/elections.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8648,
+						"buffer_size": 8174,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8407,
-								8454
+								4165,
+								4165
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1960.0,
+						"translation.y": 1470.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "application/config/asset.php",
+					"buffer": 4,
+					"file": "application/views/admin/admin-users-approvals.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1926,
+						"buffer_size": 3301,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1097,
-								1097
+								281,
+								364
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "application/models/election_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17097,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3796,
+								3796
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1120.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,

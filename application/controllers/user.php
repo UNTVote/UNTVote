@@ -230,7 +230,7 @@ class User extends CI_Controller
         $config['max_height']  = '768';
         $this->load->library('upload', $config);
 
-        $avatarUploaded = true;
+        $avatarUploaded = false;
         $errors = null;
 
         $this->data['title'] = "Edit User";
@@ -308,13 +308,20 @@ class User extends CI_Controller
                 $data['password'] = $this->input->post('password');
             }
 
-            if(isset($_FILES['avatar']['tmp_name']) && !empty($_FILES['avatar']['tmp_name']))
+            if(isset($_FILES['avatar']))
             {
-                if(!$this->upload->do_upload('avatar'))
+                if(!empty($_FILES['avatar']['name']))
                 {
-                    $userAvatar = false;
+                    if(!$this->upload->do_upload('avatar'))
+                    {
+                        $avatarUploaded = false;
+                    }
+                    else
+                    {
+                        $avatarUploaded = true;
+                    }
                 }
-            }
+            }   
 
             if ($this->form_validation->run() === TRUE)
             {
