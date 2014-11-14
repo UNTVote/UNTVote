@@ -9,6 +9,7 @@
 <?=js('admin-elections-manage.js')?>
 <?=js('admin-users-approvals.js')?>
 <?=js('admin-users-manage.js')?>
+<?=js('user-elections-browse.js')?>
 <?=js('edit-profile.js')?>
 
 
