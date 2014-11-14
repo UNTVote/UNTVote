@@ -30,7 +30,6 @@
                         <li data-value="All" data-selected="true"><a href="#">All</a></li>
                         <li data-value="Active"><a href="#">Active</a></li>
                         <li data-value="Upcoming"><a href="#">Upcoming</a></li>
-                        <li data-value="Closed"><a href="#">Closed</a></li>
                       </ul>
                       <input class="hidden hidden-field" name="filterSelection" readonly aria-hidden="true" type="text"/>
                     </div>
