@@ -308,7 +308,7 @@ class User extends CI_Controller
                 $data['password'] = $this->input->post('password');
             }
 
-            if(isset($_FILES['avatar']['tmp_name']))
+            if(isset($_FILES['avatar']['tmp_name']) && !empty($_FILES['avatar']['tmp_name']))
             {
                 if(!$this->upload->do_upload('avatar'))
                 {
@@ -318,7 +318,7 @@ class User extends CI_Controller
 
             if ($this->form_validation->run() === TRUE)
             {
-                if($userAvatar)
+                if($avatarUploaded)
                 {
                     // get the user avatar file path
                     $uploadData = $this->upload->data();
