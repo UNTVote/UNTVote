@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'ProximaNova';
-  font-weight: normal; 
+  font-weight: normal;
   src: url("../fonts/ProximaNova-Regular.otf") format("opentype");
 }
 
@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  font-family: 'ProximaNova', 'Open Sans', sans-serif; 
+  font-family: 'ProximaNova', 'Open Sans', sans-serif;
   /* Move down content because we have a fixed navbar that is 50px tall */
   padding-top: 50px;
   /* Margin bottom by footer height */
@@ -42,7 +42,7 @@ body {
 
 @media (max-width: 768px) {
   .navbar-brand {
-    padding-left: 0px; 
+    padding-left: 0px;
   }
 }
 
@@ -300,5 +300,5 @@ body {
 }
 
 .text-muted-2x {
-  color: #e6e6e6;
+  color: #dbdbdb;
 }
