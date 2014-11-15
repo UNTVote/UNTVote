@@ -1,15 +1,17 @@
-<!-- Custom script files that are not to be loaded every page, go here -->
-<script src="//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-<?=js('vendor/parsley.min.js')?>
-<?=js('vendor/bootstrap-multiselect.js')?>
-<?=js('vendor/tablesorter.min.js')?>
-<?=js('admin-elections-create.js')?>
-<?=js('admin-elections-edit.js')?>
-<?=js('admin-elections-manage.js')?>
-<?=js('admin-users-approvals.js')?>
-<?=js('admin-users-manage.js')?>
-<?=js('user-elections-browse.js')?>
-<?=js('edit-profile.js')?>
+<?php
+// check to see if cdnScripts array exists before loading any cdns
+?>
+<?php if(isset($cdnScripts)): ?>
+	<!-- load the cdn scripts -->
+	<?php foreach ($cdnScripts as $cdnScript) : ?>
+		<script src="<?=$cdnScript?>"></script>
+	<?php endforeach?>
+<?php endif?>
 
-
+<!-- load the custom javascript files -->
+<?php if(isset($scripts)): ?>
+	<!-- load the scripts -->
+	<?php foreach ($scripts as $script) : ?>
+		<?=js($script)?>
+	<?php endforeach?>
+<?php endif?>

@@ -22,6 +22,9 @@ class Pages extends CI_Controller
 			// redirect user to the user page
 			redirect('user/');
 		}
+
+		// scripts
+		$scripts = array('vendor/parsley.min.js');
         // create the title from the view passed in, capitalize the first letter, add UNTVote
         $data['title'] = ucfirst($page . ' | UNTVote');
         
@@ -29,6 +32,7 @@ class Pages extends CI_Controller
         $data['options'] = $this->ion_auth->colleges()->result_array();
 		// validation errors for the registration form
 		$data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+		$data['scripts'] = $scripts;
 		// load the views based on whether it's the home page or terms of service page
 		if($page == 'terms-of-service')
 		{

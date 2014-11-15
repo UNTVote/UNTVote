@@ -21,6 +21,7 @@ class Notifications extends CI_Controller
 			// redirect them to the login page
 			redirect('user/', 'refresh');
 		}
+		$scripts = array('vendor/tablesorter.min.js', 'admin-users-approvals.js');
 		$user = $this->ion_auth->user()->row();
 		// grab all the notifications for the admin
 		$candidateNotifications = $this->notification_model->GetCandidateNotifications();
@@ -37,13 +38,14 @@ class Notifications extends CI_Controller
 		$data['numberNotifications'] = $numberNotifications;
 		$data['numberElectionNotifications'] = $numberElectionNotifications;
 		$data['numberCandidateNotifications'] = $numberCandidateNotifications;
+		$data['scripts'] = $scripts;
 
 		$this->load->view('templates/header_user', $data);
 		$this->load->view('templates/navigation_admin', $data);
 		$this->load->view('templates/sidebar_admin');
 		$this->load->view('admin/admin-users-approvals', $data);
 		$this->load->view('templates/scripts_main');
-		$this->load->view('templates/scripts_custom');
+		$this->load->view('templates/scripts_custom', $data);
 		$this->load->view('templates/footer');
 	}
 

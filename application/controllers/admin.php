@@ -551,17 +551,23 @@ class Admin extends CI_Controller {
 			show_error("You must be an admin to view this page.");
 		}
 
+		// scripts
+		$cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js');
+		$scripts = array('admin-users-manage.js');
+
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
 		
 		$this->_render_page('templates/header_manage_elections', $this->data);
 		$this->_render_page('templates/navigation_admin', $this->data);
-		$this->_render_page('templates/sidebar_admin', $this->data);
+		$this->_render_page('templates/sidebar_admin');
 		$this->_render_page('admin/admin-users-manage', $this->data);
 		$this->_render_page('templates/scripts_main');
-		$this->_render_page('templates/scripts_custom');
-		$this->_render_page('templates/footer', $this->data);
+		$this->_render_page('templates/scripts_custom', $this->data);
+		$this->_render_page('templates/footer');
 	}
 
 	//edit a user
@@ -827,17 +833,23 @@ class Admin extends CI_Controller {
 			show_error("You must be an admin to view this page.");
 		}
 
+		// scripts we need
+		$cdnScripts = array('https://www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js');
+		$scripts = array('admin-elections-manage.js');
+
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
 		
 		$this->_render_page('templates/header_manage_elections', $this->data);
 		$this->_render_page('templates/navigation_admin', $this->data);
-		$this->_render_page('templates/sidebar_admin', $this->data);
+		$this->_render_page('templates/sidebar_admin');
 		$this->_render_page('admin/admin-elections-manage', $this->data);
 		$this->_render_page('templates/scripts_main');
-		$this->_render_page('templates/scripts_custom');
-		$this->_render_page('templates/footer', $this->data);
+		$this->_render_page('templates/scripts_custom', $this->data);
+		$this->_render_page('templates/footer');
 	}
 
 	function _get_csrf_nonce()

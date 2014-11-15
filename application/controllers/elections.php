@@ -27,13 +27,20 @@ class Elections extends CI_Controller
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
+
+        // cdn scripts
+        $cdnScripts = array('https://www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
+        $scripts = array('user-elections-browse.js');
+
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
 		
 		$this->load->view('templates/header_manage_elections', $this->data);
 		$this->load->view('templates/navigation_user', $this->data);
 		$this->load->view('templates/sidebar_user', $this->data);
 		$this->load->view('user/user-elections-browse', $this->data);
 		$this->load->view('templates/scripts_main');
-		$this->load->view('templates/scripts_custom');
+		$this->load->view('templates/scripts_custom', $this->data);
 		$this->load->view('templates/footer', $this->data);
 	}
 
@@ -49,6 +56,10 @@ class Elections extends CI_Controller
 		}
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+
+		// scripts to load
+		$cdnScripts = array('http://www.fuelcdn.com/fuelux/3.2.0/js/fuelux.min.js');
+		$scripts = array('vendor/parsley.min.js', 'vendor/bootstrap-multiselect.js', 'admin-elections-edit.js');
 
 		$user = $this->ion_auth->user()->row();
 		$title = 'Edit Election | UNTVote';
@@ -73,13 +84,15 @@ class Elections extends CI_Controller
 		$data['selectedCandidates'] = $selectedCandidates;
 		$data['startDate'] = $startDate;
 		$data['endDate'] = $endDate;
+		$data['cdnScripts'] = $cdnScripts;
+		$data['scripts'] = $scripts;
 
 		$this->load->view('templates/header_create_election', $data);
 		$this->load->view('templates/navigation_admin', $data);
 		$this->load->view('templates/sidebar_admin');
 		$this->load->view('admin/admin-edit-election', $data);
 		$this->load->view('templates/scripts_main');
-        $this->load->view('templates/scripts_custom');
+        $this->load->view('templates/scripts_custom', $data);
 		$this->load->view('templates/footer');	
 	}
 
@@ -196,6 +209,10 @@ class Elections extends CI_Controller
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
+		// scripts to load
+		$cdnScripts = array("https://www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js");
+		$scripts = array('vendor/parsley.min.js', 'vendor/bootstrap-multiselect.js', 'admin-elections-create.js');
+
 		$user = $this->ion_auth->user()->row();
 
 		$title = "New Election";
@@ -218,6 +235,8 @@ class Elections extends CI_Controller
 		$data['title'] = $title;
 		$data['colleges'] = $colleges;
 		$data['candidates'] = $candidates;
+		$data['cdnScripts'] = $cdnScripts;
+		$data['scripts'] = $scripts;
 
 		// form was not submitted, show the form
 		if($this->form_validation->run() === FALSE)
@@ -229,7 +248,7 @@ class Elections extends CI_Controller
 			$this->load->view('templates/sidebar_admin', $data);
             $this->load->view('admin/admin-create-election', $data);
 			$this->load->view('templates/scripts_main');
-            $this->load->view('templates/scripts_custom');
+            $this->load->view('templates/scripts_custom', $data);
 			$this->load->view('templates/footer');
 		}
 		// form was submitted - create the election, redirect to the admins page

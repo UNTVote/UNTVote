@@ -91,7 +91,6 @@ class User extends CI_Controller
 			$this->_render_page('templates/sidebar_user', $this->data);
             $this->_render_page('user/user-dashboard', $this->data);
 			$this->_render_page('templates/scripts_main');
-            $this->_render_page('templates/scripts_custom');
 			$this->_render_page('templates/footer');            
         }
     }
@@ -173,7 +172,10 @@ class User extends CI_Controller
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|is_unique['.$tables['users'].'.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth'));
 
-        
+        // setup an array of all scripts needed
+        $scripts = array('vendor/parsley.min.js');
+
+
         if ($this->form_validation->run() == true)
         {
             // make both the username and email lowercase
@@ -209,12 +211,13 @@ class User extends CI_Controller
 			$this->data['inforMessage'] = $this->session->flashdata('message');
 
             $this->data['options'] = $colleges;
+            $this->data['scripts'] = $scripts;
             
             $this->_render_page('templates/header', $this->data);
             $this->_render_page('templates/navigation', $this->data);
             $this->_render_page('pages/home', $this->data);
 			$this->_render_page('templates/scripts_main');  
-			$this->_render_page('templates/scripts_custom');
+			$this->_render_page('templates/scripts_custom', $this->data);
 			$this->_render_page('templates/footer', $this->data);
         }
     }
@@ -222,6 +225,10 @@ class User extends CI_Controller
     //edit a user
     function edit_user($id)
     {
+        // setup all the scripts needed for this page
+        // the cdn scripts
+        $cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
+        $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
         // user avatar details
         $config['upload_path'] = './assets/upload/';
         $config['allowed_types'] = 'gif|jpg|png';
@@ -371,13 +378,15 @@ class User extends CI_Controller
         $this->data['collegeDefault'] = $currentCollege;
         $this->data['userEmail'] = $userEmail;
         $this->data['errors'] = $errors;
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
         
         $this->_render_page('templates/header_user', $this->data);
-        $this->_render_page('templates/navigation_user');
+        $this->_render_page('templates/navigation_user', $this->data);
         $this->_render_page('templates/sidebar_user');
         $this->_render_page('pages/edit-profile', $this->data);
         $this->_render_page('templates/scripts_main');  
-        $this->_render_page('templates/scripts_custom');
+        $this->_render_page('templates/scripts_custom', $this->data);
         $this->_render_page('templates/footer');
     }
 	
