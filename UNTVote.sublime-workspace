@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"candi",
+				"candidate"
+			],
+			[
+				"GetEle",
+				"GetElections"
+			],
+			[
+				"ele",
+				"election_model"
+			],
+			[
 				"sc",
 				"script"
 			],
@@ -94,10 +106,6 @@
 			[
 				"Update",
 				"UpdateElection"
-			],
-			[
-				"ele",
-				"election"
 			],
 			[
 				"sele",
@@ -251,7 +259,7 @@
 			"file": "application/controllers/user.php",
 			"settings":
 			{
-				"buffer_size": 22520,
+				"buffer_size": 22521,
 				"line_ending": "Windows"
 			}
 		},
@@ -259,58 +267,31 @@
 			"file": "application/controllers/admin.php",
 			"settings":
 			{
-				"buffer_size": 31669,
+				"buffer_size": 35329,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/templates/scripts_custom.php",
+			"file": "application/views/templates/navigation_admin.php",
 			"settings":
 			{
-				"buffer_size": 459,
+				"buffer_size": 1055,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/controllers/pages.php",
+			"file": "application/views/templates/header_user.php",
 			"settings":
 			{
-				"buffer_size": 1820,
+				"buffer_size": 980,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/pages/edit-profile.php",
+			"file": "application/views/templates/navigation_user.php",
 			"settings":
 			{
-				"buffer_size": 7321,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/controllers/elections.php",
-			"settings":
-			{
-				"buffer_size": 9282,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/controllers/notifications.php",
-			"settings":
-			{
-				"buffer_size": 3574,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');\n\nclass Notification_Model extends CI_Model\n{\n	// constructor - sets up the model, load the database, and libraries\n    public function __construct()\n    {\n        $this->load->database();\n        $this->load->model('ion_auth_model');\n        $this->load->library('ion_auth');\n    }\n\n    // GetNotifications - Returns all the notifications\n	public function GetNotifications()\n	{\n		// return all elections\n		$query = $this->db->get('admin_notifications');\n		// returns the resulting array of the the elections is found\n		return $query->result_array();\n	}\n\n	// GetElectionNotifications - Returns all the notifications for elections\n	public function GetElectionNotifications()\n	{\n		$query = $this->db->query('SELECT admin_notifications.id, colleges.description, first_name, last_name, election_name \n								FROM users, colleges, users_colleges, admin_notifications, election WHERE type=\"Vote\" \n								AND users.id=admin_notifications.sender_id \n								AND admin_notifications.election_id=election.id \n								AND users_colleges.college_id=colleges.id \n								AND users_colleges.user_id=admin_notifications.sender_id');\n		return $query->result_array();\n	}\n\n	// GetElectionNotifications - Returns all the notifications for elections\n	public function GetCandidateNotifications()\n	{\n		$query = $this->db->query('SELECT admin_notifications.id, colleges.description, first_name, last_name\n								FROM users, colleges, users_colleges, admin_notifications WHERE type=\"Candidate\" \n								AND users.id=admin_notifications.sender_id \n								AND users_colleges.college_id=colleges.id \n								AND users_colleges.user_id=admin_notifications.sender_id');\n		return $query->result_array();\n	}\n\n	// IsElectionNotificationSent - checks to see if the logged in user has sent a notification for that election\n	// Returns - True if it has been sent, false if it has not been sent\n	public function IsElectionNotificationSent($electionID)\n	{\n		$userID = $this->ion_auth->user()->row()->id;\n		$query = $this->db->select('id')->from('admin_notifications')->where('election_id', $electionID)->where('sender_id', $userID)->get();\n		$result = $query->num_rows();\n\n		if($result >= 1)\n		{\n			return true;\n		}\n		else\n		{\n			return false;\n		}\n	}\n\n	// SendElectionNotification - Adds an election notification to the admins for the current user\n	// electionID - the ID for the election they are wanting to vote on\n	public function SendElectionNotification($electionID)\n	{\n		$userID = $this->ion_auth->user()->row()->id;\n\n		$data = array('sender_id' => $userID,\n					  'type' => 'Vote',\n					  'election_id' => $electionID);\n		$this->db->insert('admin_notifications', $data);\n\n		$this->ion_auth_model->set_message('notification_approval_sent');\n	}\n\n	// SendCandidateNotification - Adds an candidate request notification to the admins for the current user\n	public function SendCandidateNotification()\n	{\n		// the current logged on user is the user sending the request\n		$userID = $this->ion_auth->user()->row()->id;\n\n		// checks to see if we have this users approval request, if so, we do nothing.\n		$query = $this->db->get_where('admin_notifications', array('sender_id' => $userID,\n																   'type' => 'Candidate'));\n		$result = $query->num_rows();\n		if($result > 0)\n		{\n			// we have the request already, just return and do nothing\n			$this->ion_auth_model->set_message('notification_approval_notsent');\n			return;\n		}\n\n		$data = array('sender_id' => $userID,\n					  'type' => 'Candidate');\n		$this->db->insert('admin_notifications', $data);\n		$this->ion_auth_model->set_message('notification_approval_sent');\n	}\n\n	// AcceptElectionRequest - allows a user to vote on an election and deletes their notification from the table\n	// notificationID - the notification that we are accepting and deleting from the table.\n	public function AcceptElectionRequest($notificationID)\n	{\n		$this->load->library('email');\n\n		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));\n		$result = $query->row_array();\n\n		// store who sender and the election they will vote on\n		$sender = $result['sender_id'];\n		$election = $result['election_id'];\n\n		// adds the user to the voters table\n		$data = array('user_id' => $sender,\n					  'election_id' => $election);\n		$this->db->insert('voters', $data);\n\n		$userEmail = $this->ion_auth->user($sender)->row()->email;\n\n		$this->email->from('UNTVote@gmail.com', 'UNTVote');\n		$this->email->to($userEmail);\n		$this->email->subject('UNTVote: Election Approval Request');\n		$this->email->message('We are sending you this email to let you know that you have been \n								approved to vote in an election you requested.');\n		$this->email->send();\n\n		// deletes the notification from the table\n		$this->db->delete('admin_notifications', array('id' => $notificationID));\n\n		// TODO: SEND EMAIL TO THE USER HERE\n	}\n\n	public function AcceptCandidateRequest($notificationID)\n	{\n		$this->load->helper('url');\n\n		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));\n		$result = $query->row_array();\n\n		// store the sender and add the user to the candidates group\n		$sender = $result['sender_id'];\n		$this->ion_auth->add_to_group('3', $sender);\n\n		$userName = $this->ion_auth->user($sender)->row()->first_name;\n		$userEmail = $this->ion_auth->user($sender)->row()->email;\n		$profileURL = anchor('user/edit_user/' . $sender . '#candidate', \"HERE\");\n		$emailMessage = 'Congratulations <strong>' . $userName . '</strong>, you have been approved to be a candidate!<br>\n						You may click '. $profileURL . ' to edit your profile.  You can click the Candidate Tab to edit your candidate information!';\n\n		$this->email->from('UNTVote@gmail.com', 'UNTVote');\n		$this->email->to($userEmail);\n		$this->email->subject('UNTVote: Candidate Approval Request');\n		$this->email->message($emailMessage);\n		$this->email->send();\n\n		// deletes the notification from the table\n		$this->db->delete('admin_notifications', array('id' => $notificationID));\n\n		// TODO: SEND EMAIL TO THE USER HERE\n	}\n\n	// RejectRequest - The admin rejects the users reques to be a candidate or vote on an election\n	// notificationID - the notification we need to remove\n	public function RejectRequest($notificationID)\n	{\n		$this->db->delete('admin_notifications', array('id' => $notificationID));\n	}\n}",
-			"file": "application/models/notification_model.php",
-			"file_size": 6638,
-			"file_write_time": 130605178947604134,
-			"settings":
-			{
-				"buffer_size": 6388,
+				"buffer_size": 1063,
 				"line_ending": "Windows"
 			}
 		},
@@ -323,18 +304,26 @@
 			}
 		},
 		{
-			"file": "application/views/user/user-dashboard.php",
+			"file": "application/models/election_model.php",
 			"settings":
 			{
-				"buffer_size": 5393,
+				"buffer_size": 17124,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/user/user-elections-browse.php",
+			"file": "application/controllers/elections.php",
 			"settings":
 			{
-				"buffer_size": 5637,
+				"buffer_size": 10301,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/admin/admin-elections-results.php",
+			"settings":
+			{
+				"buffer_size": 5625,
 				"line_ending": "Windows"
 			}
 		}
@@ -371,13 +360,23 @@
 		"/C/xampp/htdocs/UNTVote/application/controllers",
 		"/C/xampp/htdocs/UNTVote/application/models",
 		"/C/xampp/htdocs/UNTVote/application/views",
-		"/C/xampp/htdocs/UNTVote/application/views/pages",
 		"/C/xampp/htdocs/UNTVote/application/views/templates",
-		"/C/xampp/htdocs/UNTVote/application/views/user",
-		"/C/xampp/htdocs/UNTVote/assets"
+		"/C/xampp/htdocs/UNTVote/assets",
+		"/C/xampp/htdocs/UNTVote/assets/js"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/UNTVote/assets/js/admin-elections-results.js",
+		"/C/xampp/htdocs/UNTVote/application/config/routes.php",
+		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-elections-results.html",
+		"/C/xampp/htdocs/UNTVote/application/views/pages/edit-profile.php",
+		"/C/xampp/htdocs/UNTVote/application/controllers/pages.php",
+		"/C/xampp/htdocs/UNTVote/application/views/templates/scripts_custom.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-browse.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-details.php",
+		"/C/xampp/htdocs/UNTVote/application/models/notification_model.php",
+		"/C/xampp/htdocs/UNTVote/application/controllers/notifications.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/index.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-users-manage.php",
 		"/C/xampp/htdocs/UNTVote/application/models/ion_auth_model.php",
@@ -390,38 +389,30 @@
 		"/C/xampp/htdocs/UNTVote/application/models/election_model.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-users-approvals.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/elections.php",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-details.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/candidates.php",
 		"/C/xampp/htdocs/UNTVote/application/models/college_model.php",
 		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-browse.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/user.php",
-		"/C/xampp/htdocs/UNTVote/application/views/pages/edit-profile.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/admin.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-dashboard.php",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/navigation_admin.php",
 		"/C/xampp/htdocs/UNTVote/application/config/asset.php",
 		"/C/xampp/htdocs/UNTVote/application/views/candidate/user-candidate-info.php",
 		"/C/xampp/htdocs/UNTVote/application/logs/index.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-users-manage.html",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-browse.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/user-election-results.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-elections-manage.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/sidebar_user.php",
 		"/C/xampp/htdocs/UNTVote/application/models/user_model.php",
-		"/C/xampp/htdocs/UNTVote/application/models/notification_model.php",
 		"/C/xampp/htdocs/UNTVote/assets/js/admin-elections-manage.js",
 		"/C/xampp/htdocs/UNTVote/application/views/auth/email/forgot_password.tpl.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-edit-election.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-edit-election.php",
-		"/C/xampp/htdocs/UNTVote/application/views/templates/scripts_custom.php",
 		"/C/xampp/htdocs/UNTVote/application/models/candidate_model.php",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-create-election.php",
 		"/C/xampp/htdocs/UNTVote/application/language/english/ion_auth_lang.php",
-		"/C/xampp/htdocs/UNTVote/application/config/routes.php",
 		"/C/xampp/htdocs/UNTVote/application/views/candidate/candidate-view.php",
 		"/C/xampp/htdocs/UNTVote/application/views/elections/index.php",
-		"/C/xampp/htdocs/UNTVote/application/controllers/notifications.php",
 		"/C/xampp/htdocs/UNTVote/application/views/elections/view_election.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/header_user.php",
 		"/C/xampp/htdocs/UNTVote/application/views/notifications/index.php",
@@ -489,7 +480,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -498,15 +489,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22520,
+						"buffer_size": 22521,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19805,
-								19704
+								15365,
+								15365
 							]
 						],
 						"settings":
@@ -516,10 +507,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 6090.0,
+						"translation.y": 4340.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -528,15 +519,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 31669,
+						"buffer_size": 35329,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								30009,
-								30062
+								27906,
+								27906
 							]
 						],
 						"settings":
@@ -545,83 +536,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 10290.0,
+						"translation.y": 9855.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "application/views/templates/scripts_custom.php",
+					"file": "application/views/templates/navigation_admin.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 459,
+						"buffer_size": 1055,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								459,
-								459
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "application/controllers/pages.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1820,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1235,
-								1235
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "application/views/pages/edit-profile.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7321,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5696,
-								5654
+								921,
+								921
 							]
 						],
 						"settings":
@@ -629,35 +564,6 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 770.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "application/controllers/elections.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9282,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								721,
-								721
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -667,108 +573,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "application/controllers/notifications.php",
+					"buffer": 3,
+					"file": "application/views/templates/header_user.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3574,
+						"buffer_size": 980,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1260,
-								1260
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 280.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "application/models/notification_model.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6388,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2564,
-								2564
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 560.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "application/views/user/user-elections-details.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3784,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								337,
-								337
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "application/views/user/user-dashboard.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								258,
-								236
+								0,
+								0
 							]
 						],
 						"settings":
@@ -785,20 +603,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "application/views/user/user-elections-browse.php",
+					"buffer": 4,
+					"file": "application/views/templates/navigation_user.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5637,
+						"buffer_size": 1063,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								244,
-								244
+								791,
+								738
 							]
 						],
 						"settings":
@@ -807,11 +625,129 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "application/views/user/user-elections-details.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3784,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								913,
+								962
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/models/election_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17124,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3331,
+								3331
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 560.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "application/controllers/elections.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10301,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2115,
+								2115
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 350.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "application/views/admin/admin-elections-results.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								627,
+								627
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
