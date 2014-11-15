@@ -19,10 +19,10 @@
                           <img class="candidate-pic" src="<?=base_url() . $candidate->avatar?>" alt="xxx">
                           <div class="caption text-center">
                             <h5><?=$candidate->first_name?> <?=$candidate->last_name?></h5>
-                              <?php foreach($users->colleges as $college):?>
+                              <?php foreach($candidate->colleges as $college):?>
                                 <h5><?php echo htmlspecialchars($college->description, ENT_QUOTES, 'UTF-8'); ?></h5><br />
                               <?php endforeach?>
-                              <p><a href="<?=site_url('candidates/view/' . $candidate->id)?>" class="btn btn-info" role="button">Profile</a> <a href="#" class="btn btn-success" role="button">Vote</a></p>
+                              <p><a href="<?=site_url('candidates/view/' . $candidate->id)?>" class="btn btn-info" role="button">Profile</a></p>
                           </div>
                         </div>
                       </div>

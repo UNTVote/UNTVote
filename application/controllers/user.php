@@ -297,6 +297,8 @@ class User extends CI_Controller
                 {
                     $this->ion_auth->add_to_college($clg, $id);
                 }
+                // add them back to the default group
+                $this->ion_auth->add_to_college(15, $id);
             }
 
             //update the password if it was posted

@@ -1047,6 +1047,13 @@ class Ion_auth_model extends CI_Model
             {
                 $this->add_to_college($college, $id);
             }
+        }
+
+        //add to default college if not already set
+        $default_college = $this->where('name', $this->config->item('default_college', 'ion_auth'))->college()->row();
+        if ((isset($default_college->id) && empty($colleges)) || (!empty($colleges) && !in_array($default_college->id, $colleges)))
+        {
+            $this->add_to_college($default_college->id, $id);
         }        
 
         $this->trigger_events('post_register');
