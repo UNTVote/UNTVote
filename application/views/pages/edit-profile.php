@@ -2,7 +2,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Edit profile</h1>
           <br>
-          
+
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
             <?php echo $message;?>
@@ -36,13 +36,12 @@
                             <div class="row">
                               <div class="col-sm-5">
                                 <input name="firstName" type="text" class="form-control" value="<?=$user->first_name?>" placeholder="First name" data-parsley-trigger="keyup" required autofocus>
-                                <div class="col-xs-12 visible-xs">&nbsp;</div>
                               </div>
                               <div class="col-sm-7">
                                 <input name="lastName" type="text" class="form-control" value="<?=$user->last_name?>" placeholder="Last name" data-parsley-trigger="keyup" required>
                               </div>
                             </div>
-                            
+
                           </div>
                           <div class="form-group">
                             <label>College</label>
@@ -66,7 +65,7 @@
                                 ?>
                             <option value = "<?php echo $college['id'];?>"<?php echo $default;?>>
                             <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>
-                            <?php endforeach?>   
+                            <?php endforeach?>
                           </select>
                           </div>
                           <div class="form-group">
@@ -119,8 +118,8 @@
               </div>
             </div>
           </div>
-          
+
         </div>
-   
+
       </div>
     </div>
