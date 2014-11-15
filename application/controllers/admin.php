@@ -128,6 +128,52 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	// ElectionResults
+	// Used for ajax to return the election details for the election selected
+	function ElectionResults()
+	{
+		//header('Content-Type: application/json');
+		// do we have an ajax request
+		//if($this->input->is_ajax_request())
+		//{
+			// grab the elelection they request
+			//$election = $this->input->post('elections');
+			$election = 8;
+			$electionCollege = $this->election_model->GetElectionCollege($election);
+			$college = $electionCollege['description'];
+			$candidates = $this->election_model->GetElectionCandidates($election);
+			$totalCandidates = count($candidates);
+			$totalVoters = $this->election_model->GetElectionVoters($election);
+			$electionData = $this->election_model->GetElection($election);
+			$electionName = $electionData['election_name'];
+			$startDate = date("m-d-Y", strtotime($electionData['start_time']));
+			$endDate = date("m-d-Y", strtotime($electionData['end_time']));
+			$electionVotes = $electionData['total_votes'];
+
+			$electionResults = array('election_name' => $electionName,
+									 'start_date' => $startDate,
+									 'end_date' => $endDate,
+									 'total_votes' => $electionData['total_votes'],
+									 'total_voters' => $totalVoters,
+									 'total_candidates' => $totalCandidates,
+									 'category' => $college);
+			$candidateIndex = 1;
+			foreach($candidates as $candidate)
+			{
+				$electionResults['candidate' . $candidateIndex] = array(
+										  'candidate_first_name' => $candidate['first_name'],
+										  'candidate_last_name' => $candidate['last_name'],
+							 			  'votes' => $candidate['votes']
+										);
+				$candidateIndex++;
+			}
+		
+			//encode it into json format
+			$return = json_encode($electionResults);
+			var_dump($return);
+		//}
+	}
+
 	//log the user in
 	function login()
 	{

@@ -24,16 +24,20 @@ class Elections extends CI_Controller
 	// index - default election page, shows all the elections
 	public function index()
 	{
+		$this->load->library('form_validation');
+
+		
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
 
         // cdn scripts
-        $cdnScripts = array('https://www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
+        $cdnScripts = array('https://www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js');
         $scripts = array('user-elections-browse.js');
 
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 		
 		$this->load->view('templates/header_manage_elections', $this->data);
 		$this->load->view('templates/navigation_user', $this->data);
@@ -42,6 +46,29 @@ class Elections extends CI_Controller
 		$this->load->view('templates/scripts_main');
 		$this->load->view('templates/scripts_custom', $this->data);
 		$this->load->view('templates/footer', $this->data);
+	}
+
+	// results - shows the elections results page
+	public function results()
+	{
+		$firstName = $this->ion_auth->user()->row()->first_name;
+        $this->data['user'] = $this->ion_auth->user()->row();
+        $this->data['title'] = $firstName . " | UNTVote";
+
+        $elections = $this->election_model->GetElectionsByStatus('Closed');
+
+        $scripts = array('vendor/chart.min.js', 'admin-elections-results.js');
+
+        $this->data['scripts'] = $scripts;
+        $this->data['elections'] = $elections;
+
+        $this->load->view('templates/header_user', $this->data);
+        $this->load->view('templates/navigation_admin', $this->data);
+        $this->load->view('templates/sidebar_admin');
+        $this->load->view('admin/admin-elections-results', $this->data);
+        $this->load->view('templates/scripts_main');
+        $this->load->view('templates/scripts_custom', $this->data);
+        $this->load->view('templates/footer');
 	}
 
 	// Edit - Edits/updates a certain election
@@ -167,6 +194,7 @@ class Elections extends CI_Controller
 		$data['viewElection'] = $viewElection;
 		$data['electionClosed'] = $electionClosed;
 		$data['college'] = $college;
+		$data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
 		// if the form failed to run
 		if($this->form_validation->run() === FALSE)

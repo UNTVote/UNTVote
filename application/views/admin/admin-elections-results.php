@@ -9,10 +9,10 @@
               <div class="row">
                 <div class="col-xs-12">
                   <label>Choose election</label>
-                  <select class="form-control">
-                    <option>Election XYZ</option>
-                    <option>Election HRE</option>
-                    <option>Election SOS</option>
+                  <select name="elections" class="form-control">
+                  <?php foreach($elections as $election) : ?>
+                    <option value="<?=$election['id']?>"><?=$election['election_name']?></option>
+                  <?php endforeach?>
                   </select>
                 </div>
               </div>

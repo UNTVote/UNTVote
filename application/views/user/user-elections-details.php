@@ -5,6 +5,7 @@
 
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
+            <?php echo $message;?>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><?=$election['election_name']?></h3>
@@ -61,6 +62,7 @@
                         <?php endforeach?>
                         </ul>
                         <input type="submit" class="btn btn-success btn-block" value="Submit Vote">
+                        <?php echo form_hidden('slug', $election['slug']);?>
                       </form>
                     </div>
                   </div>
