@@ -617,144 +617,171 @@ class Admin extends CI_Controller {
 
 	//edit a user
 	function edit_user($id)
-	{
-		$data['title'] = "Edit User";
+    {
+        // setup all the scripts needed for this page
+        // the cdn scripts
+        $cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
+        $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
+        // user avatar details
+        $config['upload_path'] = './assets/upload/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '100';
+        $config['max_width']  = '1024';
+        $config['max_height']  = '768';
+        $this->load->library('upload', $config);
 
-		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
-		{
-			redirect('admin', 'refresh');
-		}
+        $avatarUploaded = false;
+        $errors = null;
 
-		$user = $this->ion_auth->user($id)->row();
-		$groups = $this->ion_auth->groups()->result_array();
-		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $this->data['title'] = "Edit User";
+        $user = $this->ion_auth->user()->row();
+        $title = $user->first_name . " | UNTVote";
+        // create a substring from the email, don't include the "@my.unt.edu"
+        $userEmail = substr($user->email, 0, -11);
+        // get all the colleges from the database
+        $colleges = $this->ion_auth->colleges()->result_array();
+        $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
+        $isCanddate = true;
+        // check to see if the current user is a candidate to know to dispay that form or not
+        if($this->ion_auth->in_group('candidates'))
+        {
+            $isCandidate = true;
+        }
+        else
+        {
+            $isCandidate = false;
+        }
+
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
+            redirect('admin', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $groups = $this->ion_auth->groups()->result_array();
+        $currentGroups = $this->ion_auth->get_users_groups($id)->result();
         $colleges = $this->ion_auth->colleges()->result_array();
         $currentCollege = $this->ion_auth->get_users_colleges($id)->result();
 
-		//validate form input
-		$this->form_validation->set_rules('euid', $this->lang->line('edit_user_validation_euid_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+        //validate form input
+        $this->form_validation->set_rules('firstName', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('lastName', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'required|xss_clean');
         $this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'), 'xss_clean');
-		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
-		if (isset($_POST) && !empty($_POST))
-		{
-			// do we have a valid request?
-			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-			{
-				show_error($this->lang->line('error_csrf'));
-			}
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            //if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            //{
+               // show_error($this->lang->line('error_csrf'));
+            //}
 
-			$data = array(
-			    'euid'       => $this->input->post('username'),
-				'first_name' => $this->input->post('first_name'),
-				'last_name'  => $this->input->post('last_name'),
-			);
+            $email    = strtolower($this->input->post('email'));
+            // append @my.unt.edu to the email
+            $email   .= '@my.unt.edu'; 
 
-			// Only allow updating groups and colleges if user is admin
-			if ($this->ion_auth->is_admin())
-			{
-				//Update the groups and colleges user belongs to
-				$groupData = $this->input->post('groups');
-                $collegeData = $this->input->post('colleges');
+            $data = array(
+                'first_name' => $this->input->post('firstName'),
+                'last_name'  => $this->input->post('lastName'),
+                'email'      => $email
+            );
 
-				if (isset($groupData) && !empty($groupData)) 
-				{
-					$this->ion_auth->remove_from_group('', $id);
+            $collegeData = $this->input->post('colleges');
 
-					foreach ($groupData as $grp) 
-					{
-						$this->ion_auth->add_to_group($grp, $id);
-					}
-				}
-                
-                if (isset($collegeData) && !empty($collegeData)) 
+            if (isset($collegeData) && !empty($collegeData)) 
+            {
+                $this->ion_auth->remove_from_college('', $id);
+
+                foreach ($collegeData as $clg) 
                 {
-                    $this->ion_auth->remove_from_college('', $id);
+                    $this->ion_auth->add_to_college($clg, $id);
+                }
+                // add them back to the default group
+                $this->ion_auth->add_to_college(15, $id);
+            }
 
-                    foreach ($collegeData as $clg) 
+            //update the password if it was posted
+            if ($this->input->post('password'))
+            {
+                $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+                $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+
+                $data['password'] = $this->input->post('password');
+            }
+
+            if(isset($_FILES['avatar']))
+            {
+                if(!empty($_FILES['avatar']['name']))
+                {
+                    if(!$this->upload->do_upload('avatar'))
                     {
-                        $this->ion_auth->add_to_college($clg, $id);
+                        $avatarUploaded = false;
+                    }
+                    else
+                    {
+                        $avatarUploaded = true;
                     }
                 }
-                
-			}
+            }   
 
-			//update the password if it was posted
-			if ($this->input->post('password'))
-			{
-				$this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-				$this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+            if ($this->form_validation->run() === TRUE)
+            {
+                if($avatarUploaded)
+                {
+                    // get the user avatar file path
+                    $uploadData = $this->upload->data();
+                    $relative_url = 'assets/upload/' . $uploadData['file_name'];
+                    $data['avatar'] = $relative_url;
+                }
+                else
+                {
+                    $errors = $this->upload->display_errors(
+                        '<div id="message" class="alert alert-danger">', '</div>');
+                }
 
-				$data['password'] = $this->input->post('password');
-			}
+                $this->ion_auth->update($user->id, $data);
 
-			if ($this->form_validation->run() === TRUE)
-			{
-				$this->ion_auth->update($user->id, $data);
+                //check to see if we are creating the user
+                //redirect them back to the admin page
+                if ($this->ion_auth->is_admin())
+                {
+                    redirect('admin', 'refresh');
+                }
+                else
+                {
+                    redirect('admin', 'refresh');
+                }
+            }
+        }
 
-				//check to see if we are creating the user
-				//redirect them back to the admin page
-				$this->session->set_flashdata('message', "User Saved");
-				if ($this->ion_auth->is_admin())
-				{
-					redirect('admin', 'refresh');
-				}
-				else
-				{
-					redirect('/', 'refresh');
-				}
-			}
-		}
+        //display the edit user form
+        //$this->data['csrf'] = $this->_get_csrf_nonce();
 
-		//display the edit user form
-		$this->data['csrf'] = $this->_get_csrf_nonce();
+        //set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-		//set the flash data error message if there is one
-		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-		//pass the user to the view
-		$this->data['user'] = $user;
-		$this->data['groups'] = $groups;
-		$this->data['currentGroups'] = $currentGroups;
+        //pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['groups'] = $groups;
+        $this->data['currentGroups'] = $currentGroups;
+        $this->data['isCandidate'] = $isCandidate;
         // sets the options for the dropdown box
         $this->data['options'] = $colleges;
         $this->data['collegeDefault'] = $currentCollege;
-
-        $this->data['euid'] = array(
-            'name'  => 'euid',
-            'id'    => 'euid',
-            'type'  => 'euid',
-            'value' => $this->form_validation->set_value('euid', $user->username),
-        );
-		$this->data['first_name'] = array(
-			'name'  => 'first_name',
-			'id'    => 'first_name',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('first_name', $user->first_name),
-		);
-		$this->data['last_name'] = array(
-			'name'  => 'last_name',
-			'id'    => 'last_name',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('last_name', $user->last_name),
-		);
-		$this->data['password'] = array(
-			'name' => 'password',
-			'id'   => 'password',
-			'type' => 'password'
-		);
-		$this->data['password_confirm'] = array(
-			'name' => 'password_confirm',
-			'id'   => 'password_confirm',
-			'type' => 'password'
-		);
+        $this->data['userEmail'] = $userEmail;
+        $this->data['errors'] = $errors;
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
         
-        $this->_render_page('templates/header', $data);
-        $this->_render_page('templates/admin_navigation', $data);
-		$this->_render_page('admin/edit_user', $this->data);
-	}
+        $this->_render_page('templates/header_user', $this->data);
+        $this->_render_page('templates/navigation_admin', $this->data);
+        $this->_render_page('templates/sidebar_admin');
+        $this->_render_page('pages/edit-profile', $this->data);
+        $this->_render_page('templates/scripts_main');  
+        $this->_render_page('templates/scripts_custom', $this->data);
+        $this->_render_page('templates/footer');
+    }
 
 	// create a new group
 	function create_group()

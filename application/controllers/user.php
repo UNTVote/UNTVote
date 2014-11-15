@@ -353,7 +353,7 @@ class User extends CI_Controller
                 //redirect them back to the admin page
                 if ($this->ion_auth->is_admin())
                 {
-                    redirect('user', 'refresh');
+                    redirect('admin', 'refresh');
                 }
                 else
                 {
