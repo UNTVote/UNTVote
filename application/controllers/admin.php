@@ -132,13 +132,12 @@ class Admin extends CI_Controller {
 	// Used for ajax to return the election details for the election selected
 	function ElectionResults()
 	{
-		//header('Content-Type: application/json');
+		header('Content-Type: application/json');
 		// do we have an ajax request
-		//if($this->input->is_ajax_request())
-		//{
+		if($this->input->is_ajax_request())
+		{
 			// grab the elelection they request
-			//$election = $this->input->post('elections');
-			$election = 8;
+			$election = $this->input->post('elections');
 			$electionCollege = $this->election_model->GetElectionCollege($election);
 			$college = $electionCollege['description'];
 			$candidates = $this->election_model->GetElectionCandidates($election);
@@ -170,8 +169,8 @@ class Admin extends CI_Controller {
 		
 			//encode it into json format
 			$return = json_encode($electionResults);
-			var_dump($return);
-		//}
+			echo $return;
+		}
 	}
 
 	//log the user in
