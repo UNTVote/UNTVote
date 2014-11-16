@@ -9,9 +9,9 @@
               <div class="row">
                 <div class="col-xs-12">
                 <?php if($numberElections <= 0): ?>
-                  <label>Election</label>
                     <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
                   <?php else:?>
+                    <label>Election</label>
                   <select name="elections" class="form-control" id="electionsList">
                     <option value="" disabled selected>Choose election</option>
                   <?php foreach($elections as $election) : ?>
