@@ -213,6 +213,30 @@ class Election_Model extends CI_Model
 		$this->ion_auth_model->set_message('create_election_successful');
 	}
 
+	// DeleteElection - Deletes the given election from all the tables
+	// electionID - the electionID to delete
+	public function DeleteElection($electionID)
+	{
+		// delete from the election table
+		$this->db->where('id', $electionID);
+		$this->db->delete('election');
+
+		// election_candidates
+		$this->db->where('election_id', $electionID);
+		$this->db->delete('election_candidates');
+
+		// voters
+		$this->db->where('election_id', $electionID);
+		$this->db->delete('voters');
+
+		// vote log
+		$this->db->where('election_id', $electionID);
+		$this->db->delete('vote_log');
+
+		$this->ion_auth_model->set_message('delete_election_successful');
+	}
+
+
 	// UpdateElection - Updates the given election
 	// electionID - The election to update
 	public function UpdateElection($electionID)

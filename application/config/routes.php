@@ -41,6 +41,7 @@ $route['candidates/(:any)'] = 'candidates/$1';
 $route['candidates'] = 'candidates';
 $route['notifications/(:any)'] = 'notifications/$1';
 $route['notifications'] = 'notifications';
+$route['elections/delete/(:any)'] = 'elections/delete/$1';
 $route['elections/ElectionEdit'] = 'elections/ElectionEdit';
 $route['elections/edit/(:any)'] = 'elections/edit/$1';
 $route['elections/results'] = 'elections/results';

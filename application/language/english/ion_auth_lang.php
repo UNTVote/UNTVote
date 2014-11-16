@@ -89,9 +89,10 @@ $lang['vote_changed'] = 'Your vote has been successfully changed';
 // Elections
 $lang['create_election_successful'] = 'The election has been successfully created';
 $lang['edit_election_successful'] = 'The election has been successfully updated';
+$lang['delete_election_successful'] = 'The election has been successfully deleted';
 
 // Notification and Approvals
-$lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and will receive an email soon';
+$lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and you will receive an email soon';
 $lang['notification_approval_notsent'] = 'We already have your request; You will receive an email soon';
 
 // Candidate profile

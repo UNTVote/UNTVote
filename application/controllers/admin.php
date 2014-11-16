@@ -124,12 +124,14 @@ class Admin extends CI_Controller {
 			// grab all the elections from the database
 			$elections = $this->election_model->GetElectionsAjax();
 			$editURL = null;
+			$deleteURL = null;
 
 			$electionData = array();
 			foreach($elections as $election)
 			{
 				$editURL = site_url('elections/edit/' . $election['id']);
-				$actionButtons = "<a href='" . $editURL . "' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='#' class='btn btn-xs btn-danger'>Delete</a>";
+				$deleteURL = site_url('elections/delete/' . $election['id']);
+				$actionButtons = "<a href='" . $editURL . "' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='" . $deleteURL . "' class='btn btn-xs btn-danger'>Delete</a>";
 				$electionData[] = array(
 										  'election_name' => $election['election_name'],
 							 			  'college' => $election['description'],
@@ -155,7 +157,7 @@ class Admin extends CI_Controller {
 		if($this->input->is_ajax_request())
 		{
 			// grab the elelection they request
-			$election = $this->input->post('elections');
+			$election = 19;
 			$electionCollege = $this->election_model->GetElectionCollege($election);
 			$college = $electionCollege['description'];
 			$candidates = $this->election_model->GetElectionCandidates($election);
@@ -177,10 +179,13 @@ class Admin extends CI_Controller {
 			$candidateIndex = 0;
 			foreach($candidates as $candidate)
 			{
+				// generate a URL for the candidates avatar
+				$avatar = base_url() . $candidate['avatar'];
 				$electionResults['candidate'][$candidateIndex] = array(
 										  'candidate_first_name' => $candidate['first_name'],
 										  'candidate_last_name' => $candidate['last_name'],
-							 			  'votes' => $candidate['votes']
+							 			  'votes' => $candidate['votes'],
+							 			  'avatar' => $avatar
 										);
 				$candidateIndex++;
 			}

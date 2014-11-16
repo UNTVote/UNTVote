@@ -71,6 +71,21 @@ class Elections extends CI_Controller
         $this->load->view('templates/footer');
 	}
 
+	// Delete - deletes an election
+	// deletes any references of it from the database tables
+	// electionID - the election we are going to delete
+	public function delete($electionID)
+	{
+		if(!$this->ion_auth->is_admin())
+		{
+			redirect('/', 'refresh');
+		}
+		
+		$this->election_model->DeleteElection($electionID);
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect('admin/', 'refresh');
+	}
+
 	// Edit - Edits/updates a certain election
 	// electionID - the Election we are editing/updating
 	public function edit($electionID)
