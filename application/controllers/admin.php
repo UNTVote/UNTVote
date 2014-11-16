@@ -81,18 +81,31 @@ class Admin extends CI_Controller {
 	// used for ajax to return all the users in a json formatted string
 	function UserData()
 	{
-		header('Content-Type: application/json');
+		//header('Content-Type: application/json');
 
 		// do we have an ajax request
-		if($this->input->is_ajax_request())
-		{
+		//if($this->input->is_ajax_request())
+		//{
 			// grab all the users
 			$users = $this->user_model->GetsUsersAjax();
 
+			$userData = array();
+			foreach($users as $user)
+			{
+				$userData[] = array(
+									'first_name' => $user['first_name'],
+									'last_name'  => $user['last_name'],
+									'college'    => $user['college'],
+									'role'       => $user['role'],
+									'last_login' => date('m-d-Y', $user['last_login']),
+									'created_on' => date('m-d-Y', $user['created_on'])
+								);
+			}
+
 			// encode this array into json
-			$return = json_encode($users);
-			echo $return;
-		}
+			$return = json_encode($userData);
+			var_dump($return);
+		//}
 	}
 
 	// ElectionData
@@ -622,17 +635,8 @@ class Admin extends CI_Controller {
         // the cdn scripts
         $cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
         $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
-        // user avatar details
-        $config['upload_path'] = './assets/upload/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '100';
-        $config['max_width']  = '1024';
-        $config['max_height']  = '768';
-        $this->load->library('upload', $config);
 
-        $avatarUploaded = false;
-        $errors = null;
-
+        
         $this->data['title'] = "Edit User";
         $user = $this->ion_auth->user()->row();
         $title = $user->first_name . " | UNTVote";
@@ -642,6 +646,7 @@ class Admin extends CI_Controller {
         $colleges = $this->ion_auth->colleges()->result_array();
         $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
         $isCanddate = true;
+
         // check to see if the current user is a candidate to know to dispay that form or not
         if($this->ion_auth->in_group('candidates'))
         {
