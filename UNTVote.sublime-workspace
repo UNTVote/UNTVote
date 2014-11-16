@@ -275,15 +275,23 @@
 			"file": "application/controllers/elections.php",
 			"settings":
 			{
-				"buffer_size": 12243,
+				"buffer_size": 12704,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/views/user/user-dashboard.php",
+			"file": "application/views/admin/admin-elections-results.php",
 			"settings":
 			{
-				"buffer_size": 5393,
+				"buffer_size": 5501,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/controllers/admin.php",
+			"settings":
+			{
+				"buffer_size": 40017,
 				"line_ending": "Windows"
 			}
 		}
@@ -317,21 +325,24 @@
 	[
 		"/C/xampp/htdocs/UNTVote",
 		"/C/xampp/htdocs/UNTVote/application",
+		"/C/xampp/htdocs/UNTVote/application/controllers",
 		"/C/xampp/htdocs/UNTVote/application/language",
-		"/C/xampp/htdocs/UNTVote/application/language/english",
 		"/C/xampp/htdocs/UNTVote/application/views",
+		"/C/xampp/htdocs/UNTVote/application/views/admin",
 		"/C/xampp/htdocs/UNTVote/application/views/user"
 	],
 	"file_history":
 	[
-		"/C/xampp/htdocs/UNTVote/application/controllers/admin.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-details.php",
+		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
+		"/C/xampp/htdocs/UNTVote/application/views/pages/help.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/contact.php",
+		"/C/xampp/htdocs/UNTVote/application/controllers/admin.php",
+		"/C/xampp/htdocs/UNTVote/application/views/pages/contact-us.php",
+		"/C/xampp/htdocs/UNTVote/application/config/email.php",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/footer.php",
 		"/C/xampp/htdocs/UNTVote/application/views/pages/home.php",
-		"/C/xampp/htdocs/UNTVote/application/views/pages/contact-us.php",
 		"/C/xampp/htdocs/UNTVote/application/config/routes.php",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-details.php",
-		"/C/xampp/htdocs/UNTVote/application/views/pages/help.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/pages.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/forgot-password.php",
 		"/C/xampp/htdocs/UNTVote/application/language/english/ion_auth_lang.php",
@@ -364,7 +375,6 @@
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-elections-results.html",
 		"/C/xampp/htdocs/UNTVote/application/views/templates/scripts_custom.php",
 		"/C/xampp/htdocs/UNTVote/application/views/user/user-elections-browse.php",
-		"/C/xampp/htdocs/UNTVote/application/views/user/user-dashboard.php",
 		"/C/xampp/htdocs/UNTVote/application/controllers/index.html",
 		"/C/xampp/htdocs/UNTVote/application/views/admin/admin-users-manage.php",
 		"/C/xampp/htdocs/UNTVote/application/libraries/Ion_auth.php",
@@ -448,7 +458,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -457,15 +467,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12243,
+						"buffer_size": 12704,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6415,
-								6415
+								2762,
+								2762
 							]
 						],
 						"settings":
@@ -474,27 +484,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1747.0,
+						"translation.y": 560.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/views/user/user-dashboard.php",
+					"file": "application/views/admin/admin-elections-results.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5393,
+						"buffer_size": 5501,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1896,
-								1896
+								1073,
+								1073
 							]
 						],
 						"settings":
@@ -503,11 +513,40 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/controllers/admin.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 40017,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6439,
+								6439
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 910.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

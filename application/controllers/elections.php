@@ -67,10 +67,13 @@ class Elections extends CI_Controller
         	$elections = $this->election_model->GetElectionsByUser($user->id, 'Closed');
         }
 
+        $numberElections = count($elections);
+
         $scripts = array('vendor/chart.min.js', 'vendor/pdfmake.min.js', 'vendor/vfs_fonts.js', 'admin-elections-results.js');
 
         $this->data['scripts'] = $scripts;
         $this->data['elections'] = $elections;
+        $this->data['numberElections'] = $numberElections;
 
         $this->load->view('templates/header_user', $this->data);
         if($this->ion_auth->is_admin())
