@@ -1,12 +1,12 @@
-        
+
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
-          
+
           <div class="row fade-on-load" hidden>
           <?php echo $message;?>
             <div class="col-xs-12">
-              
+
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Overview</h3>
@@ -14,16 +14,16 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <a href="<?=site_url('notifications/')?>"><h4><span class="info-circle info-circle-red"><?=$numberNotifications?></span> Approval requests</h4></a>
+                      <a class="no-underline" href="<?=site_url('notifications/')?>"><h4><span class="info-circle info-circle-red"><?=$numberNotifications?></span> Approval requests</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <a href="<?=site_url('admin/manage_users')?>"><h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4></a>
+                      <a class="no-underline" href="<?=site_url('admin/manage_users')?>"><h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <a href="<?=site_url('admin/manage_elections/')?>"><h4><span class="info-circle info-circle-green"><?=$numberActiveElections?></span> Active elections</h4></a>
+                      <a class="no-underline" href="<?=site_url('admin/manage_elections/')?>"><h4><span class="info-circle info-circle-green"><?=$numberActiveElections?></span> Active elections</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <a href="<?=site_url('admin/manage_elections')?>"><h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4></a>
+                      <a class="no-underline" href="<?=site_url('admin/manage_elections')?>"><h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4></a>
                     </div>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                       </thead>
                       <tbody>
                         <?php foreach ($activeElections as $activeElection) : ?>
-                          <?php 
+                          <?php
                             $totalVotes = $activeElection['total_votes'];
                             $percentage = 0;
                             if($totalVotes == 0)
@@ -64,7 +64,7 @@
                           <td><?=date("m-d-Y", strtotime($activeElection['end_time'])) ?></td>
                           <td>
                             <div class="progress" style="margin-bottom: 0px;">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100" 
+                              <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100"
                                 style="width:<?=$percentage?>%;">
                                 <?=$activeElection['total_votes']?> / <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                             </div>
@@ -77,7 +77,7 @@
                 </div>
               </div>
             <?php endif?>
-              
+
               <?php if($numberUpcomingElections > 0):?>
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -110,10 +110,10 @@
                 </div>
               </div>
             <?php endif?>
-              
+
             </div>
           </div>
-                  
+
         </div>
       </div>
     </div>

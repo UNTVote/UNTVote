@@ -302,3 +302,7 @@ body {
 .text-muted-2x {
   color: #dbdbdb;
 }
+
+.no-underline:hover {
+  text-decoration: none;
+}
