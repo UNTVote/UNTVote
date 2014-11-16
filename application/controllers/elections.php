@@ -81,6 +81,34 @@ class Elections extends CI_Controller
         $this->load->view('templates/footer');
 	}
 
+	// livefeed- shows a livefeed of all the elections currently running
+	public function livefeed()
+	{
+		if(!$this->ion_auth->is_admin())
+		{
+			show_error("I'm sorry, you must be an administrator to view the live feed");
+		}
+
+		$user = $this->ion_auth->user()->row();
+        $this->data['user'] = $user;
+        $this->data['title'] = "Live Feed | UNTVote";
+
+        $elections = $this->election_model->GetElectionsByStatus('Active');
+
+        $scripts = array('vendor/chart.min.js', 'admin-elections-live-feed.js');
+
+        $this->data['scripts'] = $scripts;
+        $this->data['elections'] = $elections;
+
+        $this->load->view('templates/header_user', $this->data);
+        $this->load->view('templates/navigation_admin', $this->data);
+        $this->load->view('templates/sidebar_admin');
+        $this->load->view('admin/admin-elections-live-feed', $this->data);
+        $this->load->view('templates/scripts_main');
+        $this->load->view('templates/scripts_custom', $this->data);
+        $this->load->view('templates/footer');
+	}
+
 	// Delete - deletes an election
 	// deletes any references of it from the database tables
 	// electionID - the election we are going to delete
@@ -226,7 +254,14 @@ class Elections extends CI_Controller
 		{
 			$this->load->view('templates/header_user', $data);
 			$this->load->view('templates/navigation_user', $data);
-			$this->load->view('templates/sidebar_user');
+			if($this->ion_auth->is_admin())
+			{
+				$this->load->view('templates/sidebar_admin');
+			}
+			else
+			{
+				$this->load->view('templates/sidebar_user');
+			}
 			$this->load->view('user/user-elections-details', $data);
 			$this->load->view('templates/scripts_main');
 			$this->load->view('templates/footer');

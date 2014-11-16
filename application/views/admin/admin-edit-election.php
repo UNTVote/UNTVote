@@ -249,7 +249,8 @@
                     <?php echo form_hidden('electionID', $election['id']);?>
                     <!-- Submit button -->
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>&nbsp
+                      <a href="<?=site_url('elections/delete/' . $election['id'])?>" class="btn btn-danger">Delete</a>
                     </div>
                   </form>
                 </div>

@@ -37,8 +37,32 @@ class Pages extends CI_Controller
 		// load the views based on whether it's the home page or terms of service page
 		if($page == 'terms-of-service')
 		{
-			$this->load->view('templates/header_user', $data);
-        	$this->load->view('templates/navigation_login', $data);
+			$data['title'] = "Terms of Service | UNTVote";
+			$this->load->view('templates/header_login', $data);
+        	$this->load->view('templates/navigation_forgot', $data);
+		}
+		elseif($page == 'help')
+		{
+			$data['title'] = 'Help | UNTVote';
+			if($this->ion_auth->logged_in())
+			{
+				$data['user'] = $this->ion_auth->user()->row();
+				$this->load->view('templates/header_user', $data);
+				$this->load->view('templates/navigation_user', $data);
+				if($this->ion_auth->is_admin())
+				{
+					$this->load->view('templates/sidebar_admin');
+				}
+				else
+				{
+					$this->load->view('templates/sidebar_user');
+				}
+			}
+			else
+			{
+				$this->load->view('templates/header_login', $data);
+        		$this->load->view('templates/navigation_forgot', $data);
+			}
 		}
 		else
 		{

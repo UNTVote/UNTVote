@@ -6,7 +6,7 @@
           <br>
 
           <div class="col-xs-12 col-sm-10 block-center">
-            <form role="form" data-parsley-validate>
+            <form method="post" accept-charset="utf-8" action="<?=site_url('contact/SendMail')?>" class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
               <div class="form-group">
                 <label>Name</label>
                 <div class="row">
@@ -25,7 +25,7 @@
               </div>
               <div class="form-group">
                 <label>Message</label>
-                <textarea class="form-control" rows="5" placeholder="Your message or question" data-parsley-trigger="keyup" data-parsley-minlength="50"></textarea>
+                <textarea name="message" class="form-control" rows="5" placeholder="Your message or question" data-parsley-trigger="keyup" data-parsley-minlength="50"></textarea>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Send</button>

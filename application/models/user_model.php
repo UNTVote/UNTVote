@@ -34,4 +34,18 @@ class User_Model extends CI_Model
                                     AND users_colleges.user_id=users.id AND users_colleges.college_id=colleges.id AND users.id = " . $userID);
         return $query->row_array()['description'];
     }
+
+    // DeleteUser - deletes the user from all the election tables
+    // userID - the user to delete
+    public function DeleteUser($userID)
+    {
+        $this->db->where('user_id', $userID);
+        $this->db->delete('voters');
+
+        $this->db->where('candidate_id', $userID);
+        $this->db->delete('election_candidates');
+
+        $this->db->where('sender_id', $userID);
+        $this->db->delete('admin_notifications');
+    }
 }

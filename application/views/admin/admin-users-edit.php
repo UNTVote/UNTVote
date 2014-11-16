@@ -103,7 +103,7 @@
                               </div>
                               <div class="col-xs-12 visible-xs">&nbsp;</div>
                               <div class="col-xs-12 col-sm-6 col-sm-pull-6">
-                                <button class="btn btn-danger btn-block">Delete</button>
+                                <a href="<?=site_url('admin/delete_user/' . $user->id)?>" class="btn btn-danger btn-block">Delete</a>
                               </div>
                             </div>
                           </div>

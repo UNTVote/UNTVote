@@ -130,8 +130,7 @@ class Admin extends CI_Controller {
 			foreach($elections as $election)
 			{
 				$editURL = site_url('elections/edit/' . $election['id']);
-				$deleteURL = site_url('elections/delete/' . $election['id']);
-				$actionButtons = "<a href='" . $editURL . "' class='btn btn-xs btn-primary'>Edit</a>&nbsp;<a href='" . $deleteURL . "' class='btn btn-xs btn-danger'>Delete</a>";
+				$actionButtons = "<a href='" . $editURL . "' class='btn btn-xs btn-primary'>Edit</a>";
 				$electionData[] = array(
 										  'election_name' => $election['election_name'],
 							 			  'college' => $election['description'],
@@ -741,6 +740,15 @@ class Admin extends CI_Controller {
 		$this->load->view('templates/scripts_main');
 		$this->load->view('templates/scripts_custom', $data);
 		$this->load->view('templates/footer');
+	}
+
+	// deletes a user
+	// userID - the suer to delete
+	function delete_user($userID)
+	{
+		$this->ion_auth->delete_user($userID);
+		$this->user_model->DeleteUser($userID);
+		redirect('admin/manage_users', 'refresh');
 	}
 
 	//edit a user

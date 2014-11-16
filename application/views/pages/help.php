@@ -1,59 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
 
-    <title>Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-    <!-- Custom styles -->
-    <link href="../../../assets/css/style-main.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <!-- Navigation -->
-    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-5">
-            <a href="#"><img class="navbar-brand" src="../../../assets/img/UNTVote-logo.png" alt="UNTVote"></a>
-          </div>
-          <div class="col-xs-7 text-right">
-            <label class="profile-name">Username</label>
-            <div class="btn-group">
-              <img src="../../../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
-              <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
-                <li><a href="#">Porfile</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <br>
         <!-- Main body content -->
         <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
           <h1>Help &amp; support</h1>
           <hr>
 
-          <p>Below you will find a curated list of basic how-to topics. If you can't find what you are looking for please submit your question through our <a href="#" alt="Contact page">contact page.</a></p>
+          <p>Below you will find a curated list of basic how-to topics. If you can't find what you are looking for please submit your question through our <a href="<?=site_url('contact/')?>" alt="Contact page">contact page.</a></p>
 
 
           <h2 class="text-muted-2x">Accounts</h2>
@@ -111,7 +62,7 @@
               </div>
               <div id="changeAccount" class="panel-collapse collapse" role="tabpanel" aria-labelledby="changeAccount">
                 <div class="panel-body">
-                  Once you are signed into your account click on your name on the top right corner. Click on "Profile" from the menu. On the following page you will be able change your name, email address, password, college and your avatar. If you made and changes click on "Save changes" to apply those changes.
+                  Once you are signed into your account click on your name on the top right corner. Click on "Profile" from the menu. On the following page you will be able change your name, email address, password, college and your avatar. If you made any changes click on "Save changes" to apply those changes.
                 </div>
               </div>
             </div>
@@ -232,26 +183,3 @@
         <br><br>
       </div>
     </div>
-
-    <!-- Footer area -->
-    <div class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-6">
-            <p class="footer-text">&copy; 2014 UNT Vote</p>
-          </div>
-          <div class="col-xs-6 text-right">
-            <a href="#" class="footer-text">Contact</a>
-            &nbsp;
-            <a href="#" class="footer-text">Help</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- All scripts go below this area -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="../../../assets/js/app.js"></script>
-  </body>
-</html>

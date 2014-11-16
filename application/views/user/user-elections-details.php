@@ -44,7 +44,7 @@
                       <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote...</a>
                     </div>
                     <div class="col-xs-12" <?=$electionClosed?>>
-                      <h5 class='text-muted text-center'>Please come back on <?=date("m-d-Y", strtotime($election['start_time'])) ?> to cast your vote</h5>
+                      <div class='alert alert-warning'>Please come back on <?=date("m-d-Y", strtotime($election['start_time'])) ?> to cast your vote</div>
                     </div>
                     <div class="col-xs-12" <?=$viewElection?>>
                       <h4>Cast your vote:</h4>

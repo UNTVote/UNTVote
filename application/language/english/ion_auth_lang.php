@@ -97,3 +97,6 @@ $lang['notification_approval_notsent'] = 'We already have your request; You will
 
 // Candidate profile
 $lang['candidate_profile_updated'] = 'Your candidate information has been updated';
+
+// contact us 
+$lang['email_sent'] = 'Thank you for contacting us!  We wil get back to you as soon as we can';

@@ -8,7 +8,7 @@
                 <ul class="nav-sidebar-sub-menu">
                   <li><?=anchor('admin/manage_elections', 'Manage')?></li>
                   <li><?=anchor('elections/results', 'Results')?></li>
-                  <li><a href="#">Live Feed</a></li>
+                  <li><?=anchor('elections/livefeed', 'Live Feed')?></li>
                 </ul>
               </div>
             </li>

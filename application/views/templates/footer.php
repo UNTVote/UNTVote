@@ -6,9 +6,9 @@
             <p class="footer-text">&copy; 2014 UNT Vote</p>
           </div>
           <div class="col-xs-6 text-right">
-            <a href="#" class="footer-text">Contact</a>
+            <a href="<?=site_url('contact/')?>" class="footer-text">Contact</a>
             &nbsp;
-            <a href="#" class="footer-text">Help</a>
+            <a href="<?=site_url('/help')?>" class="footer-text">Help</a>
           </div>
         </div>
       </div>
