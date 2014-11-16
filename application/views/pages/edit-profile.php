@@ -30,8 +30,11 @@
                       <div class="col-xs-12 col-md-9">
                         <form method="post" accept-charset="utf-8" action="<?=site_url('user/edit_user/' . $user->id)?>" role="form" enctype="multipart/form-data" data-parsley-validate>
                           <div class="form-group">
-                          <label>User Avatar</label>
+                            <label>Avatar</label>
                             <input type="file" name="avatar" id="avatar">
+                          </div>
+                          <br>
+                          <div class="form-group">
                             <label>Name</label>
                             <div class="row">
                               <div class="col-sm-5">
@@ -41,7 +44,6 @@
                                 <input name="lastName" type="text" class="form-control" value="<?=$user->last_name?>" placeholder="Last name" data-parsley-trigger="keyup" required>
                               </div>
                             </div>
-
                           </div>
                           <div class="form-group">
                             <label>College</label>

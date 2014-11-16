@@ -1,5 +1,5 @@
-
         <!-- Main body content -->
+
         <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
           <h1>Help &amp; support</h1>
           <hr>
@@ -180,6 +180,6 @@
             </div>
           </div>
         </div>
-        <br><br>
+
       </div>
     </div>
