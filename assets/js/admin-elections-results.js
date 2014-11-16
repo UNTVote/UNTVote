@@ -5,7 +5,7 @@ function createChart() {
   var candidates = [];
   var voteData = [];
 
-  if (electionResults.total_candidates > 1) {
+  if (electionResults.total_candidates >= 1) {
     $("#resultsChart").show();
     // Get all candidates to an array
     $.each(electionResults.candidate, function(key,value) {
@@ -53,7 +53,7 @@ function populateResults() {
   $('#electionResultsPanel').fadeOut(500);
 
   setTimeout(function() {
-   if (electionResults.total_candidates > 1) {
+   if (electionResults.total_candidates >= 1) {
 
       // Sort candidates based on their votes (Highest votes first)
       electionResults.candidate.sort(function(a,b) {
@@ -61,7 +61,12 @@ function populateResults() {
       });
 
       // Add markup for the candidates
-      $('#candidates').prepend('<div class="col-xs-12"><ul class="list-inline election-winners"><li><h1>1.</h1></li><li><img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70"></li><li><ul class="list-unstyled"><li><H4>' + electionResults.candidate[0].candidate_first_name + " " + electionResults.candidate[0].candidate_last_name + '</H4></li><li class="text-muted">' + electionResults.candidate[0].votes + ' votes</li></ul></li></ul></div><div class="col-xs-12"><ul class="list-inline election-winners"><li><h1>2.</h1></li><li><img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70"></li><li><ul class="list-unstyled"><li><H4>' + electionResults.candidate[1].candidate_first_name + " " + electionResults.candidate[1].candidate_last_name + '</H4></li><li class="text-muted">' + electionResults.candidate[1].votes + ' votes</li></ul></li></ul></div>');
+     if (electionResults.total_candidates === 1) {
+       $('#candidates').prepend('<div class="col-xs-12"><ul class="list-inline election-winners"><li><h1>1.</h1></li><li><img src="' + electionResults.candidate[0].avatar + '" class="img-circle img-thumbnail" width="70"></li><li><ul class="list-unstyled"><li><H4>' + electionResults.candidate[0].candidate_first_name + " " + electionResults.candidate[0].candidate_last_name + '</H4></li><li class="text-muted">' + electionResults.candidate[0].votes + ' votes</li></ul></li></ul></div>');
+     }
+     else {
+      $('#candidates').prepend('<div class="col-xs-12"><ul class="list-inline election-winners"><li><h1>1.</h1></li><li><img src="' + electionResults.candidate[0].avatar + '" class="img-circle img-thumbnail" width="70"></li><li><ul class="list-unstyled"><li><H4>' + electionResults.candidate[0].candidate_first_name + " " + electionResults.candidate[0].candidate_last_name + '</H4></li><li class="text-muted">' + electionResults.candidate[0].votes + ' votes</li></ul></li></ul></div><div class="col-xs-12"><ul class="list-inline election-winners"><li><h1>2.</h1></li><li><img src="' + electionResults.candidate[1].avatar + '" class="img-circle img-thumbnail" width="70"></li><li><ul class="list-unstyled"><li><H4>' + electionResults.candidate[1].candidate_first_name + " " + electionResults.candidate[1].candidate_last_name + '</H4></li><li class="text-muted">' + electionResults.candidate[1].votes + ' votes</li></ul></li></ul></div>');
+     }
 
     }
 
