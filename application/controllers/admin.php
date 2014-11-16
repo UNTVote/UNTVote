@@ -732,7 +732,7 @@ class Admin extends CI_Controller {
 		$this->data['currentGroups'] = $currentGroups;
 		$this->data['colleges'] = $colleges;
 		$this->data['currentColleges'] = $currentColleges;
-        
+
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/navigation_admin', $data);
         $this->load->view('templates/sidebar_admin');
@@ -760,7 +760,7 @@ class Admin extends CI_Controller {
         $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
         $errors = null;
 
-        
+
         $this->data['title'] = "Edit User";
         $user = $this->ion_auth->user()->row();
         $title = $user->first_name . " | UNTVote";

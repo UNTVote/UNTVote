@@ -26,16 +26,21 @@ function populateUserTable() {
 			property: 'role',
 			sortable: true
 		},
-//        {
-//			label: 'Status',
-//			property: 'status',
-//			sortable: true
-//		},
-//		{
-//			label: 'Actions',
-//			property: 'actionButtons',
-//			sortable: false
-//		}
+        {
+			label: 'Member since',
+			property: 'created_on',
+			sortable: true
+		},
+        {
+			label: 'Last login',
+			property: 'last_login',
+			sortable: true
+		},
+		{
+			label: 'Actions',
+			property: 'action_buttons',
+			sortable: false
+		}
 	];
 
     var users = userData;
