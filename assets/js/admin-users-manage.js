@@ -96,6 +96,7 @@ function populateUserTable() {
 				return (
 					(item.first_name.toLowerCase().search(options.search)>=0) ||
                     (item.last_name.toLowerCase().search(options.search)>=0) ||
+                    (item.username.toLowerCase().search(options.search)>=0) ||
                     (item.college.toLowerCase().search(options.search)>=0) ||
                     (item.role.toLowerCase().search(options.search)>=0)
 				);
