@@ -67,7 +67,7 @@ class Admin extends CI_Controller {
         	$this->data['numberNotifications'] = $numberNotifications;
 			// set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            
+
             $this->_render_page('templates/header_user', $this->data);
             $this->_render_page('templates/navigation_admin', $this->data);
 			$this->_render_page('templates/sidebar_admin', $this->data);
@@ -121,7 +121,7 @@ class Admin extends CI_Controller {
 							  			  'actionButtons' => $actionButtons
 										);
 			}
-		
+
 			//encode it into json format
 			$return = json_encode($electionData);
 			echo $return;
@@ -156,17 +156,17 @@ class Admin extends CI_Controller {
 									 'total_voters' => $totalVoters,
 									 'total_candidates' => $totalCandidates,
 									 'category' => $college);
-			$candidateIndex = 1;
+			$candidateIndex = 0;
 			foreach($candidates as $candidate)
 			{
-				$electionResults['candidate' . $candidateIndex] = array(
+				$electionResults['candidate'][$candidateIndex] = array(
 										  'candidate_first_name' => $candidate['first_name'],
 										  'candidate_last_name' => $candidate['last_name'],
 							 			  'votes' => $candidate['votes']
 										);
 				$candidateIndex++;
 			}
-		
+
 			//encode it into json format
 			$return = json_encode($electionResults);
 			echo $return;
@@ -180,7 +180,7 @@ class Admin extends CI_Controller {
         // do we have a logged in user
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
-        
+
         // validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -209,14 +209,14 @@ class Admin extends CI_Controller {
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            
+
             $this->_render_page('templates/header_login', $this->data);
             $this->_render_page('templates/navigation_login', $this->data);
-            $this->_render_page('admin/login', $this->data); 
-			$this->_render_page('templates/scripts_main');   
-			$this->_render_page('templates/footer', $this->data);    
+            $this->_render_page('admin/login', $this->data);
+			$this->_render_page('templates/scripts_main');
+			$this->_render_page('templates/footer', $this->data);
         }
-        
+
     }
 
 	//log the user out
@@ -304,7 +304,7 @@ class Admin extends CI_Controller {
 	public function forgot_password()
 	{
 		$this->data['title'] = 'Forgot Password | UNTVote';
-		
+
 		// set the validation rules
 		$this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
 		if ($this->form_validation->run() == false)
@@ -323,7 +323,7 @@ class Admin extends CI_Controller {
 		{
 			// email validation
 			$identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
-	            if(empty($identity)) 
+	            if(empty($identity))
 				{
 		        	$this->ion_auth->set_message('forgot_password_email_not_found');
 		            $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -332,7 +332,7 @@ class Admin extends CI_Controller {
 
 			// run the forgotten password method to email an activation code to the user
 			$forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
-			
+
 			// if their were not errors redirect user to the login page
 			if ($forgotten)
 			{
@@ -586,7 +586,7 @@ class Admin extends CI_Controller {
 			$this->_render_page('admin/create_user', $this->data);
 		}
 	}
-	
+
 	// manage all the users
 	function manage_users()
 	{
@@ -605,7 +605,7 @@ class Admin extends CI_Controller {
         $this->data['title'] = $firstName . " | UNTVote";
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
-		
+
 		$this->_render_page('templates/header_manage_elections', $this->data);
 		$this->_render_page('templates/navigation_admin', $this->data);
 		$this->_render_page('templates/sidebar_admin');
@@ -679,7 +679,7 @@ class Admin extends CI_Controller {
 
             $email    = strtolower($this->input->post('email'));
             // append @my.unt.edu to the email
-            $email   .= '@my.unt.edu'; 
+            $email   .= '@my.unt.edu';
 
             $data = array(
                 'first_name' => $this->input->post('firstName'),
@@ -689,11 +689,11 @@ class Admin extends CI_Controller {
 
             $collegeData = $this->input->post('colleges');
 
-            if (isset($collegeData) && !empty($collegeData)) 
+            if (isset($collegeData) && !empty($collegeData))
             {
                 $this->ion_auth->remove_from_college('', $id);
 
-                foreach ($collegeData as $clg) 
+                foreach ($collegeData as $clg)
                 {
                     $this->ion_auth->add_to_college($clg, $id);
                 }
@@ -723,7 +723,7 @@ class Admin extends CI_Controller {
                         $avatarUploaded = true;
                     }
                 }
-            }   
+            }
 
             if ($this->form_validation->run() === TRUE)
             {
@@ -773,12 +773,12 @@ class Admin extends CI_Controller {
         $this->data['errors'] = $errors;
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
-        
+
         $this->_render_page('templates/header_user', $this->data);
         $this->_render_page('templates/navigation_admin', $this->data);
         $this->_render_page('templates/sidebar_admin');
         $this->_render_page('pages/edit-profile', $this->data);
-        $this->_render_page('templates/scripts_main');  
+        $this->_render_page('templates/scripts_main');
         $this->_render_page('templates/scripts_custom', $this->data);
         $this->_render_page('templates/footer');
     }
@@ -890,12 +890,12 @@ class Admin extends CI_Controller {
 			'type'  => 'text',
 			'value' => $this->form_validation->set_value('group_description', $group->description),
 		);
-        
+
         $this->_render_page('templates/header', $data);
         $this->_render_page('templates/admin_navigation', $data);
 		$this->_render_page('admin/edit_group', $this->data);
 	}
-	
+
 	// admin managing elections
 	function manage_elections()
 	{
@@ -914,7 +914,7 @@ class Admin extends CI_Controller {
         $this->data['title'] = $firstName . " | UNTVote";
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
-		
+
 		$this->_render_page('templates/header_manage_elections', $this->data);
 		$this->_render_page('templates/navigation_admin', $this->data);
 		$this->_render_page('templates/sidebar_admin');

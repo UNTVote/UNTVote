@@ -2,36 +2,36 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Results</h1>
           <br>
-          
+
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
-            
+
               <div class="row">
                 <div class="col-xs-12">
                   <label>Choose election</label>
-                  <select name="elections" class="form-control">
+                  <select name="elections" class="form-control" id="electionsList">
                   <?php foreach($elections as $election) : ?>
                     <option value="<?=$election['id']?>"><?=$election['election_name']?></option>
                   <?php endforeach?>
                   </select>
                 </div>
               </div>
-              
+
               <br>
-              
-              
-              <div class="panel panel-default">
-                <div class="panel-heading">              
-                  <h3 class="panel-title">Election XYZ <span class="text-muted">- (08/21/14 - 09/12/14)</span></h3>
-                  
-                  
+
+
+              <div class="panel panel-default" id="electionResultsPanel" hidden>
+                <div class="panel-heading">
+                  <h3 class="panel-title"><span id="electionName">Election XYZ</span> <span class="text-muted" id="electionDates">- (08/21/14 - 09/12/14)</span></h3>
+
+
                 </div>
-                
+
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-11 block-center">
                       <br>
-                      
+
                       <div class="row">
                         <div class="col-xs-12">
                           <canvas id="resultsChart" class="bar-chart"></canvas>
@@ -39,8 +39,9 @@
                       </div>
 
                       <br><br>
-                      
-                      <div class="row">
+
+                      <div class="row" id="candidates">
+<!--
                         <div class="col-xs-12">
                           <ul class="list-inline election-winners">
                             <li><h1>1.</h1></li>
@@ -65,39 +66,40 @@
                             </li>
                           </ul>
                         </div>
+-->
                       </div>
-                      
+
                       <h4 class="text-center">Statistics</h4>
                       <br>
-                      
+
                       <div class="row">
                         <div class="col-xs-12 col-sm-6">
                           <ul class="list-inline">
                             <li><strong>Total votes</strong></li>
-                            <li><p>35</p></li>
+                            <li><p id="totalVotes">0</p></li>
                           </ul>
                           <ul class="list-inline">
                             <li><strong>Registered voters</strong></li>
-                            <li><p>56</p></li>
+                            <li><p id="registeredVoters">0</p></li>
                           </ul>
                         </div>
                         <div class="col-xs-12 col-sm-6 text-right-sm">
                           <ul class="list-inline">
                             <li><strong>Total candidates:</strong></li>
-                            <li><p>3</p></li>
+                            <li><p id="totalCandidates">0</p></li>
                           </ul>
                           <ul class="list-inline">
                             <li><strong>Category:</strong></li>
-                            <li>College of engineering</li>
+                            <li id="electionCategory">Empty</li>
                           </ul>
                         </div>
                       </div>
-                      
+
                       <br>
 
                       <h4 class="text-center">Actions</h4>
                       <br>
-                      
+
                       <div class="row">
                         <div class="col-xs-12 col-sm-4">
                           <button class="btn btn-block btn-primary">
@@ -118,12 +120,11 @@
                         </div>
                       </div>
                       <br>
-                      
                     </div>
                   </div>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </div>
