@@ -157,7 +157,7 @@ class Admin extends CI_Controller {
 		if($this->input->is_ajax_request())
 		{
 			// grab the elelection they request
-			$election = 19;
+			$election = $this->input->post('elections');
 			$electionCollege = $this->election_model->GetElectionCollege($election);
 			$college = $electionCollege['description'];
 			$candidates = $this->election_model->GetElectionCandidates($election);
