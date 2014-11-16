@@ -8,8 +8,9 @@
 
               <div class="row">
                 <div class="col-xs-12">
-                  <label>Choose election</label>
+                  <label>Election</label>
                   <select name="elections" class="form-control" id="electionsList">
+                    <option value="" disabled selected>Choose election</option>
                   <?php foreach($elections as $election) : ?>
                     <option value="<?=$election['id']?>"><?=$election['election_name']?></option>
                   <?php endforeach?>
@@ -18,7 +19,6 @@
               </div>
 
               <br>
-
 
               <div class="panel panel-default" id="electionResultsPanel" hidden>
                 <div class="panel-heading">
