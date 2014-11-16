@@ -9,7 +9,7 @@
               <div id="collapseElections" class="panel-collapse collapse">
                 <ul class="nav-sidebar-sub-menu">
                   <li><a href="<?=site_url('elections/')?>">Browse</a></li>
-                  <li><a href="#">Results</a></li>
+                  <li><?=anchor('elections/results', 'Results')?></li>
                 </ul>
               </div>
             

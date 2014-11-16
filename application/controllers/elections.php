@@ -52,10 +52,20 @@ class Elections extends CI_Controller
 	public function results()
 	{
 		$firstName = $this->ion_auth->user()->row()->first_name;
-        $this->data['user'] = $this->ion_auth->user()->row();
+		$user = $this->ion_auth->user()->row();
+        $this->data['user'] = $user;
         $this->data['title'] = $firstName . " | UNTVote";
 
-        $elections = $this->election_model->GetElectionsByStatus('Closed');
+        // if the user is an admin show all the elections that are closed
+        if($this->ion_auth->is_admin())
+        {
+        	$elections = $this->election_model->GetElectionsByStatus('Closed');
+        }
+        else
+        {
+        	// only get them by the current logged in user
+        	$elections = $this->election_model->GetElectionsByUser($user->id, 'Closed');
+        }
 
         $scripts = array('vendor/chart.min.js', 'vendor/pdfmake.min.js', 'vendor/vfs_fonts.js', 'admin-elections-results.js');
 
