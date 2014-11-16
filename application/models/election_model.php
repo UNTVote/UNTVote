@@ -253,12 +253,15 @@ class Election_Model extends CI_Model
 		$this->db->where('id', $electionID);
 		$this->db->update('election', $data);
 
-		// for every candidate selected, add them to the election
-		foreach($candidates as $candidate)
+		if(isset($candidates) && !empty($candidates))
 		{
-			$this->AddCandidateToElection($candidate, $electionID);
+			// for every candidate selected, add them to the election
+			foreach($candidates as $candidate)
+			{
+				$this->AddCandidateToElection($candidate, $electionID);
+			}
 		}
-		$this->ion_auth_model->set_message('edit_election_successful');
+			$this->ion_auth_model->set_message('edit_election_successful');
 	}
 
 	// RemoveCandidate - Removes the given candidate from the given election
