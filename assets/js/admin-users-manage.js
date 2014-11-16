@@ -17,6 +17,11 @@ function populateUserTable() {
 			sortable: true
 		},
         {
+			label: 'Username',
+			property: 'username',
+			sortable: true
+		},
+        {
 			label: 'College',
 			property: 'college',
 			sortable: true
