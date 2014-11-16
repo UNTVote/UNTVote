@@ -50,9 +50,10 @@ function populateResults() {
   // Empty the candidate list
   $('#candidates').empty();
 
-  $('#electionResultsPanel').fadeOut(500, function() {
+  $('#electionResultsPanel').fadeOut(500);
 
-    if (electionResults.total_candidates > 1) {
+  setTimeout(function() {
+   if (electionResults.total_candidates > 1) {
 
       // Sort candidates based on their votes (Highest votes first)
       electionResults.candidate.sort(function(a,b) {
@@ -72,7 +73,8 @@ function populateResults() {
     $('#electionCategory').html(electionResults.category);
 
     $('#electionResultsPanel').fadeIn(500);
-  });
+  }, 800);
+
 
   // Show chart after the fade animations
   setTimeout(function (){
