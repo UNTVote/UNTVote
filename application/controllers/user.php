@@ -2,7 +2,7 @@
 
 // User Controller class
 // What all the general users can do
-class User extends CI_Controller 
+class User extends CI_Controller
 {
     function __construct()
     {
@@ -52,13 +52,13 @@ class User extends CI_Controller
                                           'actionButtons' => $actionButtons
                                         );
             }
-        
+
             //encode it into json format
             $return = json_encode($electionData);
             echo $return;
         }
     }
-    
+
     public function index()
     {
         // if the user is not logged in take them to the log in page
@@ -74,7 +74,7 @@ class User extends CI_Controller
             $upcomingElections = $this->election_model->GetElectionsByUser($user->id, 'Upcoming');
             // number of users in the voters group
             $numberVoters = $this->election_model->GetTotalVoters();
-            
+
             $this->data['user'] = $user;
             $this->data['title'] = $title;
             $this->data['activeElections'] = $activeElections;
@@ -92,17 +92,17 @@ class User extends CI_Controller
 			$this->_render_page('templates/sidebar_user', $this->data);
             $this->_render_page('user/user-dashboard', $this->data);
 			$this->_render_page('templates/scripts_main');
-			$this->_render_page('templates/footer');            
+			$this->_render_page('templates/footer');
         }
     }
-    
+
     public function login()
     {
         $this->data['title'] = "Login | UNTVote";
         // do we have a logged in user
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
-        
+
         // validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -131,35 +131,35 @@ class User extends CI_Controller
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            
+
             $this->_render_page('templates/header_login', $this->data);
             $this->_render_page('templates/navigation_login', $this->data);
-            $this->_render_page('user/login', $this->data);  
-			$this->_render_page('templates/scripts_main');   
-			$this->_render_page('templates/footer', $this->data);     
+            $this->_render_page('user/login', $this->data);
+			$this->_render_page('templates/scripts_main');
+			$this->_render_page('templates/footer', $this->data);
         }
-        
+
     }
 
     public function logout()
     {
         $this->data['title'] = "Logout | UNTVote";
-        
+
         // logout the user
         $logout = $this->ion_auth->logout();
-        
+
         // redirect to homep age
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('user/login', 'refresh');
     }
-    
+
     public function register()
     {
         $this->data['title'] = "Register | UNTVote";
         // do we have a logged in user
         $this->data['loggedIn'] = $this->ion_auth->logged_in();
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
-        
+
         // get all the colleges from the database
         $colleges = $this->college_model->GetCollegesNotLike('All');
 
@@ -184,19 +184,19 @@ class User extends CI_Controller
             $username = strtolower($this->input->post('euid'));
             $email    = strtolower($this->input->post('email'));
             // append @my.unt.edu to the email
-            $email   .= '@my.unt.edu'; 
+            $email   .= '@my.unt.edu';
             $password = $this->input->post('password');
- 				
-			// all the colleges the user has picked.     
+
+			// all the colleges the user has picked.
             $collegeData = $this->input->post('colleges');
-            
+
 			// additional data to be send to the users table
 			$additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name'  => $this->input->post('last_name'),
             );
         }
-		
+
 		// check to see if we are creating the user
         if ($this->form_validation->run() == true && $this->ion_auth->registerUser($username, $password, $email, $collegeData, $additional_data))
         {
@@ -213,11 +213,11 @@ class User extends CI_Controller
 
             $this->data['options'] = $colleges;
             $this->data['scripts'] = $scripts;
-            
+
             $this->_render_page('templates/header', $this->data);
             $this->_render_page('templates/navigation', $this->data);
             $this->_render_page('pages/home', $this->data);
-			$this->_render_page('templates/scripts_main');  
+			$this->_render_page('templates/scripts_main');
 			$this->_render_page('templates/scripts_custom', $this->data);
 			$this->_render_page('templates/footer', $this->data);
         }
@@ -268,7 +268,6 @@ class User extends CI_Controller
         $user = $this->ion_auth->user($id)->row();
         $groups = $this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
-        $colleges = $this->ion_auth->colleges()->result_array();
         $currentCollege = $this->ion_auth->get_users_colleges($id)->result();
 
         //validate form input
@@ -287,7 +286,7 @@ class User extends CI_Controller
 
             $email    = strtolower($this->input->post('email'));
             // append @my.unt.edu to the email
-            $email   .= '@my.unt.edu'; 
+            $email   .= '@my.unt.edu';
 
             $data = array(
                 'first_name' => $this->input->post('firstName'),
@@ -297,11 +296,11 @@ class User extends CI_Controller
 
             $collegeData = $this->input->post('colleges');
 
-            if (isset($collegeData) && !empty($collegeData)) 
+            if (isset($collegeData) && !empty($collegeData))
             {
                 $this->ion_auth->remove_from_college('', $id);
 
-                foreach ($collegeData as $clg) 
+                foreach ($collegeData as $clg)
                 {
                     $this->ion_auth->add_to_college($clg, $id);
                 }
@@ -331,7 +330,7 @@ class User extends CI_Controller
                         $avatarUploaded = true;
                     }
                 }
-            }   
+            }
 
             if ($this->form_validation->run() === TRUE)
             {
@@ -381,21 +380,21 @@ class User extends CI_Controller
         $this->data['errors'] = $errors;
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
-        
+
         $this->_render_page('templates/header_user', $this->data);
         $this->_render_page('templates/navigation_user', $this->data);
         $this->_render_page('templates/sidebar_user');
         $this->_render_page('pages/edit-profile', $this->data);
-        $this->_render_page('templates/scripts_main');  
+        $this->_render_page('templates/scripts_main');
         $this->_render_page('templates/scripts_custom', $this->data);
         $this->_render_page('templates/footer');
     }
-	
+
 	//forgot password
 	public function forgot_password()
 	{
 		$this->data['title'] = 'Forgot Password | UNTVote';
-		
+
 		// set the validation rules
 		$this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
 		if ($this->form_validation->run() == false)
@@ -408,13 +407,13 @@ class User extends CI_Controller
 			$this->_render_page('templates/navigation_forgot', $this->data);
 			$this->_render_page('user/forgot-password', $this->data);
 			$this->_render_page('templates/scripts_main');
-			$this->_render_page('templates/footer', $this->data); 
+			$this->_render_page('templates/footer', $this->data);
 		}
 		else
 		{
 			// email validation
 			$identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
-	            if(empty($identity)) 
+	            if(empty($identity))
 				{
 		        	$this->ion_auth->set_message('forgot_password_email_not_found');
 		            $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -423,7 +422,7 @@ class User extends CI_Controller
 
 			// run the forgotten password method to email an activation code to the user
 			$forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
-			
+
 			// if their were not errors redirect user to the login page
 			if ($forgotten)
 			{
@@ -437,7 +436,7 @@ class User extends CI_Controller
 			}
 		}
 	}
-	
+
 	//reset password - final step for forgotten password
 	public function reset_password($code = NULL)
 	{
@@ -476,7 +475,7 @@ class User extends CI_Controller
 				$this->_render_page('templates/header_login', $this->data);
 				$this->_render_page('templates/navigation_forgot', $this->data);
 				$this->_render_page('user/reset-password', $this->data);
-				$this->_render_page('templates/scripts_main'); 
+				$this->_render_page('templates/scripts_main');
 				$this->_render_page('templates/footer', $this->data);
 			}
 			else
@@ -524,14 +523,14 @@ class User extends CI_Controller
     function _render_page($view, $data=null, $render=false)
     {
         $this->viewData = (empty($data)) ? $this->data : $data;
-        
+
         $viewHTML = $this->load->view($view, $this->viewData, $render);
         if(!$render)
         {
             return $viewHTML;
         }
     }
-	
+
 	function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
@@ -542,7 +541,7 @@ class User extends CI_Controller
 
 		return array($key => $value);
 	}
-    
+
     function _valid_csrf_nonce()
     {
         if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&

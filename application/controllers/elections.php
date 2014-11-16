@@ -106,10 +106,13 @@ class Elections extends CI_Controller
 
         $elections = $this->election_model->GetElectionsByStatus('Active');
 
+        $numberElections = count($elections);
+
         $scripts = array('vendor/chart.min.js', 'admin-elections-live-feed.js');
 
         $this->data['scripts'] = $scripts;
         $this->data['elections'] = $elections;
+        $this->data['numberElections'] = $numberElections;
 
         $this->load->view('templates/header_user', $this->data);
         $this->load->view('templates/navigation_admin', $this->data);
