@@ -283,7 +283,7 @@
 			"file": "application/views/admin/admin-elections-results.php",
 			"settings":
 			{
-				"buffer_size": 5501,
+				"buffer_size": 5507,
 				"line_ending": "Windows"
 			}
 		},
@@ -458,7 +458,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -487,7 +487,7 @@
 						"translation.y": 560.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -496,15 +496,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5501,
+						"buffer_size": 5507,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1073,
-								1073
+								616,
+								616
 							]
 						],
 						"settings":
@@ -517,7 +517,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{

@@ -101,6 +101,7 @@ class Admin extends CI_Controller {
 									'last_name'  => $user['last_name'],
 									'college'    => $user['college'],
 									'role'       => $user['role'],
+									'username'   => $user['username'],
 									'last_login' => date('m-d-Y', $user['last_login']),
 									'created_on' => date('m-d-Y', $user['created_on']),
 									'action_buttons' => $actionButtons
