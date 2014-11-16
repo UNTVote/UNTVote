@@ -18,6 +18,7 @@ class Admin extends CI_Controller {
 		$this->load->model('election_model');
 		$this->load->model('notification_model');
 		$this->load->model('user_model');
+		$this->load->model('college_model');
 
 		$this->load->database();
 
@@ -81,31 +82,35 @@ class Admin extends CI_Controller {
 	// used for ajax to return all the users in a json formatted string
 	function UserData()
 	{
-		//header('Content-Type: application/json');
+		header('Content-Type: application/json');
 
 		// do we have an ajax request
-		//if($this->input->is_ajax_request())
-		//{
+		if($this->input->is_ajax_request())
+		{
 			// grab all the users
 			$users = $this->user_model->GetsUsersAjax();
+			$viewURL = null;
 
 			$userData = array();
 			foreach($users as $user)
 			{
+				$viewURL = site_url('admin/view_user/' . $user['user_id']);
+				$actionButtons = "<a href='" . $viewURL . "' class='btn btn-xs btn-primary'>Edit</a>";
 				$userData[] = array(
 									'first_name' => $user['first_name'],
 									'last_name'  => $user['last_name'],
 									'college'    => $user['college'],
 									'role'       => $user['role'],
 									'last_login' => date('m-d-Y', $user['last_login']),
-									'created_on' => date('m-d-Y', $user['created_on'])
+									'created_on' => date('m-d-Y', $user['created_on']),
+									'action_buttons' => $actionButtons
 								);
 			}
 
 			// encode this array into json
 			$return = json_encode($userData);
-			var_dump($return);
-		//}
+			echo $return;
+		}
 	}
 
 	// ElectionData
@@ -626,6 +631,111 @@ class Admin extends CI_Controller {
 		$this->_render_page('templates/scripts_main');
 		$this->_render_page('templates/scripts_custom', $this->data);
 		$this->_render_page('templates/footer');
+	}
+
+	// edit/view a user from the manage users table
+	function view_user($id)
+	{
+
+		$data['user'] = $this->ion_auth->user()->row();
+		$profile = $this->ion_auth->user($id)->row();
+		$data['title'] = $profile->first_name . "'s Profile | UNTVote";
+		$scripts = array('vendor/parsley.min.js');
+		$data['scripts'] = $scripts;
+
+		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+		{
+			redirect('auth', 'refresh');
+		}
+		$user = $this->ion_auth->user($id)->row();
+		// create a substring from the email, don't include the "@my.unt.edu"
+        $userEmail = substr($user->email, 0, -11);
+		$groups=$this->ion_auth->groups()->result_array();
+		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
+		$colleges = $this->college_model->GetCollegesNotLike('All');
+		$currentColleges = $this->ion_auth->get_users_colleges($id)->result();
+		//validate form input
+		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
+		$this->form_validation->set_rules('colleges', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
+
+		if (isset($_POST) && !empty($_POST))
+		{
+			// do we have a valid request?
+			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+			{
+				show_error($this->lang->line('error_csrf'));
+			}
+			$email    = strtolower($this->input->post('email'));
+            // append @my.unt.edu to the email
+            $email   .= '@my.unt.edu';
+			$data = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name'  => $this->input->post('last_name'),
+				'email'      => $email
+			);
+			// Only allow updating groups if user is admin
+			if ($this->ion_auth->is_admin())
+			{
+				//Update the groups user belongs to
+				$groupData = $this->input->post('groups');
+				if (isset($groupData) && !empty($groupData)) {
+					$this->ion_auth->remove_from_group('', $id);
+					foreach ($groupData as $grp) {
+						$this->ion_auth->add_to_group($grp, $id);
+					}
+				}
+			}
+
+			if ($this->ion_auth->is_admin())
+			{
+				//Update the colleges user belongs to
+				$collegeData = $this->input->post('colleges');
+				if (isset($collegeData) && !empty($collegeData)) {
+					$this->ion_auth->remove_from_college('', $id);
+					foreach ($collegeData as $clg) {
+						$this->ion_auth->add_to_college($clg, $id);
+					}
+				}
+				// add them back to the all college
+				$this->ion_auth->add_to_college(15, $id);
+			}
+			if ($this->form_validation->run() === TRUE)
+			{
+				$this->ion_auth->update($user->id, $data);
+				//check to see if we are creating the user
+				//redirect them back to the admin page
+				$this->session->set_flashdata('message', "User Saved");
+				if ($this->ion_auth->is_admin())
+				{
+					redirect('admin/manage_users', 'refresh');
+				}
+				else
+				{
+					redirect('/', 'refresh');
+				}
+			}
+		}
+		//display the edit user form
+		$this->data['csrf'] = $this->_get_csrf_nonce();
+		//set the flash data error message if there is one
+		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+		//pass the user to the view
+		$this->data['user'] = $user;
+		$this->data['userEmail'] = $userEmail;
+		$this->data['groups'] = $groups;
+		$this->data['currentGroups'] = $currentGroups;
+		$this->data['colleges'] = $colleges;
+		$this->data['currentColleges'] = $currentColleges;
+        
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/navigation_admin', $data);
+        $this->load->view('templates/sidebar_admin');
+		$this->_render_page('admin/admin-users-edit', $this->data);
+		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/scripts_custom', $data);
+		$this->load->view('templates/footer');
 	}
 
 	//edit a user

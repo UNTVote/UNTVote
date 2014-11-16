@@ -14,4 +14,12 @@ class College_Model extends CI_Model
     	$query = $this->db->get('colleges');
     	return $query->result_array();
     }
+
+    // GetCollegesNotLike - selects all colleges from the database that are not like a string
+    // $string - the college that we do not want to include
+    public function GetCollegesNotLike($string)
+    {
+        $query = $this->db->select('*')->from('colleges')->not_like('description', $string)->get();
+        return $query->result_array();
+    }
 }

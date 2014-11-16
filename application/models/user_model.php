@@ -14,7 +14,7 @@ class User_Model extends CI_Model
     // Returns first_name, last_name, college, role
     public function GetsUsersAjax()
     {
-    	$query = $this->db->query("SELECT users.first_name,users.last_name,users.last_login,users.created_on,colleges.description AS college,groups.name as role 
+    	$query = $this->db->query("SELECT users.first_name, users_colleges.user_id, users.last_name,users.last_login,users.created_on,colleges.description AS college,groups.name as role 
     							  FROM users,colleges,users_colleges,groups,users_groups 
     							  WHERE colleges.description NOT LIKE '%All%' 
     							  AND users_colleges.user_id=users.id 
