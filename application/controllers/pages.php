@@ -9,6 +9,7 @@ class Pages extends CI_Controller
         parent::__construct();
         
         $this->load->library('ion_auth');
+        $this->load->model('college_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
     }
@@ -29,7 +30,7 @@ class Pages extends CI_Controller
         $data['title'] = ucfirst($page . ' | UNTVote');
         
 		// get all the colleges from the database
-        $data['options'] = $this->ion_auth->colleges()->result_array();
+        $data['options'] = $this->college_model->GetCollegesNotLike('All');
 		// validation errors for the registration form
 		$data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 		$data['scripts'] = $scripts;

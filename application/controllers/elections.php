@@ -80,7 +80,7 @@ class Elections extends CI_Controller
 		{
 			redirect('/', 'refresh');
 		}
-		
+
 		$this->election_model->DeleteElection($electionID);
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
 		redirect('admin/', 'refresh');
@@ -261,7 +261,7 @@ class Elections extends CI_Controller
 		$title = "New Election";
 
 		// get all the colleges for the admin to select from
-		$colleges = $this->ion_auth->colleges()->result_array();
+		$colleges = $this->college_model->GetColleges();
 		// get the users that can be candidates
 		$candidates = $this->ion_auth->users(3)->result_array();
 

@@ -18,6 +18,7 @@ class User extends CI_Controller
 
         // model loads
         $this->load->model('election_model');
+        $this->load->model('college_model');
 
         $this->load->database();
 
@@ -160,7 +161,7 @@ class User extends CI_Controller
         $this->data['isAdmin'] = $this->ion_auth->is_admin();
         
         // get all the colleges from the database
-        $colleges = $this->ion_auth->colleges()->result_array();
+        $colleges = $this->college_model->GetCollegesNotLike('All');
 
         $tables = $this->config->item('tables','ion_auth');
 

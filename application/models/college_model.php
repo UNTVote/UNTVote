@@ -11,7 +11,7 @@ class College_Model extends CI_Model
     // GetColleges - Selects all the colleges from the database
     public function GetColleges()
     {
-    	$query = $this->db->get('colleges');
+    	$query = $this->db->select('*')->from('colleges')->order_by('description', 'asc')->get();
     	return $query->result_array();
     }
 
