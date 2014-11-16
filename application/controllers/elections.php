@@ -73,13 +73,14 @@ class Elections extends CI_Controller
         $this->data['elections'] = $elections;
 
         $this->load->view('templates/header_user', $this->data);
-        $this->load->view('templates/navigation_admin', $this->data);
         if($this->ion_auth->is_admin())
         {
+        	$this->load->view('templates/navigation_admin', $this->data);
         	$this->load->view('templates/sidebar_admin');
         }
         else
         {
+        	$this->load->view('templates/navigation_user', $this->data);
         	$this->load->view('templates/sidebar_user');
         }
         $this->load->view('admin/admin-elections-results', $this->data);
