@@ -1,17 +1,8 @@
-        <!-- Main body content -->
-        <?php if($this->ion_auth->logged_in()):?>
-          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
-          </div>
-      <?php else :?>
-         <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
+ <!-- Main body content -->
+<?php if($this->ion_auth->logged_in()):?>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-        <?php endif?>
+<?php endif?>
         <div class="col-xs-11 col-sm-10 col-md-8 col-lg-6 panel panel-default block-center fade-on-load" hidden>
-         <?php if($this->ion_auth->logged_in()):?>
-        </div>
-      <?php endif?>
           <h1>Help &amp; support</h1>
           <hr>
 
@@ -191,6 +182,8 @@
             </div>
           </div>
         </div>
-
+        <?php if($this->ion_auth->logged_in()):?>
+        </div>
+<?php endif?>
       </div>
     </div>
