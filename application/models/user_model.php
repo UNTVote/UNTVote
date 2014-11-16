@@ -24,4 +24,14 @@ class User_Model extends CI_Model
 
     	return $query->result_array();
     }
+
+    // GetUsersCollege - Returns the college of the user, but not all
+    // usedID - the usersID to get the college for
+    public function GetUsersCollege($userID)
+    {
+        $query = $this->db->query("SELECT users.first_name, users_colleges.user_id, users.last_name, colleges.description
+                                    FROM users, colleges, users_colleges WHERE colleges.description NOT LIKE '%All%' 
+                                    AND users_colleges.user_id=users.id AND users_colleges.college_id=colleges.id AND users.id = " . $userID);
+        return $query->row_array()['description'];
+    }
 }

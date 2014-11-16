@@ -11,6 +11,7 @@ class Candidates extends CI_Controller
 		$this->load->helper('url');
 		$this->load->library('ion_auth');
 		$this->load->model('candidate_model');
+		$this->load->model('user_model');
 		// the user must be logged in the view the candidates
 		if (!$this->ion_auth->logged_in())
 		{
@@ -23,20 +24,13 @@ class Candidates extends CI_Controller
 	public function index()
 	{
 		$user = $this->ion_auth->user()->row();
-		$users = $this->ion_auth->user()->row();
 		$title = "Candidates";
 
 		// All the users that are candidates
 		$candidates = $this->ion_auth->users(3)->result();
 
-		foreach ($candidates as $k => $users)
-		{
-            $candidates[$k]->colleges = $this->ion_auth->get_users_colleges($user->id)->result();
-		}
-
 		$data['title'] = $title;
 		$data['user'] = $user;
-		$data['users'] = $users;
 		$data['candidates'] = $candidates;
 
 		$this->load->view('templates/header_user', $data);
@@ -56,13 +50,15 @@ class Candidates extends CI_Controller
 		// get the candidate they want to view
 		$candidate = $this->ion_auth->user($candidateID)->row();
 		$title = $candidate->first_name . "'s Candidate Profile | UNTVote";
-		$colleges = $this->ion_auth->get_users_colleges($candidateID)->result();
+		$college = $this->user_model->GetUsersCollege($candidateID);
 		$user = $this->ion_auth->user()->row();
+		$elections = $this->candidate_model->GetCandidateElections($candidateID);
 
 		$data['title'] = $title;
 		$data['candidate'] = $candidate;
-		$data['colleges'] = $colleges;
+		$data['college'] = $college;
 		$data['user'] = $user;
+		$data['elections'] = $elections;
 
 		$this->load->view('templates/header_user', $data);
 		$this->load->view('templates/navigation_user', $data);

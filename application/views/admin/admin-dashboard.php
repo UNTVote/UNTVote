@@ -14,16 +14,16 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-red"><?=$numberNotifications?></span> Approval requests</h4>
+                      <a href="<?=site_url('notifications/')?>"><h4><span class="info-circle info-circle-red"><?=$numberNotifications?></span> Approval requests</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4>
+                      <a href="<?=site_url('admin/manage_users')?>"><h4><span class="info-circle info-circle-blue"><?=$numberUsers?></span> Registered students</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-green"><?=$numberActiveElections?></span> Active elections</h4>
+                      <a href="<?=site_url('admin/manage_elections/')?>"><h4><span class="info-circle info-circle-green"><?=$numberActiveElections?></span> Active elections</h4></a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                      <h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4>
+                      <a href="<?=site_url('admin/manage_elections')?>"><h4><span class="info-circle info-circle-yellow"><?=$numberUpcomingElections?></span> Upcoming elections</h4></a>
                     </div>
                   </div>
                 </div>

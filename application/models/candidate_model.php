@@ -26,4 +26,13 @@ class Candidate_Model extends CI_Model
     	$this->db->update('users', $data);
     	$this->ion_auth_model->set_message('candidate_profile_updated');
     }
+
+    // GetCanddiateElections - Grabs all the elections the candidate is apart of
+    // candidateID - the candidate we are looking for
+    public function GetCandidateElections($candidateID)
+    {
+        $query = $this->db->query('SELECT election.election_name,election.slug FROM election, election_candidates WHERE election.id=election_candidates.election_id
+                                    AND election_candidates.candidate_id=' . $candidateID);
+        return $query->result_array();
+    }
 }

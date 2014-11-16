@@ -13,18 +13,18 @@
                         <div class="col-md-12 block-center">
                             <img src="<?=base_url() . $candidate->avatar?>" alt="..." class="img-circle center-block">
                             <br>
+                            <h3>About Me: </h3>
                              <p><?=$candidate->about_me?></p>
+                             <h3>Goals: </h3>
+                             <p><?=$candidate->goals?></p>
                             <h3>Participating Election(s):</h3>
                             <div class="list-group">
-                              <a href="#" class="list-group-item">Peq Election</a>
-                              <a href="#" class="list-group-item">XYZ Election</a>
-                              <a href="#" class="list-group-item">KAP Election</a>
-
-                            </div>
-                            <h3>College(s):</h3>
-                            <?php foreach($colleges as $college):?>
-                              <span class="label label-info"><?=$college->description?></span>
+                            <?php foreach($elections as $election):?>
+                              <a href="<?=site_url('elections/' . $election['slug'])?>" class="list-group-item"><?=$election['election_name']?></a>
                             <?php endforeach?>
+                            </div>
+                            <h3>College:</h3>
+                            <span class="label label-info"><?=$college?></span>
                             <h3>My Contact Info:</h3>
                             <p>Email : <?=$candidate->email?></p>
                     </div>

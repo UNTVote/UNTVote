@@ -3,7 +3,8 @@
           <h1 class="page-header">Approvals</h1>
           <?php if($numberNotifications == 0):?>
             <div class="col-xs-12 fade-on-load" hidden>
-              <h3 class='text-muted text-center'>Their are currently zero approval requests.</h3>
+              <h3 class='text-muted text-center'>There are currently zero approval requests!</h3><br>
+              <h4 class='text-muted text-center'>Good Job!</h4>
             </div>
           <?php endif ?>
             <div class="row">
