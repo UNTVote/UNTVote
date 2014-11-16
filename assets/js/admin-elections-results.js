@@ -1,3 +1,6 @@
+var electionResults;
+var pdfDoc;
+
 function createChart() {
    var data = {
     labels: ["Steve Jobs", "Jim Carey", "Jony Ive"],
@@ -27,9 +30,6 @@ function createChart() {
 $(window).load(function() {
   createChart();
 });
-
-
-var electionResults;
 
 function populateResults() {
   // Empty the candidate list
@@ -81,10 +81,100 @@ function getElectionResults(electionID){
   });
 }
 
+function createPDF(){
+   pdfDoc = {
+      pageSize: 'A4',
+
+      pageMargins: [ 40, 40, 40, 40 ],
+
+      content: [
+       {  text: 'UNTVote - Election Results\n\n',
+          style: 'header',
+          fontSize: 18
+       },
+
+       {
+		  text: [
+            { text: 'Election: ', bold: true },
+            { text: electionResults.election_name + '\n\n'}
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Winner: ', bold: true },
+            { text: electionResults.candidate[0].candidate_first_name + ' ' + electionResults.candidate[0].candidate_last_name + ' '},
+            { text: '(' + electionResults.candidate[0].votes + ' votes)\n\n'}
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Total votes: ', bold: true },
+            { text: electionResults.total_votes + '\n\n' }
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Registered votes: ', bold: true },
+            { text: electionResults.total_voters + '\n\n' }
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Total candidates: ', bold: true },
+            { text: electionResults.total_candidates + '\n\n' }
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Category: ', bold: true },
+            { text: electionResults.category + '\n\n' }
+          ]
+       },
+
+       {
+		  text: [
+            { text: 'Election period: ', bold: true },
+            { text: electionResults.start_date + ' - ' + electionResults.end_date }
+          ]
+       }
+     ],
+
+     styles: {
+       header: {
+         fontSize: 22,
+         bold: true
+       },
+     }
+ };
+
+}
+
+function printPDF() {
+  pdfMake.createPdf(pdfDoc).print();
+}
+
+function downloadPDF(){
+  pdfMake.createPdf(pdfDoc).download(electionResults.election_name.replace(/\s+/g, '-') + '-election.pdf');
+}
+
 $(document).ready(function() {
 
   $('#electionsList').on('change', function() {
     getElectionResults(this.value);
   });
 
+  $('#btnPrint').on('click', function () {
+    createPDF();
+    printPDF();
+  });
+
+  $('#btnDownload').on('click', function () {
+    createPDF();
+    downloadPDF();
+  });
 });

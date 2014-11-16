@@ -26,7 +26,7 @@ class Elections extends CI_Controller
 	{
 		$this->load->library('form_validation');
 
-		
+
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['title'] = $firstName . " | UNTVote";
@@ -38,7 +38,7 @@ class Elections extends CI_Controller
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
         $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-		
+
 		$this->load->view('templates/header_manage_elections', $this->data);
 		$this->load->view('templates/navigation_user', $this->data);
 		$this->load->view('templates/sidebar_user', $this->data);
@@ -57,7 +57,7 @@ class Elections extends CI_Controller
 
         $elections = $this->election_model->GetElectionsByStatus('Closed');
 
-        $scripts = array('vendor/chart.min.js', 'admin-elections-results.js');
+        $scripts = array('vendor/chart.min.js', 'vendor/pdfmake.min.js', 'vendor/vfs_fonts.js', 'admin-elections-results.js');
 
         $this->data['scripts'] = $scripts;
         $this->data['elections'] = $elections;
@@ -120,7 +120,7 @@ class Elections extends CI_Controller
 		$this->load->view('admin/admin-edit-election', $data);
 		$this->load->view('templates/scripts_main');
         $this->load->view('templates/scripts_custom', $data);
-		$this->load->view('templates/footer');	
+		$this->load->view('templates/footer');
 	}
 
 	// the script that runs when an election gets edited

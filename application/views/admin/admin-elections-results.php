@@ -102,7 +102,7 @@
 
                       <div class="row">
                         <div class="col-xs-12 col-sm-4">
-                          <button class="btn btn-block btn-primary">
+                          <button class="btn btn-block btn-primary" id="btnPrint">
                             <span class="glyphicon glyphicon-print"></span> Print
                           </button>
                         </div>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-xs-12 visible-xs">&nbsp;</div>
                         <div class="col-xs-12 col-sm-4">
-                          <button class="btn btn-block btn-warning">
+                          <button class="btn btn-block btn-warning" id="btnDownload">
                             <span class="glyphicon glyphicon-download"></span> Download
                           </button>
                         </div>
