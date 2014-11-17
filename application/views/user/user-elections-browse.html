@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+    <title>Unt Vote</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.0.2/css/fuelux.css">
+
+    <!-- Custom styles -->
+    <link href="../../../assets/css/style-main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-5">
+            <a href="#"><img class="navbar-brand" src="../../../assets/img/UNTVote-logo.png" alt="UNTVote"></a>
+          </div>
+          <div class="col-xs-7 text-right">
+            <label class="profile-name">Username</label>
+            <div class="btn-group">
+              <img src="../../../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
+              <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
+                <li><a href="#">Porfile</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar panel-group" id="menuAccordion">
+            <li class="panel"><a href="#"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Dashboard</a></li>
+            <li class="panel">
+              <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
+              <div id="collapseElections" class="panel-collapse collapse">
+                <ul class="nav-sidebar-sub-menu">
+                  <li><a href="#">Browse</a></li>
+                  <li><a href="#">Results</a></li>
+                </ul>
+              </div>
+            
+            </li>
+            <li class="panel">
+              <a href="#"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Candidates</a>
+            </li>
+          </ul>
+        </div>
+
+        
+        <!-- Main body content -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Elections</h1>
+            <div class="fade-on-load" hidden>       
+             <!-- Repeater-->
+          <div class="row">
+            <div class="col-xs-12 fuelux">
+              <div class="repeater" data-staticheight="350" id="electionTable">
+                <div class="repeater-header">
+                  <div class="repeater-header-left">
+                    <div class="repeater-search">
+                      <div class="search input-group">
+                        <input type="search" class="form-control" placeholder="Search elections"/>
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <span class="sr-only">Search elections</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="repeater-header-right">
+                    <div class="btn-group selectlist repeater-filters" data-resize="auto">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Status <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-open-left" role="menu">
+                        <li data-value="All" data-selected="true"><a href="#">All</a></li>
+                        <li data-value="Active"><a href="#">Active</a></li>
+                        <li data-value="Upcoming"><a href="#">Upcoming</a></li>
+                      </ul>
+                      <input class="hidden hidden-field" name="filterSelection" readonly aria-hidden="true" type="text"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="repeater-viewport">
+                  <div class="repeater-canvas"></div>
+                  <div class="loader repeater-loader"></div>
+                </div>
+                <div class="repeater-footer">
+                  <div class="repeater-footer-left">
+                    <div class="repeater-itemization">
+                      <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> elections. </span>
+                      <div class="btn-group selectlist" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                          <span class="selected-label">&nbsp;</span>
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li data-value="5"><a href="#">5</a></li>
+                          <li data-value="10" data-selected="true"><a href="#">10</a></li>
+                          <li data-value="20"><a href="#">20</a></li>
+                          <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+                          <li data-value="100"><a href="#">100</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="itemsPerPage" readonly aria-hidden="true" type="text"/>
+                      </div>
+                      <span>per page.</span>
+                    </div>
+                  </div>
+                  <div class="repeater-footer-right">
+                    <div class="repeater-pagination">
+                      <button type="button" class="btn btn-default btn-sm repeater-prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous Page</span>
+                      </button>
+                      <label class="page-label" id="myPageLabel">Page</label>
+                      <div class="repeater-primaryPaging active">
+                        <div class="input-group input-append dropdown combobox">
+                          <input type="text" class="form-control" aria-labelledby="myPageLabel">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right"></ul>
+                          </div>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="myPageLabel">
+                      <span>of <span class="repeater-pages"></span></span>
+                      <button type="button" class="btn btn-default btn-sm repeater-next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next Page</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>  
+            
+        </div>
+          
+    </div>
+ 
+            
+        </div>
+
+    <!-- Footer area -->
+    <div class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-6">
+            <p class="footer-text">&copy; 2014 UNT Vote</p>
+          </div>
+          <div class="col-xs-6 text-right">
+            <a href="#" class="footer-text">Contact</a>
+            &nbsp;
+            <a href="#" class="footer-text">Help</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- All scripts go below this area -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://www.fuelcdn.com/fuelux/3.0.2/js/fuelux.min.js"></script>
+      <script src="../../../assets/js/admin-elections-manage.js"></script>
+      <script src="../../../assets/js/app.js"></script>
+  </body>
+</html>

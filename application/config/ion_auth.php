@@ -29,7 +29,9 @@
 */
 $config['tables']['users']           = 'users';
 $config['tables']['groups']          = 'groups';
+$config['tables']['colleges']        = 'colleges';
 $config['tables']['users_groups']    = 'users_groups';
+$config['tables']['users_colleges']  = 'users_colleges';
 $config['tables']['login_attempts']  = 'login_attempts';
 
 /*
@@ -38,8 +40,9 @@ $config['tables']['login_attempts']  = 'login_attempts';
  | Joins from users.id
  | Joins from groups.id
  */
-$config['join']['users']  = 'user_id';
-$config['join']['groups'] = 'group_id';
+$config['join']['users']  =   'user_id';
+$config['join']['groups'] =   'group_id';
+$config['join']['colleges'] = 'college_id';
 
 /*
  | -------------------------------------------------------------------------
@@ -84,6 +87,7 @@ $config['salt_prefix']    = '$2y$';
 $config['site_title']                 = "UNTVote";       // Site Title, example.com
 $config['admin_email']                = "Smith.Chad12@gmail.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';           // Default group, use name
+$config['default_college']            = 'all';          // Default college
 $config['admin_group']                = 'admin';             // Default administrators group, use name
 $config['identity']                   = 'username';          // A database column which is used to login with
 $config['min_password_length']        = 8;                   // Minimum Required Length of Password
@@ -117,7 +121,7 @@ $config['identity_cookie_name'] = 'identity';
  | 	  'file' = Use the default CI config or use from a config file
  | 	  array  = Manually set your email config settings
  */
-$config['use_ci_email'] = FALSE; // Send Email using the builtin CI email class, if false it will return the code and the identity
+$config['use_ci_email'] = TRUE; // Send Email using the builtin CI email class, if false it will return the code and the identity
 $config['email_config'] = array(
 	'mailtype' => 'html',
 );
@@ -175,10 +179,10 @@ $config['store_salt']  = FALSE;
  | -------------------------------------------------------------------------
  */
 $config['delimiters_source']       = 'config'; 	// "config" = use the settings defined here, "form_validation" = use the settings defined in CI's form validation library
-$config['message_start_delimiter'] = '<p>'; 	// Message start delimiter
-$config['message_end_delimiter']   = '</p>'; 	// Message end delimiter
-$config['error_start_delimiter']   = '<p>';		// Error mesage start delimiter
-$config['error_end_delimiter']     = '</p>';	// Error mesage end delimiter
+$config['message_start_delimiter'] = '<div id="message" class="alert alert-info">'; 	// Message start delimiter
+$config['message_end_delimiter']   = '</div>'; 	// Message end delimiter
+$config['error_start_delimiter']   = '<div id="message" class="alert alert-danger">';		// Error mesage start delimiter
+$config['error_end_delimiter']     = '</div>';	// Error mesage end delimiter
 
 /* End of file ion_auth.php */
 /* Location: ./application/config/ion_auth.php */

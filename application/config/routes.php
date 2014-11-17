@@ -37,11 +37,24 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
+$route['contact/(:any)'] = 'contact/$1';
+$route['contact'] = 'contact';
+$route['candidates/(:any)'] = 'candidates/$1';
+$route['candidates'] = 'candidates';
+$route['notifications/(:any)'] = 'notifications/$1';
+$route['notifications'] = 'notifications';
+$route['elections/delete/(:any)'] = 'elections/delete/$1';
+$route['elections/ElectionEdit'] = 'elections/ElectionEdit';
+$route['elections/edit/(:any)'] = 'elections/edit/$1';
+$route['elections/livefeed'] = 'elections/livefeed';
+$route['elections/results'] = 'elections/results';
+$route['elections/create'] = 'elections/create';
+$route['elections/(:any)'] = 'elections/view/$1';
+$route['elections'] = 'elections';
 $route['user/(:any)'] = 'user/$1';
 $route['user'] = 'user';
-$route['auth/(:any)'] = 'auth/$1';
-$route['auth'] = 'auth';
+$route['admin/(:any)'] = 'admin/$1';
+$route['admin'] = 'admin';
 $route['default_controller'] = "pages/view";
 $route['(:any)'] = 'pages/view/$1';
 

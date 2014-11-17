@@ -55,6 +55,15 @@ $lang['group_delete_successful']    = 'Group deleted';
 $lang['group_delete_unsuccessful'] 	= 'Unable to delete group';
 $lang['group_name_required'] 		= 'Group name is a required field';
 
+// Colleges
+$lang['college_creation_successful']  = 'College created Successfully';
+$lang['college_already_exists']       = 'College name already taken';
+$lang['college_update_successful']    = 'College details updated';
+$lang['college_delete_successful']    = 'College deleted';
+$lang['college_delete_unsuccessful']  = 'Unable to delete college';
+$lang['college_name_required']        = 'College name is a required field';
+
+
 // Activation Email
 $lang['email_activation_subject']            = 'Account Activation';
 $lang['email_activate_heading']    = 'Activate account for %s';
@@ -71,3 +80,23 @@ $lang['email_forgot_password_link']       = 'Reset Your Password';
 $lang['email_new_password_subject']          = 'New Password';
 $lang['email_new_password_heading']    = 'New Password for %s';
 $lang['email_new_password_subheading'] = 'Your password has been reset to: %s';
+
+// Voting 
+$lang['vote_successful'] = 'Thank you, your vote has been successfully submitted';
+$lang['vote_already_voted'] = 'Your vote was not submitted, as you have already voted for this candidate';
+$lang['vote_changed'] = 'Your vote has been successfully changed';
+
+// Elections
+$lang['create_election_successful'] = 'The election has been successfully created';
+$lang['edit_election_successful'] = 'The election has been successfully updated';
+$lang['delete_election_successful'] = 'The election has been successfully deleted';
+
+// Notification and Approvals
+$lang['notification_approval_sent'] = 'Your request has been sent to the voting administrators, and you will receive an email soon';
+$lang['notification_approval_notsent'] = 'We already have your request; You will receive an email soon';
+
+// Candidate profile
+$lang['candidate_profile_updated'] = 'Your candidate information has been updated';
+
+// contact us 
+$lang['email_sent'] = 'Thank you for contacting us!  We wil get back to you as soon as we can';

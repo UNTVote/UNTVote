@@ -167,6 +167,21 @@ class Ion_auth_model extends CI_Model
 	 * @var array
 	 **/
 	protected $_cache_groups = array();
+    
+    /**
+	 * caching of users and their groups
+	 *
+	 * @var array
+	 **/
+	public $_cache_user_in_college = array();
+
+     
+     /**
+      * caching of colleges
+      * 
+      * @var array
+      */
+      protected $_cache_colleges = array();
 
 	public function __construct()
 	{
@@ -942,6 +957,110 @@ class Ion_auth_model extends CI_Model
 		return (isset($id)) ? $id : FALSE;
 	}
 
+    /**
+     * registerUser
+     *
+     * @return bool
+     * @author Chad
+     **/
+    public function registerUser($username, $password, $email, $colleges = array(), $additional_data = array(), $groups = array())
+    {
+        $this->trigger_events('pre_register');
+
+        $manual_activation = $this->config->item('manual_activation', 'ion_auth');
+
+        if ($this->email_check($email))
+        {
+            $this->set_error('account_creation_duplicate_email');
+            return FALSE;
+        }
+        elseif ($this->identity_column == 'username' && $this->username_check($username))
+        {
+            $this->set_error('account_creation_duplicate_username');
+            return FALSE;
+        }
+
+        // If username is taken, use username1 or username2, etc.
+        if ($this->identity_column != 'username')
+        {
+            $original_username = $username;
+            for($i = 0; $this->username_check($username); $i++)
+            {
+                if($i > 0)
+                {
+                    $username = $original_username . $i;
+                }
+            }
+        }
+
+        // IP Address
+        $ip_address = $this->_prepare_ip($this->input->ip_address());
+        $salt       = $this->store_salt ? $this->salt() : FALSE;
+        $password   = $this->hash_password($password, $salt);
+
+        // Users table.
+        $data = array(
+            'username'   => $username,
+            'password'   => $password,
+            'email'      => $email,
+            'ip_address' => $ip_address,
+            'created_on' => time(),
+            'last_login' => time(),
+            'active'     => ($manual_activation === false ? 1 : 0)
+        );
+
+        if ($this->store_salt)
+        {
+            $data['salt'] = $salt;
+        }
+
+        //filter out any data passed that doesnt have a matching column in the users table
+        //and merge the set user data and the additional data
+        $user_data = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
+
+        $this->trigger_events('extra_set');
+
+        $this->db->insert($this->tables['users'], $user_data);
+
+        $id = $this->db->insert_id();
+
+        if (!empty($groups))
+        {
+            //add to groups
+            foreach ($groups as $group)
+            {
+                $this->add_to_group($group, $id);
+            }
+        }
+
+        //add to default group if not already set
+        $default_group = $this->where('name', $this->config->item('default_group', 'ion_auth'))->group()->row();
+        if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups)))
+        {
+            $this->add_to_group($default_group->id, $id);
+        }
+        
+        if (!empty($colleges))
+        {
+            //add to groups
+            foreach ($colleges as $college)
+            {
+                $this->add_to_college($college, $id);
+            }
+        }
+
+        //add to default college if not already set
+        $default_college = $this->where('name', $this->config->item('default_college', 'ion_auth'))->college()->row();
+        if ((isset($default_college->id) && empty($colleges)) || (!empty($colleges) && !in_array($default_college->id, $colleges)))
+        {
+            $this->add_to_college($default_college->id, $id);
+        }        
+
+        $this->trigger_events('post_register');
+
+        return (isset($id)) ? $id : FALSE;
+    }
+
 	/**
 	 * login
 	 *
@@ -1345,6 +1464,109 @@ class Ion_auth_model extends CI_Model
 		return $this;
 	}
 
+    /**
+     * usersCollege
+     *
+     * @return object Users
+     * @author Chad
+     **/
+    public function usersCollege($colleges = NULL)
+    {
+        $this->trigger_events('users');
+
+        if (isset($this->_ion_select) && !empty($this->_ion_select))
+        {
+            foreach ($this->_ion_select as $select)
+            {
+                $this->db->select($select);
+            }
+
+            $this->_ion_select = array();
+        }
+        else
+        {
+            //default selects
+            $this->db->select(array(
+                $this->tables['users'].'.*',
+                $this->tables['users'].'.id as id',
+                $this->tables['users'].'.id as user_id'
+            ));
+        }
+
+        //filter by college id(s) if passed
+        if (isset($colleges))
+        {
+            //build an array if only one college was passed
+            if (is_numeric($colleges))
+            {
+                $colleges = Array($colleges);
+            }
+
+            //join and then run a where_in against the college ids
+            if (isset($colleges) && !empty($colleges))
+            {
+                $this->db->distinct();
+                $this->db->join(
+                    $this->tables['users_colleges'],
+                    $this->tables['users_colleges'].'.'.$this->join['users'].'='.$this->tables['users'].'.id',
+                    'inner'
+                );
+
+                $this->db->where_in($this->tables['users_colleges'].'.'.$this->join['colleges'], $colleges);
+            }
+        }
+
+        $this->trigger_events('extra_where');
+
+        //run each where that was passed
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_like) && !empty($this->_ion_like))
+        {
+            foreach ($this->_ion_like as $like)
+            {
+                $this->db->or_like($like);
+            }
+
+            $this->_ion_like = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+
+            $this->_ion_order    = NULL;
+            $this->_ion_order_by = NULL;
+        }
+
+        $this->response = $this->db->get($this->tables['users']);
+
+        return $this;
+    }
+
 	/**
 	 * user
 	 *
@@ -1384,6 +1606,25 @@ class Ion_auth_model extends CI_Model
 		                ->join($this->tables['groups'], $this->tables['users_groups'].'.'.$this->join['groups'].'='.$this->tables['groups'].'.id')
 		                ->get($this->tables['users_groups']);
 	}
+    
+    /**
+     * get_users_colleges
+     *
+     * @return array
+     * @author Chad
+     **/
+    public function get_users_colleges($id=FALSE)
+    {
+        $this->trigger_events('get_users_college');
+
+        //if no id was passed use the current users id
+        $id || $id = $this->session->userdata('user_id');
+
+        return $this->db->select($this->tables['users_colleges'].'.'.$this->join['colleges'].' as id, '.$this->tables['colleges'].'.name, '.$this->tables['colleges'].'.description')
+                        ->where($this->tables['users_colleges'].'.'.$this->join['users'], $id)
+                        ->join($this->tables['colleges'], $this->tables['users_colleges'].'.'.$this->join['colleges'].'='.$this->tables['colleges'].'.id')
+                        ->get($this->tables['users_colleges']);
+    }
 
 	/**
 	 * add_to_group
@@ -1415,6 +1656,41 @@ class Ion_auth_model extends CI_Model
 		}
 		return $return;
 	}
+    
+    /**
+     * add_to_college
+     * @return bool
+     * @author Chad
+     */
+     public function add_to_college($college_id, $user_id=false)
+     {
+         $this->trigger_events('add_to_college');
+
+        //if no id was passed use the current users id
+        $user_id || $user_id = $this->session->userdata('user_id');
+
+        //check if unique - num_rows() > 0 means row found
+        if ($this->db->where(array( $this->join['colleges'] => (int)$college_id, $this->join['users'] => (int)$user_id))->get($this->tables['users_colleges'])->num_rows())
+        {
+            return false;
+        } 
+
+        if ($return = $this->db->insert($this->tables['users_colleges'], array( $this->join['colleges'] => (int)$college_id, $this->join['users'] => (int)$user_id)))
+        {
+            if (isset($this->_cache_colleges[$college_id])) 
+            {
+                $college_name = $this->_cache_colleges[$college_id];
+            }
+            else 
+            {
+                $college = $this->college($college_id)->result();
+                $college_name = $college[0]->name;
+                $this->_cache_colleges[$college_id] = $college_name;
+            }
+            $this->_cache_user_in_college[$user_id][$college_id] = $college_name;
+        }
+        return $return;
+     }
 
 	/**
 	 * remove_from_group
@@ -1460,6 +1736,51 @@ class Ion_auth_model extends CI_Model
 		}
 		return $return;
 	}
+    
+    /**
+     * remove_from_college
+     *
+     * @return bool
+     * @author Chad
+     **/
+    public function remove_from_college($college_ids=false, $user_id=false)
+    {
+        $this->trigger_events('remove_from_college');
+
+        // user id is required
+        if(empty($user_id))
+        {
+            return FALSE;
+        }
+
+        // if college id(s) are passed remove user from the college(s)
+        if( ! empty($college_ids))
+        {
+            if(!is_array($college_ids))
+            {
+                $college_ids = array($college_ids);
+            }
+
+            foreach($college_ids as $college_id)
+            {
+                $this->db->delete($this->tables['users_colleges'], array($this->join['colleges'] => (int)$college_id, $this->join['users'] => (int)$user_id));
+                if (isset($this->_cache_user_in_college[$user_id]) && isset($this->_cache_user_in_college[$user_id][$college_id]))
+                {
+                    unset($this->_cache_user_in_college[$user_id][$college_id]);
+                }
+            }
+
+            $return = TRUE;
+        }
+        // otherwise remove user from all colleges
+        else
+        {
+            if ($return = $this->db->delete($this->tables['users_colleges'], array($this->join['users'] => (int)$user_id))) {
+                $this->_cache_user_in_college[$user_id] = array();
+            }
+        }
+        return $return;
+    }
 
 	/**
 	 * groups
@@ -1505,6 +1826,51 @@ class Ion_auth_model extends CI_Model
 
 		return $this;
 	}
+    
+    /**
+     * colleges
+     *
+     * @return object
+     * @author Chad
+     **/
+    public function colleges()
+    {
+        $this->trigger_events('colleges');
+
+        //run each where that was passed
+        if (isset($this->_ion_where) && !empty($this->_ion_where))
+        {
+            foreach ($this->_ion_where as $where)
+            {
+                $this->db->where($where);
+            }
+            $this->_ion_where = array();
+        }
+
+        if (isset($this->_ion_limit) && isset($this->_ion_offset))
+        {
+            $this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+            $this->_ion_limit  = NULL;
+            $this->_ion_offset = NULL;
+        }
+        else if (isset($this->_ion_limit))
+        {
+            $this->db->limit($this->_ion_limit);
+
+            $this->_ion_limit  = NULL;
+        }
+
+        //set the order
+        if (isset($this->_ion_order_by) && isset($this->_ion_order))
+        {
+            $this->db->order_by($this->_ion_order_by, $this->_ion_order);
+        }
+
+        $this->response = $this->db->get($this->tables['colleges']);
+
+        return $this;
+    }
 
 	/**
 	 * group
@@ -1525,6 +1891,26 @@ class Ion_auth_model extends CI_Model
 
 		return $this->groups();
 	}
+    
+    /**
+     * college
+     *
+     * @return object
+     * @author Chad Smith
+     **/
+    public function college($id = NULL)
+    {
+        $this->trigger_events('college');
+
+        if (isset($id))
+        {
+            $this->where($this->tables['colleges'].'.id', $id);
+        }
+
+        $this->limit(1);
+
+        return $this->colleges();
+    }
 
 	/**
 	 * update
@@ -1603,7 +1989,8 @@ class Ion_auth_model extends CI_Model
 
 		// remove user from groups
 		$this->remove_from_group(NULL, $id);
-
+        // remove user from colleges
+        $this->remove_from_college(NULL, $id);
 		// delete user from users table should be placed after remove from group
 		$this->db->delete($this->tables['users'], array('id' => $id));
 
@@ -1848,6 +2235,46 @@ class Ion_auth_model extends CI_Model
 		return $group_id;
 	}
 
+/**
+     * create_college
+     *
+     * @author aditya menon
+    */
+    public function create_college($college_name = FALSE, $college_description = '', $additional_data = array())
+    {
+        // bail if the college name was not passed
+        if(!$college_name)
+        {
+            $this->set_error('college_name_required');
+            return FALSE;
+        }
+
+        // bail if the college name already exists
+        $existing_college = $this->db->get_where($this->tables['college'], array('name' => $college_name))->num_rows();
+        if($existing_college !== 0)
+        {
+            $this->set_error('college_already_exists');
+            return FALSE;
+        }
+
+        $data = array('name'=>$college_name,'description'=>$college_description);
+
+        //filter out any data passed that doesnt have a matching column in the colleges table
+        //and merge the set college data and the additional data
+        if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['colleges'], $additional_data), $data);
+
+        $this->trigger_events('extra_college_set');
+
+        // insert the new college
+        $this->db->insert($this->tables['college'], $data);
+        $college_id = $this->db->insert_id();
+
+        // report success
+        $this->set_message('college_creation_successful');
+        // return the brand new college id
+        return $college_id;
+    }
+
 	/**
 	 * update_group
 	 *
@@ -1893,6 +2320,51 @@ class Ion_auth_model extends CI_Model
 		return TRUE;
 	}
 
+/**
+     * update_college
+     *
+     * @return bool
+     * @author Chad
+     **/
+    public function update_college($college_id = FALSE, $college_name = FALSE, $additional_data = array())
+    {
+        if (empty($college_id)) return FALSE;
+
+        $data = array();
+
+        if (!empty($college_name))
+        {
+            // we are changing the name, so do some checks
+
+            // bail if the college name already exists
+            $existing_college = $this->db->get_where($this->tables['colleges'], array('name' => $college_name))->row();
+            if(isset($existing_college->id) && $existing_college->id != $college_id)
+            {
+                $this->set_error('college_already_exists');
+                return FALSE;
+            }
+
+            $data['name'] = $college_name;
+        }
+
+
+        // IMPORTANT!! Third parameter was string type $description; this following code is to maintain backward compatibility
+        // New projects should work with 3rd param as array
+        if (is_string($additional_data)) $additional_data = array('description' => $additional_data);
+
+
+        //filter out any data passed that doesnt have a matching column in the colleges table
+        //and merge the set college data and the additional data
+        if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['colleges'], $additional_data), $data);
+
+
+        $this->db->update($this->tables['colleges'], $data, array('id' => $college_id));
+
+        $this->set_message('college_update_successful');
+
+        return TRUE;
+    }
+
 	/**
 	* delete_group
 	*
@@ -1930,6 +2402,44 @@ class Ion_auth_model extends CI_Model
 		$this->set_message('group_delete_successful');
 		return TRUE;
 	}
+
+/**
+    * delete_college
+    *
+    * @return bool
+    * @author Chad
+    **/
+    public function delete_college($college_id = FALSE)
+    {
+        // bail if mandatory param not set
+        if(!$college_id || empty($college_id))
+        {
+            return FALSE;
+        }
+
+        $this->trigger_events('pre_delete_college');
+
+        $this->db->trans_begin();
+
+        // remove all users from this college
+        $this->db->delete($this->tables['users_colleges'], array($this->join['colleges'] => $college_id));
+        // remove the college itself
+        $this->db->delete($this->tables['colleges'], array('id' => $college_id));
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            $this->trigger_events(array('post_delete_college', 'post_delete_college_unsuccessful'));
+            $this->set_error('college_delete_unsuccessful');
+            return FALSE;
+        }
+
+        $this->db->trans_commit();
+
+        $this->trigger_events(array('post_delete_college', 'post_delete_college_successful'));
+        $this->set_message('college_delete_successful');
+        return TRUE;
+    }
 
 	public function set_hook($event, $name, $class, $method, $arguments)
 	{

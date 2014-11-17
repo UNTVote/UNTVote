@@ -50,6 +50,13 @@ class Ion_auth
 	 * @var array
 	 **/
 	public $_cache_user_in_group;
+    
+    /**
+     * caching of users and their colleges
+     *
+     * @var array
+     **/
+    public $_cache_user_in_college;
 
 	/**
 	 * __construct
@@ -79,6 +86,7 @@ class Ion_auth
 		$this->load->model('ion_auth_model');
 
 		$this->_cache_user_in_group =& $this->ion_auth_model->_cache_user_in_group;
+        $this->_cache_user_in_college =& $this->ion_auth_model->_cache_user_in_college;
 
 		//auto-login the user if they are remembered
 		if (!$this->logged_in() && get_cookie($this->config->item('identity_cookie_name', 'ion_auth')) && get_cookie($this->config->item('remember_cookie_name', 'ion_auth')))
@@ -370,6 +378,93 @@ class Ion_auth
 		}
 	}
 
+    /**
+     * registerUser
+     *
+     * @return void
+     * @author Chad
+     **/
+    public function registerUser($username, $password, $email, $college_id = array(), $additional_data = array(), $group_ids = array()) //need to test email activation
+    {
+        $this->ion_auth_model->trigger_events('pre_account_creation');
+
+        $email_activation = $this->config->item('email_activation', 'ion_auth');
+
+        if (!$email_activation)
+        {
+            $id = $this->ion_auth_model->registerUser($username, $password, $email, $college_id, $additional_data, $group_ids);
+            if ($id !== FALSE)
+            {
+                $this->set_message('account_creation_successful');
+                $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful'));
+                return $id;
+            }
+            else
+            {
+                $this->set_error('account_creation_unsuccessful');
+                $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_unsuccessful'));
+                return FALSE;
+            }
+        }
+        else
+        {
+            $id = $this->ion_auth_model->registerUser($username, $password, $email, $college_id, $additional_data, $group_ids);
+
+            if (!$id)
+            {
+                $this->set_error('account_creation_unsuccessful');
+                return FALSE;
+            }
+
+            $deactivate = $this->ion_auth_model->deactivate($id);
+
+            if (!$deactivate)
+            {
+                $this->set_error('deactivate_unsuccessful');
+                $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_unsuccessful'));
+                return FALSE;
+            }
+
+            $activation_code = $this->ion_auth_model->activation_code;
+            $identity        = $this->config->item('identity', 'ion_auth');
+            $user            = $this->ion_auth_model->user($id)->row();
+
+            $data = array(
+                'identity'   => $user->{$identity},
+                'id'         => $user->id,
+                'email'      => $email,
+                'activation' => $activation_code,
+            );
+            if(!$this->config->item('use_ci_email', 'ion_auth'))
+            {
+                $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
+                $this->set_message('activation_email_successful');
+                    return $data;
+            }
+            else
+            {
+                $message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_activate', 'ion_auth'), $data, true);
+
+                $this->email->clear();
+                $this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
+                $this->email->to($email);
+                $this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_activation_subject'));
+                $this->email->message($message);
+
+                if ($this->email->send() == TRUE)
+                {
+                    $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
+                    $this->set_message('activation_email_successful');
+                    return $id;
+                }
+            }
+
+            $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_unsuccessful', 'activation_email_unsuccessful'));
+            $this->set_error('activation_email_unsuccessful');
+            return FALSE;
+        }
+    }
+
 	/**
 	 * logout
 	 *
@@ -514,5 +609,65 @@ class Ion_auth
 		 */
 		return $check_all;
 	}
+    
+    /**
+     * in_group
+     *
+     * @param mixed college(s) to check
+     * @param bool user id
+     * @param bool check if all cooleges is present, or any of the colleges
+     *
+     * @return bool
+     * @author Chad Smith
+     **/
+    public function in_college($check_college, $id=false, $check_all = false)
+    {
+        $this->ion_auth_model->trigger_events('in_college');
+
+        $id || $id = $this->session->userdata('user_id');
+
+        if (!is_array($check_college))
+        {
+            $check_college = array($check_college);
+        }
+
+        if (isset($this->_cache_user_in_college[$id]))
+        {
+            $colleges_array = $this->_cache_user_in_college[$id];
+        }
+        else
+        {
+            $users_colleges = $this->ion_auth_model->get_users_colleges($id)->result();
+            $groups_array = array();
+            foreach ($users_colleges as $college)
+            {
+                $colleges_array[$college->id] = $college->name;
+            }
+            $this->_cache_user_in_college[$id] = $college_array;
+        }
+        foreach ($check_college as $key => $value)
+        {
+            $college = (is_string($value)) ? $college_array : array_keys($colleges_array);
+
+            /**
+             * if !all (default), in_array
+             * if all, !in_array
+             */
+            if (in_array($value, $colleges) xor $check_all)
+            {
+                /**
+                 * if !all (default), true
+                 * if all, false
+                 */
+                return !$check_all;
+            }
+        }
+
+        /**
+         * if !all (default), false
+         * if all, true
+         */
+        return $check_all;
+    }
 
 }

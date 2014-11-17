@@ -1,0 +1,8 @@
+/* Stylesheet for sign in and forgot password pages */
+
+@media (min-width: 768px) { 
+  .panel-user-auth {
+    width: 380px;
+    margin-top: 15vh;
+  }
+}
