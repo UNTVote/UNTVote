@@ -119,7 +119,7 @@ class Notification_Model extends CI_Model
 
 		$userEmail = $this->ion_auth->user($sender)->row()->email;
 
-		$this->email->from('UNTVote@gmail.com', 'UNTVote');
+		$this->email->from('UNTVote@rangersrounding3rd.com', 'UNTVote');
 		$this->email->to($userEmail);
 		$this->email->subject('UNTVote: Election Approval Request');
 		$this->email->message('We are sending you this email to let you know that you have been 
@@ -136,6 +136,9 @@ class Notification_Model extends CI_Model
 	{
 		$this->load->helper('url');
 
+		$this->load->library('email');
+
+
 		$query = $this->db->get_where('admin_notifications', array('id' => $notificationID));
 		$result = $query->row_array();
 
@@ -149,7 +152,7 @@ class Notification_Model extends CI_Model
 		$emailMessage = 'Congratulations <strong>' . $userName . '</strong>, you have been approved to be a candidate!<br>
 						You may click '. $profileURL . ' to edit your profile.  You can click the Candidate Tab to edit your candidate information!';
 
-		$this->email->from('UNTVote@gmail.com', 'UNTVote');
+		$this->email->from('UNTVote@rangersrounding3rd.com', 'UNTVote');
 		$this->email->to($userEmail);
 		$this->email->subject('UNTVote: Candidate Approval Request');
 		$this->email->message($emailMessage);
