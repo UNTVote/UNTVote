@@ -242,10 +242,11 @@ class Elections extends CI_Controller
 			$viewElection = 'hidden';
 			$requestVote = 'hidden';
 		}
-		else
+		else if($election['status'] == 'Closed')
 		{
 			$viewElection = 'hidden';
 			$requestSent = 'hidden';
+			$requestVote = 'hidden';
 		}
 		if($election['status'] == 'Upcoming')
 		{
@@ -256,6 +257,9 @@ class Elections extends CI_Controller
 		{
 			$viewElection = 'hidden';
 			$electionDone = '';
+			$requestSent - 'hidden';
+			$reqeustVote = 'hidden';
+			$electionClosed = 'hidden';
 		}
 
 		$data['election'] = $election;
