@@ -242,11 +242,11 @@ class Elections extends CI_Controller
 			$viewElection = 'hidden';
 			$requestVote = 'hidden';
 		}
-		else if($election['status'] == 'Closed')
+		else
 		{
 			$viewElection = 'hidden';
 			$requestSent = 'hidden';
-			$requestVote = 'hidden';
+			$requestVote = '';
 		}
 		if($election['status'] == 'Upcoming')
 		{
