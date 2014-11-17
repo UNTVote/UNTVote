@@ -380,6 +380,7 @@ class User extends CI_Controller
         $this->data['errors'] = $errors;
         $this->data['cdnScripts'] = $cdnScripts;
         $this->data['scripts'] = $scripts;
+        $this->data['colleges'] = $colleges;
 
         $this->_render_page('templates/header_user', $this->data);
         $this->_render_page('templates/navigation_user', $this->data);

@@ -768,7 +768,7 @@ class Admin extends CI_Controller {
         // create a substring from the email, don't include the "@my.unt.edu"
         $userEmail = substr($user->email, 0, -11);
         // get all the colleges from the database
-        $colleges = $this->ion_auth->colleges()->result_array();
+        $colleges = $this->college_model->GetCollegesNotLike('All');
         $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
         $isCanddate = true;
 
@@ -790,7 +790,7 @@ class Admin extends CI_Controller {
         $user = $this->ion_auth->user($id)->row();
         $groups = $this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
-        $colleges = $this->ion_auth->colleges()->result_array();
+        $colleges = $this->college_model->GetCollegesNotLike('All');
         $currentCollege = $this->ion_auth->get_users_colleges($id)->result();
 
         //validate form input
