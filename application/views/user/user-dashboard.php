@@ -6,7 +6,7 @@
             <div class="fade-on-load" hidden>
             <?php echo $message;?>
               <!-- Overview Panel -->
-              <div class="panel panel-info">
+              <div class="panel panel-default">
                   <div class="panel-heading">Overview</div>
                 <div class="panel-body">
                     <div class="row">
@@ -26,7 +26,7 @@
               <!-- only show the active elections if we have any -->
               <?php if($numberActiveElections > 0):?>
               <!-- Overview Panel -->
-              <div class="panel panel-info">
+              <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">Active elections</h3>
                   </div>
@@ -76,7 +76,7 @@
 
               <?php if($numberInactiveElections):?>
               <!-- Overview Panel -->
-              <div class="panel panel-info">
+              <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">Upcoming elections</h3>
                   </div>
