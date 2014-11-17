@@ -64,8 +64,8 @@ class Contact extends CI_Controller
 			$this->email->to('UNTVote@gmail.com'); 
 
 			$this->email->subject($firstName . ' has contacted UNTVote');
-			$this->email->message('Name: ' . $firstName . ' ' . $lastName
-								  '<br>Email: ' . $email
+			$this->email->message('Name: ' . $firstName . ' ' . $lastName .
+								  '<br>Email: ' . $email .
 								  '<br>: Message: ' .$message);	
 
 			$this->email->send();
