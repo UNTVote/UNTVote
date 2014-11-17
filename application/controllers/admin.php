@@ -758,6 +758,7 @@ class Admin extends CI_Controller {
         // the cdn scripts
         $cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
         $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
+        $errors = null;
 
         
         $this->data['title'] = "Edit User";
