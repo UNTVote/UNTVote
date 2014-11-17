@@ -233,9 +233,9 @@ class User extends CI_Controller
         // user avatar details
         $config['upload_path'] = './assets/upload/';
         $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '100';
-        $config['max_width']  = '1024';
-        $config['max_height']  = '768';
+        $config['max_size'] = '2048';
+        $config['max_width']  = '1280';
+        $config['max_height']  = '720';
         $this->load->library('upload', $config);
 
         $avatarUploaded = false;
