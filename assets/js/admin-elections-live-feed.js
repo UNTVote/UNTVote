@@ -1,3 +1,5 @@
+var interval = null;
+var electionID;
 var electionResults;
 
 function createChart() {
@@ -38,6 +40,7 @@ function createChart() {
     var resultsBarChart = new Chart(ctx).Bar(data, {
       barShowStroke: false,
       tooltipTitleFontStyle: "normal",
+      animation: false,
       responsive: true
     });
   }
@@ -48,9 +51,8 @@ function createChart() {
 
 function populateResults() {
 
-  $('#liveFeedPanel').fadeOut(500);
-
   setTimeout(function() {
+
    if (electionResults.total_candidates >= 1) {
 
       // Sort candidates based on their votes (Highest votes first)
@@ -79,18 +81,13 @@ function populateResults() {
     $('#totalCandidates').html(electionResults.total_candidates);
     $('#electionCategory').html(electionResults.category);
 
-    $('#liveFeedPanel').fadeIn(500);
-  }, 800);
-
-
-  // Show chart after the fade animations
-  setTimeout(function (){
     createChart();
-  }, 1000);
+
+  }, 500);
+
 }
 
-function getElectionResults(electionID){
-
+function getElectionResults(){
   var postData = {elections: electionID};
 
   $.ajax({
@@ -105,15 +102,30 @@ function getElectionResults(electionID){
       error: function (jqXHR, textStatus, errorThrown)
       {
         console.log("Error getting JSON data from 'ElectionResults'");
+        clearInterval(interval);
         alert("Sorry, we couldn't load results for that election");
       }
   });
 }
 
+function keepRefreshing() {
+  // Refresh every two seconds
+  interval = setInterval(getElectionResults,2000);
+}
+
+function changedElection() {
+  $('#liveFeedPanel').fadeOut(500);
+  getElectionResults();
+  $('#liveFeedPanel').fadeIn(500);
+  keepRefreshing();
+}
+
 $(document).ready(function() {
 
   $('#liveElectionsList').on('change', function() {
-    getElectionResults(this.value);
+    clearInterval(interval);
+    electionID = this.value;
+    changedElection();
   });
 
 });

@@ -24,6 +24,8 @@
 
               <br>
 
+              <div class="alert alert-danger" role="alert" id="liveDataError" hidden>Oops, can't load live data right now.</div>
+
               <div class="panel panel-default" id="liveFeedPanel" hidden>
                 <div class="panel-heading">
                   <h3 class="panel-title hide-text-overflow" id="electionName">Election name</h3>
@@ -32,6 +34,7 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-11 block-center">
+
                       <h4 class="text-center" id="leadingCandidate">No votes yet</h4>
 
                       <canvas id="liveFeedChart" class="bar-chart" hidden></canvas>
