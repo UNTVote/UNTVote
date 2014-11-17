@@ -247,7 +247,7 @@ class User extends CI_Controller
         // create a substring from the email, don't include the "@my.unt.edu"
         $userEmail = substr($user->email, 0, -11);
         // get all the colleges from the database
-        $colleges = $this->ion_auth->colleges()->result_array();
+        $colleges = $this->college_model->GetCollegesNotLike('All');
         $currentCollege = $this->ion_auth->get_users_colleges($user->id)->result();
         $isCanddate = true;
         // check to see if the current user is a candidate to know to dispay that form or not

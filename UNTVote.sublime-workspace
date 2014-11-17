@@ -291,7 +291,15 @@
 			"file": "application/controllers/admin.php",
 			"settings":
 			{
-				"buffer_size": 40017,
+				"buffer_size": 40045,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/user_model.php",
+			"settings":
+			{
+				"buffer_size": 2128,
 				"line_ending": "Windows"
 			}
 		}
@@ -327,6 +335,7 @@
 		"/C/xampp/htdocs/UNTVote/application",
 		"/C/xampp/htdocs/UNTVote/application/controllers",
 		"/C/xampp/htdocs/UNTVote/application/language",
+		"/C/xampp/htdocs/UNTVote/application/models",
 		"/C/xampp/htdocs/UNTVote/application/views",
 		"/C/xampp/htdocs/UNTVote/application/views/admin",
 		"/C/xampp/htdocs/UNTVote/application/views/user"
@@ -458,7 +467,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -487,7 +496,7 @@
 						"translation.y": 560.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -503,8 +512,8 @@
 						"selection":
 						[
 							[
-								616,
-								616
+								1079,
+								1079
 							]
 						],
 						"settings":
@@ -517,7 +526,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -526,15 +535,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 40017,
+						"buffer_size": 40045,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6439,
-								6439
+								3798,
+								3798
 							]
 						],
 						"settings":
@@ -543,10 +552,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 910.0,
+						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/models/user_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2128,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								932,
+								932
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
