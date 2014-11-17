@@ -46,6 +46,9 @@
                     <div class="col-xs-12" <?=$electionClosed?>>
                       <div class='alert alert-warning'>Please come back on <?=date("m-d-Y", strtotime($election['start_time'])) ?> to cast your vote</div>
                     </div>
+                    <div class="col-xs-12" <?=$electionDone?>>
+                      <div class='alert alert-danger'>The election has closed, and is not accepting anymore votes!</div>
+                    </div>
                     <div class="col-xs-12" <?=$viewElection?>>
                       <h4>Cast your vote:</h4>
                       <form name="vote" action="<?=site_url('elections/' . $election['slug'])?>" method="post" role="form">

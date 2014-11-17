@@ -74,7 +74,14 @@ class Elections extends CI_Controller
 
         $this->load->view('templates/header_user', $this->data);
         $this->load->view('templates/navigation_admin', $this->data);
-        $this->load->view('templates/sidebar_admin');
+        if($this->ion_auth->is_admin())
+        {
+        	$this->load->view('templates/sidebar_admin');
+        }
+        else
+        {
+        	$this->load->view('templates/sidebar_user');
+        }
         $this->load->view('admin/admin-elections-results', $this->data);
         $this->load->view('templates/scripts_main');
         $this->load->view('templates/scripts_custom', $this->data);
@@ -216,6 +223,7 @@ class Elections extends CI_Controller
 		$requestSent = '';
 		$requestVote = '';
 		$electionClosed = 'hidden';
+		$electionDone = 'hidden';
 
 		if($this->election_model->IsUserRegistered($electionID))
 		{
@@ -232,10 +240,15 @@ class Elections extends CI_Controller
 			$viewElection = 'hidden';
 			$requestSent = 'hidden';
 		}
-		if($election['status'] == 'Upcoming' || $election['status'] == 'Closed')
+		if($election['status'] == 'Upcoming')
 		{
 			$viewElection = 'hidden';
 			$electionClosed = '';
+		}
+		elseif($election['status'] == 'Closed')
+		{
+			$viewElection = 'hidden';
+			$electionDone = '';
 		}
 
 		$data['election'] = $election;
@@ -246,6 +259,7 @@ class Elections extends CI_Controller
 		$data['requestVote'] = $requestVote;
 		$data['viewElection'] = $viewElection;
 		$data['electionClosed'] = $electionClosed;
+		$data['electionDone'] = $electionDone;
 		$data['college'] = $college;
 		$data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
