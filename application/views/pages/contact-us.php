@@ -36,6 +36,7 @@
             <br>
           </div>
         </div>
+        <br>
         <?php if($this->ion_auth->logged_in()):?>
           </div>
         <?php endif?>
