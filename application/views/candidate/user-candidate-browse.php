@@ -19,7 +19,7 @@
                           <br>
                           <img class="img-circle img-thumbnail" width="100" src="<?=base_url() . $candidate->avatar?>" alt="<?=$candidate->first_name?> <?=$candidate->last_name?>">
                           <div class="caption text-center">
-                            <h5><?=$candidate->first_name?> <?=$candidate->last_name?></h5>
+                            <h4><?=$candidate->first_name?> <?=$candidate->last_name?></h4>
                             <h5><?=$this->user_model->GetUsersCollege($candidate->id)?></h5><br />
                             <p><a href="<?=site_url('candidates/view/' . $candidate->id)?>" class="btn btn-primary" role="button">Profile</a></p>
                           </div>
