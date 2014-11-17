@@ -283,7 +283,7 @@
 			"file": "application/controllers/user.php",
 			"settings":
 			{
-				"buffer_size": 22383,
+				"buffer_size": 22388,
 				"line_ending": "Windows"
 			}
 		},
@@ -495,15 +495,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22383,
+						"buffer_size": 22388,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9815,
-								9815
+								10186,
+								10186
 							]
 						],
 						"settings":

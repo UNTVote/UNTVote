@@ -232,7 +232,7 @@ class User extends CI_Controller
         $scripts = array('vendor/parsley.min.js', 'edit-profile.js');
         // user avatar details
         $config['upload_path'] = './assets/upload/';
-        $config['allowed_types'] = 'gif|jpg|png';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $config['max_size'] = '2048';
         $config['max_width']  = '1280';
         $config['max_height']  = '720';
