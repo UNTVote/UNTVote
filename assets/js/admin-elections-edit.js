@@ -1,6 +1,6 @@
 $(function () {
-  var nameTextBox = $('#formEditElection #electionName');
-  var panelLabel = $('#formEditElection #panelTitle');
+  var nameTextBox = $('#electionName');
+  var panelLabel = $('#panelTitle');
 
   // Change panel title as the user types in a name
   nameTextBox.on('keyup', function () {
