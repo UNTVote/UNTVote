@@ -84,9 +84,9 @@ function populateElectionTable() {
 			search = options.search.toLowerCase();
 			items = _.filter(items, function(item){
 				return (
-					(item.election_name.toLowerCase().search(options.search)>=0) ||
-                    (item.college.toLowerCase().search(options.search)>=0) ||
-                    (item.status.toLowerCase().search(options.search)>=0)
+					(item.election_name.toLowerCase().search(options.search.toLowerCase())>=0) ||
+                    (item.college.toLowerCase().search(options.search.toLowerCase())>=0) ||
+                    (item.status.toLowerCase().search(options.search.toLowerCase())>=0)
 				);
 			});
 		}

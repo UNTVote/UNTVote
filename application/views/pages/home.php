@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-5">
-              
+
               <form method="post" accept-charset="utf-8" action="<?=site_url('user/register')?>" class="form-horizontal col-md-10 col-lg-8 block-center" id="register" role="form" data-parsley-validate>
                 <?php if($message != NULL):?>
                 <div class="row">
@@ -71,11 +71,11 @@
                 <div class="form-group">
                   <label>College</label>
                   <select name="colleges[]" class="form-control">
-                    <!-- create an option for every college that we have -->      
--                   <?php foreach($options as $college):?>       
--                       <option value = "<?php echo $college['id'];?>">      
--                           <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>     
--                       </option>        
+                    <!-- create an option for every college that we have -->
+-                   <?php foreach($options as $college):?>
+-                       <option value = "<?php echo $college['id'];?>">
+-                           <?php echo htmlspecialchars($college['description'], ENT_QUOTES, 'UTF-8');?>
+-                       </option>
 -                   <?php endforeach?>
                   </select>
                 </div>
