@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 block-center">
-                            <img src="<?=base_url() . $candidate->avatar?>" alt="..." class="img-circle center-block" width="200" height="200">
+                            <img src="<?=base_url() . $candidate->avatar?>" alt="" class="img-circle img-thumbnail center-block" width="150">
                             <br>
                             <h3>About Me: </h3>
                              <p><?=$candidate->about_me?></p>
@@ -29,11 +29,11 @@
                             <p>Email : <?=$candidate->email?></p>
                     </div>
                 </div>
-                    
+
               </div>
             </div>
             </div>
-        
+
       </div>
         </div>
     </div>

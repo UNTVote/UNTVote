@@ -109,6 +109,7 @@ function getElectionResults(electionID){
 }
 
 function createPDF(){
+
    pdfDoc = {
       pageSize: 'A4',
 

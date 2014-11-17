@@ -294,11 +294,6 @@ body {
   cursor: pointer;
 }
 
-.candidate-pic{
-  width: 100px;
-  height: 100px;
-}
-
 .text-muted-2x {
   color: #dbdbdb;
 }

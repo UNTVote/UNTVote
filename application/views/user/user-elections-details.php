@@ -44,9 +44,11 @@
                       <a href="#" class="btn btn-default btn-block" disabled>Pending request to vote...</a>
                     </div>
                     <div class="col-xs-12" <?=$electionClosed?>>
+                      <br>
                       <div class='alert alert-warning'>Please come back on <?=date("m-d-Y", strtotime($election['start_time'])) ?> to cast your vote</div>
                     </div>
                     <div class="col-xs-12" <?=$electionDone?>>
+                      <br>
                       <div class='alert alert-danger'>The election has closed, and is not accepting anymore votes!</div>
                     </div>
                     <div class="col-xs-12" <?=$viewElection?>>

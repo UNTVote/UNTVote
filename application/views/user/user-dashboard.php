@@ -1,8 +1,8 @@
-    
+
         <!-- Main body content -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Elections</h1>
-          
+          <h1 class="page-header">Dashboard</h1>
+
             <div class="fade-on-load" hidden>
             <?php echo $message;?>
               <!-- Overview Panel -->
@@ -10,18 +10,18 @@
                   <div class="panel-heading">Overview</div>
                 <div class="panel-body">
                     <div class="row">
-                          <div class="col-xs-6 col-md-4">
+                          <div class="col-xs-12 col-sm-6 col-md-4">
                           <h4><span class = "info-circle info-circle-red"><?=$numberActiveElections?></span> Active Elections</h4>
                           </div>
-                          <div class="col-xs-6 col-md-4">
+                          <div class="col-xs-12 col-sm-6 col-md-4">
                           <h4><span class = "info-circle info-circle-blue"><?=$numberInactiveElections?></span> Upcoming Elections</h4>
                           </div>
-                          <div class="col-xs-6 col-md-4">
+                          <div class="col-xs-12 col-sm-6 col-md-4">
                           <h4><span class = "info-circle info-circle-purple"><?=$numberVoters?></span> Voters</h4>
                           </div>
                       </div>
                 </div>
-              </div>   
+              </div>
 
               <!-- only show the active elections if we have any -->
               <?php if($numberActiveElections > 0):?>
@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                           <?php foreach ($activeElections as $activeElection) : ?>
-                          <?php 
+                          <?php
                             $totalVotes = $activeElection['total_votes'];
                             $percentage = 0;
                             if($totalVotes == 0)
@@ -61,7 +61,7 @@
                             <td>
                               <div class="progress" style="margin-bottom: 0px;">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100"
-                                 style="width: <?=$percentage?>%;"><?=$activeElection['total_votes']?> / 
+                                 style="width: <?=$percentage?>%;"><?=$activeElection['total_votes']?> /
                                  <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                               </div>
                             </td>
@@ -107,12 +107,12 @@
                   </div>
                 </div>
               <?php endif?>
-            
+
         </div>
       </div>
     </div>
- 
-            
+
+
         </div>
       </div>
     </div>

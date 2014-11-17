@@ -17,7 +17,7 @@
                   </div>
                   <div class="media-body">
                     <h4 class="media-heading">Elections</h4>
-                    <p>Browse elections, candidates and vote. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet odio ante, eu molestie urna commodo et. Donec consectetur aliquam nisi.</p>
+                    <p>Browse elections and candidates all in one place. You can view detailed information for each election and candidate before voting.</p>
                   </div>
                 </div>
                 <div class="media">
@@ -26,8 +26,8 @@
                     <img class="media-object site-features" src="<?=img_url()?>results.png" alt="Results">
                   </div>
                   <div class="media-body">
-                    <h4 class="media-heading">View results</h4>
-                    <p>Browse elections, candidates and vote. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet odio ante, eu molestie urna commodo et. Donec consectetur aliquam nisi.</p>
+                    <h4 class="media-heading">Results</h4>
+                    <p>All results will be available right after an election is closed. You can view, print and download detailed information about them.</p>
                   </div>
                 </div>
                 <div class="media">
@@ -36,12 +36,12 @@
                   <img class="media-object site-features" src="<?=img_url()?>candidate.png" alt="Become a candidate">
                 </div>
                 <div class="media-body">
-                  <h4 class="media-heading">Become a candidate</h4>
-                  <p>Browse elections, candidates and vote. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet odio ante, eu molestie urna commodo et. Donec consectetur aliquam nisi.</p>
+                  <h4 class="media-heading">Run for elections</h4>
+                  <p>It is even better when you can become a candidate. Simply send a candidate request, build your candidate profile and you are on your way to get some votes.</p>
                 </div>
               </div>
               <br>
-              <h4>Register today and join the revolution.</h4>
+              <h4>Register today and help make a change.</h4>
               <br>
               </div>
             </div>
