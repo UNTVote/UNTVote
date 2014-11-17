@@ -15,14 +15,14 @@
                             <br>
                             <h4>About Me: </h4>
                             <?php if(empty($candidate->about_me)):?>
-                              <h3 class='text-muted'>Not Available</h3><br>
+                              <p class='text-muted'>Not Available</p>
                             <?php else :?>
                              <p><?=$candidate->about_me?></p>
                            <?php endif?>
                             <br>
                              <h4>Goals: </h4>
                              <?php if(empty($candidate->goals)):?>
-                              <h3 class='text-muted'>Not Available</h3><br>
+                              <p class='text-muted'>Not Available</p>
                             <?php else :?>
                              <p><?=$candidate->goals?></p>
                            <?php endif?>
