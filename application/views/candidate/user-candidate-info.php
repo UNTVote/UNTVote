@@ -14,10 +14,18 @@
                             <img src="<?=base_url() . $candidate->avatar?>" alt="" class="img-circle img-thumbnail center-block" width="150">
                             <br>
                             <h4>About Me: </h4>
+                            <?php if(empty($candidate->about_me)):?>
+                              <h3 class='text-muted'>Not Available</h3><br>
+                            <?php else :?>
                              <p><?=$candidate->about_me?></p>
+                           <?php endif?>
                             <br>
                              <h4>Goals: </h4>
+                             <?php if(empty($candidate->goals)):?>
+                              <h3 class='text-muted'>Not Available</h3><br>
+                            <?php else :?>
                              <p><?=$candidate->goals?></p>
+                           <?php endif?>
                             <br>
                             <h4>Participating Election(s):</h4>
                             <div class="list-group">
