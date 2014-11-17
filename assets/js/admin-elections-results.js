@@ -2,8 +2,23 @@ var electionResults;
 var pdfDoc;
 
 function createChart() {
+  var candidates = [];
+  var voteData = [];
+
+  if (electionResults.total_candidates > 1) {
+    $("#resultsChart").show();
+    // Get all candidates to an array
+    $.each(electionResults.candidate, function(key,value) {
+      candidates.push(value.candidate_first_name + ' ' + value.candidate_last_name);
+    });
+
+    // Get all votes to an array
+    $.each(electionResults.candidate, function(key,value) {
+      voteData.push(value.votes);
+    });
+
    var data = {
-    labels: ["Steve Jobs", "Jim Carey", "Jony Ive"],
+    labels: candidates,
     datasets: [
         {
             label: "Election results",
@@ -11,25 +26,25 @@ function createChart() {
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [45, 20, 34]
+            data: voteData
         }
-    ]
-  };
+      ]
+    };
 
-  // This will get the first returned node in the jQuery collection
-  var ctx = $("#resultsChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection
+    var ctx = $("#resultsChart").get(0).getContext("2d");
 
-  // Create chart
-  var resultsBarChart = new Chart(ctx).Bar(data, {
-    barShowStroke: false,
-    tooltipTitleFontStyle: "normal",
-    responsive: true
-  });
+    // Create chart
+    var resultsBarChart = new Chart(ctx).Bar(data, {
+      barShowStroke: false,
+      tooltipTitleFontStyle: "normal",
+      responsive: true
+    });
+  }
+  else {
+   $("#resultsChart").hide();
+  }
 }
-
-$(window).load(function() {
-  createChart();
-});
 
 function populateResults() {
   // Empty the candidate list
@@ -58,6 +73,11 @@ function populateResults() {
 
     $('#electionResultsPanel').fadeIn(500);
   });
+
+  // Show chart after the fade animations
+  setTimeout(function (){
+    createChart();
+  }, 1000);
 }
 
 function getElectionResults(electionID){

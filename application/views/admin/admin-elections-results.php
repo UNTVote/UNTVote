@@ -101,14 +101,20 @@
                       <br>
 
                       <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-4">
                           <button class="btn btn-block btn-primary" id="btnPrint">
                             <span class="glyphicon glyphicon-print"></span> Print
                           </button>
                         </div>
                         <div class="col-xs-12 visible-xs">&nbsp;</div>
-                        <div class="col-xs-12 col-sm-6">
-                          <button class="btn btn-block btn-success" id="btnDownload">
+                        <div class="col-xs-12 col-sm-4">
+                          <button class="btn btn-block btn-success">
+                            <span class="glyphicon glyphicon-envelope"></span> Email
+                          </button>
+                        </div>
+                        <div class="col-xs-12 visible-xs">&nbsp;</div>
+                        <div class="col-xs-12 col-sm-4">
+                          <button class="btn btn-block btn-warning" id="btnDownload">
                             <span class="glyphicon glyphicon-download"></span> Download
                           </button>
                         </div>
