@@ -241,7 +241,7 @@ class User extends CI_Controller
         $avatarUploaded = false;
         $errors = null;
 
-        $this->data['title'] = "Edit User";
+        $this->data['title'] = "Edit profile | UNTVote";
         $user = $this->ion_auth->user()->row();
         $title = $user->first_name . " | UNTVote";
         // create a substring from the email, don't include the "@my.unt.edu"

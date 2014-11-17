@@ -24,7 +24,7 @@ class Candidates extends CI_Controller
 	public function index()
 	{
 		$user = $this->ion_auth->user()->row();
-		$title = "Candidates";
+		$title = "Candidates | UNTVote";
 
 		// All the users that are candidates
 		$candidates = $this->ion_auth->users(3)->result();
@@ -39,7 +39,7 @@ class Candidates extends CI_Controller
         $this->load->view('candidate/user-candidate-browse', $data);
 	    $this->load->view('templates/scripts_main');
         $this->load->view('templates/scripts_custom');
-		$this->load->view('templates/footer'); 
+		$this->load->view('templates/footer');
 	}
 
 	// View - Views the candidates personal profile

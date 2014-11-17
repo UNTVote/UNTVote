@@ -324,7 +324,7 @@ class Elections extends CI_Controller
 
 		$user = $this->ion_auth->user()->row();
 
-		$title = "New Election";
+		$title = "New Election | UNTVote";
 
 		// get all the colleges for the admin to select from
 		$colleges = $this->college_model->GetColleges();
