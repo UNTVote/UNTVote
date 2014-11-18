@@ -242,18 +242,23 @@ class Elections extends CI_Controller
 			$viewElection = 'hidden';
 			$requestVote = 'hidden';
 		}
-		else
+		else if(!$this->election_model->IsUserRegistered($electionID) && !$this->notification_model->IsElectionNotificationSent($electionID))
 		{
 			$viewElection = 'hidden';
 			$requestSent = 'hidden';
-			$requestVote = '';
+		}
+		if(!$this->election_model->IsUserRegistered($electionID) && $election['status'] == 'Closed')
+		{
+			$viewElection = 'hidden';
+			$requestSent = 'hidden';
+			$requestVote = 'hidden';
 		}
 		if($election['status'] == 'Upcoming')
 		{
 			$viewElection = 'hidden';
 			$electionClosed = '';
 		}
-		elseif($election['status'] == 'Closed')
+		if($election['status'] == 'Closed')
 		{
 			$viewElection = 'hidden';
 			$electionDone = '';
