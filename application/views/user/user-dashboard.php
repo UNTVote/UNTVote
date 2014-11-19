@@ -52,7 +52,7 @@
                             }
                             else
                             {
-                              $percentage = ($this->election_model->GetElectionVoters($activeElection['id'])/$totalVotes) * 100;
+                              $percentage = ($totalVotes/$this->election_model->GetElectionVoters($activeElection['id'])) * 100;
                             }
                           ?>
                             <tr>

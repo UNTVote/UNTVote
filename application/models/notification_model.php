@@ -119,7 +119,7 @@ class Notification_Model extends CI_Model
 
 		$userEmail = $this->ion_auth->user($sender)->row()->email;
 
-		$this->email->from('UNTVote@gmail.com', 'UNTVote');
+		$this->email->from('UNTVote@gmail.com', 'UNTVote@gmail.com');
 		$this->email->to($userEmail);
 		$this->email->subject('UNTVote: Election Approval Request');
 		$this->email->message('We are sending you this email to let you know that you have been 
