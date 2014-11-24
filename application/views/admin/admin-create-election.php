@@ -228,7 +228,18 @@
 
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="" checked>Send reminders to registered voters
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                     <br>
+
                     <!-- Submit button -->
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Create election</button>

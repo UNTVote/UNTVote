@@ -7,7 +7,7 @@ class Pages extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->load->library('ion_auth');
         $this->load->model('college_model');
         $this->load->library('form_validation');
@@ -28,7 +28,7 @@ class Pages extends CI_Controller
 		$scripts = array('vendor/parsley.min.js');
         // create the title from the view passed in, capitalize the first letter, add UNTVote
         $data['title'] = ucfirst($page . ' | UNTVote');
-        
+
 		// get all the colleges from the database
         $data['options'] = $this->college_model->GetCollegesNotLike('All');
 		// validation errors for the registration form
@@ -69,7 +69,7 @@ class Pages extends CI_Controller
 			$this->load->view('templates/header', $data);
         	$this->load->view('templates/navigation', $data);
 		}
-        
+
         $this->load->view('pages/'.$page, $data);
 		$this->load->view('templates/scripts_main');
 		$this->load->view('templates/scripts_custom');
