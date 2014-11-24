@@ -1,9 +1,0 @@
-# System files
-desktop.ini
-*.dll
-*.dylib
-
-# Workspaces
-*.project
-*.sublime-project
-*.sublime-workspace
