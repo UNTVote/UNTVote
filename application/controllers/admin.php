@@ -114,6 +114,30 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	// VoteData
+	// Used for ajax to return the number of votes in an hour in a json formatted string
+	function VoteData()
+	{
+		header('Content-Type: application/json');
+
+		if($this->input->is_ajax_request())
+		{
+			$election = $this->input->post('elections');
+			$voteData = array();
+			$votes = 0;
+			// loop through all 24 hours to get the data
+			for($currentHour = 0; $currentHour < 24; $currentHour++)
+			{
+				// get the number of votes for that hour
+				$votes = $this->election_model->GetVotesByHour($election, $currentHour);
+				$voteData['hour'.$currentHour] = array('number_votes' => $votes);
+			}
+
+			$return = json_encode($voteData);
+			echo $return;
+		}
+	}
+
 	// ElectionData
 	// used for ajax to return the election data in a json formatted string
 	function ElectionData()

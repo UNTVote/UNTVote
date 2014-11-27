@@ -250,7 +250,7 @@
                       <div class="col-xs-12">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value="" checked>Send reminders to registered voters
+                            <input name="remindUsers" type="checkbox" value="1" checked>Send reminders to registered voters
                           </label>
                         </div>
                       </div>

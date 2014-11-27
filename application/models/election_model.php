@@ -27,6 +27,15 @@ class Election_Model extends CI_Model
 		return $query->row_array();
 	}
 
+	// GetVotesByHour - Returns all the votes in a certain hour for an election
+	// election - the election we want the number of votes for
+	// hour - the hour (in 24 hour format) we want the number of votes for
+	public function GetVotesByHour($election, $hour)
+	{
+		$query = $this->db->query('SELECT id FROM vote_log WHERE election_id = ' . $election . ' AND HOUR(vote_time) = ' . $hour);
+		return $query->num_rows();
+	}
+
 	// GetElectionsAjax - Gets all the elections
 	// -Used for Ajax
 	public function GetElectionsAjax()
@@ -176,6 +185,7 @@ class Election_Model extends CI_Model
 		$endDate = $this->input->post('electionEnd');
 		$college = $this->input->post('electionCollege');
 		$candidates = $this->input->post('electionCandidates');
+		$remindUsers = $this->input->post('remindUsers');
 
 		// format the dates to SQL date format
 		$newStartDate = date('Y-m-d', strtotime($startDate));
@@ -198,7 +208,8 @@ class Election_Model extends CI_Model
 					  'end_time' => $newEndDate,
 					  'college_id' => $college,
 					  'total_votes' => 0,
-					  'status' => $status);
+					  'status' => $status,
+					  'remind_users' => $remindUsers);
 		// insert into the election table
 		$this->db->insert('election', $data);
 		// get the election id of the last insert into the table
@@ -252,6 +263,7 @@ class Election_Model extends CI_Model
 		$endDate = $this->input->post('electionEnd');
 		$college = $this->input->post('electionCollege');
 		$candidates = $this->input->post('electionCandidates');
+		$remindUsers = $this->input->post('remindUsers');
 
 		// format the dates to SQL date format
 		$newStartDate = date('Y-m-d', strtotime($startDate));
@@ -273,7 +285,8 @@ class Election_Model extends CI_Model
 					  'start_time' => $newStartDate,
 					  'end_time' => $newEndDate,
 					  'college_id' => $college,
-					  'status' => $status);
+					  'status' => $status,
+					  'remind_users' => $remindUsers);
 		$this->db->where('id', $electionID);
 		$this->db->update('election', $data);
 
