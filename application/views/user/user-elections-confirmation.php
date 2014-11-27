@@ -19,7 +19,7 @@
               <button class="btn btn-success">Download receipt</button>
             </div>
             <div class="col-xs-6 text-left">
-              <a class="btn btn-primary" href="https://www.facebook.com/sharer/sharer.php?u=<?=base_url()?>" target="_blank">Share on Facebook</a>
+              <a class="btn btn-default" href="https://twitter.com/share?url=<?=base_url()?>&text=I voted at UNTVote! You should too!" target="_blank">Share on Twitter</a>
             </div>
           </div>
         </div>
