@@ -307,8 +307,11 @@ class Elections extends CI_Controller
 			}
 			else
 			{
+				$this->load->helper('string');
+				$electionVoted = $this->input->post('slug');
+				$electionID = $this->election_model->GetElectionIDBySlug($electionVoted);
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('user/');
+				redirect('elections/ElectionReceipt/' . random_string('alnum', 5) . $electionID);
 			}
 		}
 
@@ -376,5 +379,39 @@ class Elections extends CI_Controller
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect('admin/');
 		}
+	}
+
+	// electionreceipt - generates a voting receipt for the voter that voted on the election
+	public function ElectionReceipt($electionVoted)
+	{
+		$this->load->helper('string');
+
+		// get the election that was just voted for
+		$election = substr($electionVoted, 5);
+		// current user
+		$user = $this->ion_auth->user()->row();
+		$title = 'Vote Confirmation | UNTVote';
+
+		$receipt = $this->election_model->GenerateElectionReceipt($election, $user->id);
+		$confirmationNumber = null;
+		if(!$receipt)
+		{
+			show_error("I'm sorry, but no receipt was found...");
+		}
+		else
+		{
+			$confirmationNumber = random_string('alnum', 5) . $receipt['id'];
+		}
+
+		$data['confirmationNumber'] = $confirmationNumber;
+		$data['title'] = $title;
+		$data['user'] = $user;
+
+		$this->load->view('templates/header_user', $data);
+		$this->load->view('templates/navigation_user', $data);
+		$this->load->view('templates/sidebar_user');
+		$this->load->view('user/user-elections-confirmation', $data);
+		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/footer');
 	}
 }

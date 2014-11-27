@@ -532,4 +532,22 @@ class Election_Model extends CI_Model
 		}
 	}
 
+	// GenerateElectionReceipt
+	// gets the election receipt data for an election and user that voted
+	// returns - false if no vote is found, the vote receipt if found
+	public function GenerateElectionReceipt($election, $user)
+	{
+		$query = $this->db->get_where('vote_log', array('election_id' => $election, 
+														'voter_id'    => $user));
+
+		// we couldn't find that vote
+		if($query->num_rows() < 1)
+		{
+			return false;
+		}
+		else
+		{
+			return $query->row_array();
+		}
+	}
 }
