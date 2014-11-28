@@ -3,10 +3,17 @@ var hourlyResults;
 var pdfDoc;
 
 function hourlyChart() {
+  var voteData = [];
+
   $("#activeElectionSection").show();
 
+  // Get all votes to an array
+  $.each(hourlyResults, function(key,value) {
+    voteData.push(value);
+  });
+
    var data = {
-    labels: ["1 hour", "2 hour", "3 hour", "4 hour", "5 hour", "6 hour", "7 hour", "8 hour", "9 hour", "10 hour", "11 hour", "12 hour", "13 hour", "14 hour", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
+    labels: ["Hour 1", "Hour 2", "Hour 3", "Hour 4", "Hour 5", "Hour 6", "Hour 7", "Hour 8", "Hour 9", "Hour 10", "Hour 11", "Hour 12", "Hour 13", "Hour 14", "Hour 15", "Hour 16", "Hour 17", "Hour 18", "Hour 19", "Hour 20", "Hour 21", "Hour 22", "Hour 23", "Hour 24"],
     datasets: [
         {
             label: "Hourly results",
@@ -14,7 +21,7 @@ function hourlyChart() {
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80]
+            data: voteData
         }
       ]
     };
@@ -139,7 +146,7 @@ function getElectionResults(electionID){
 
 function getHourlyResults(electionID){
 
-  var postData = {election: electionID};
+  var postData = {elections: electionID};
 
   $.ajax({
       url : "../admin/VoteData",
@@ -149,7 +156,6 @@ function getHourlyResults(electionID){
       {
         hourlyResults = data;
         hourlyChart();
-        console.log(data);
       },
       error: function (jqXHR, textStatus, errorThrown)
       {

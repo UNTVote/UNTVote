@@ -130,7 +130,7 @@ class Admin extends CI_Controller {
 			{
 				// get the number of votes for that hour
 				$votes = $this->election_model->GetVotesByHour($election, $currentHour);
-				$voteData['hour'.$currentHour] = array('number_votes' => $votes);
+				$voteData['hour'.$currentHour] = $votes;
 			}
 
 			$return = json_encode($voteData);
