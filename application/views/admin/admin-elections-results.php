@@ -7,17 +7,26 @@
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
 
       <div role="tabpanel">
+      <?php if(!$isAdmin)
+      {
+        $active = ' class="active" ';
+        $inActive = 'in active';
+      }
+      ?>
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
+        <?php if($isAdmin) : ?>
           <li role="presentation" class="active"><a href="#activeElections" role="tab" data-toggle="tab">Active elections</a>
           </li>
-          <li role="presentation"><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
+        <?php endif?>
+          <li role="presentation" <?=$active?>><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
           </li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
+        <?php if($isAdmin) : ?>
           <div role="tabpanel" class="tab-pane fade in active" id="activeElections">
             <br>
             <div class="row">
@@ -50,7 +59,7 @@
             </div>
             <br>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="closedElections">
+          <div role="tabpanel" class="tab-pane fade <?=$inActive?>" id="closedElections">
             <br>
             <div class="row">
               <div class="col-xs-12">
@@ -71,6 +80,7 @@
             </div>
 
             <br>
+          <?php endif?>
 
             <div class="panel panel-default" id="electionResultsPanel" hidden>
               <div class="panel-heading">

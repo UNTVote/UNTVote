@@ -55,6 +55,7 @@ class Elections extends CI_Controller
 		$user = $this->ion_auth->user()->row();
         $this->data['user'] = $user;
         $this->data['title'] = $firstName . " | UNTVote";
+        $this->data['isAdmin'] = $this->ion_auth->is_admin();
 
         // if the user is an admin show all the elections that are closed
         if($this->ion_auth->is_admin())
