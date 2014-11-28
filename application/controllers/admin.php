@@ -122,7 +122,7 @@ class Admin extends CI_Controller {
 
 		if($this->input->is_ajax_request())
 		{
-			$election = $this->input->post('activeElections');
+			$election = $this->input->post('elections');
 			$voteData = array();
 			$votes = 0;
 			// loop through all 24 hours to get the data

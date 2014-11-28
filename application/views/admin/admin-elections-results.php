@@ -26,7 +26,7 @@
                 <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
                 <?php else:?>
                 <label>Election</label>
-                <select name="activeElections" class="form-control" id="activeElectionsSelect">
+                <select name="elections" class="form-control" id="activeElectionsSelect">
                   <option value="" disabled selected>Choose election</option>
                   <?php foreach($activeElections as $election) : ?>
                   <option value="<?=$election['id']?>">
