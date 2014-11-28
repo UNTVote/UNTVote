@@ -401,6 +401,8 @@ class Elections extends CI_Controller
 		$title = 'Vote Confirmation | UNTVote';
 
 		$receipt = $this->election_model->GenerateElectionReceipt($election, $user->id);
+		$electionName = $this->election_model->GetElection($election)['election_name'];
+		$candidateVoted = $this->ion_auth->user($receipt['candidate_id'])->row();
 		$confirmationNumber = null;
 		if(!$receipt)
 		{
@@ -414,6 +416,8 @@ class Elections extends CI_Controller
 		$data['confirmationNumber'] = $confirmationNumber;
 		$data['title'] = $title;
 		$data['user'] = $user;
+		$data['electionName'] = $electionName;
+		$data['candidateVoted'] = $candidateVoted->first_name . ' ' . $candidateVoted->last_name;
 
 		$this->load->view('templates/header_user', $data);
 		$this->load->view('templates/navigation_user', $data);

@@ -20,6 +20,8 @@
             </div>
             <div class="col-xs-6 text-left">
               <a class="btn btn-default" href="https://twitter.com/share?url=<?=base_url()?>&text=I voted at UNTVote! You should too!" target="_blank">Share on Twitter</a>
+              <input type="hidden" name="election" id="election" value="<?=$electionName?>"/>
+              <input type="hidden" name="candidate" id="candidate" value="<?=$candidateVoted?>" />
             </div>
           </div>
         </div>
