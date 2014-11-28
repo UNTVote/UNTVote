@@ -404,6 +404,15 @@ class Election_Model extends CI_Model
 		}
 	}
 
+	// GetUsersNotVoted - gets all the users who have not yet voted in an election
+	// electionID - the election to get the voters for
+	private function GetUsersNotVoted($electionID)
+	{
+		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', 'false')->get();
+
+		return $query->result_array();
+	}
+
 	// IsUserRegistered - Checks to see if the logged in user is registered to vote in that election
 	// electionID - The election we are seeing if they have voted
 	// Returns - true if the user can vote, false otherwise
@@ -493,6 +502,28 @@ class Election_Model extends CI_Model
 		}	
 	}
 
+	// SendReminderEmails - sends an email to every user who has not yet voted in an election
+	// electionID - the election to send reminders for
+	private function SendReminderEmails($electionID)
+	{
+		// get all the voters who have not yet voted
+		$voters = $this->GetUsersNotVoted($electionID);
+
+		// send an email to them
+		foreach($voters as $voter)
+		{
+			$voterEmail = $this->ion_auth->user($voter['user_id'])->row()->email;
+			$voterName =  $this->ion_auth->user($voter['user_id'])->row()->first_name;
+
+			$this->email->from('UNTVote@gmail.com', 'UNTVote@gmail.com');
+			$this->email->to($voterEmail);
+			$this->email->subject('UNTVote: Election Reminder');
+			$this->email->message('Hey ' . $voterName . ',
+								  <br>We are sending you this email to let you know you have two days left to vote in an election');
+			$this->email->send();
+		}
+	}
+
 	// IsActive - IsActive is a helper function that determines whether an election should be active
 	// startDate - the date to check whether or not it is active
 	// Returns - returns true if start date is today or earlier, false otherwise
@@ -509,6 +540,42 @@ class Election_Model extends CI_Model
 			return true;
 		}
 	}
+
+	// SendReminder - determines whether or not an election needs to send a reminder out
+	private function SendReminder($endDate)
+	{
+		// central timezone
+		date_default_timezone_set('America/Chicago');
+		// gets todays date
+		$todaysDate = date('Y-m-d');
+
+		// set the DateTime objects
+		$today = new DateTime($todaysDate);
+		$electionEnd = new DateTime($endDate);
+
+		// get the difference between the two
+		$dateDifference = $today->diff($electionEnd);
+		$days = $dateDifference->days;
+
+		// the days are within two days, send the reminder
+		if($days == 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	// UpdateReminders - updates that an election reminders has been set
+	// electionID - the election to update
+	private function UpdateReminders($electionID)
+	{
+		$this->db->where('id', $electionID);
+		$this->db->update('election', array('reminder_sent' => 'true'));
+	}
+
 
 	// UpdateElections - This checks whether each election needs to have their status updated, and if so update it
 	public function UpdateElections()
@@ -541,6 +608,11 @@ class Election_Model extends CI_Model
 				{
 					$this->ExtendElection($election['id']);
 				}
+			}
+			if($this->SendReminder($election['end_time']))
+			{
+				$this->SendReminderEmails($election['id']);
+				$this->UpdateReminders($election['id']);
 			}
 		}
 	}

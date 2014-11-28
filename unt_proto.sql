@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2014 at 09:53 AM
+-- Generation Time: Nov 28, 2014 at 05:12 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admin_notifications` (
   `type` varchar(20) NOT NULL COMMENT 'candidate or vote',
   `election_id` int(10) NOT NULL,
   `response` varchar(10) NOT NULL DEFAULT 'No'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -82,25 +82,26 @@ CREATE TABLE IF NOT EXISTS `election` (
   `college_id` int(11) NOT NULL,
   `total_votes` int(11) NOT NULL,
   `status` varchar(10) NOT NULL,
-  `remind_users` tinyint(1) NOT NULL DEFAULT '0'
+  `remind_users` tinyint(1) NOT NULL DEFAULT '0',
+  `reminder_sent` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `election`
 --
 
-INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `start_time`, `end_time`, `college_id`, `total_votes`, `status`, `remind_users`) VALUES
-(8, 'Computer Science President', 'Who should be the president of the Computer Science department', 'computer-science-president', '2014-11-27', '2014-11-27', 2, 0, 'Closed', 1),
-(10, 'College of Engineering Dean', 'Dean of the College of Engineering and some long description...', 'college-of-engineering-dean', '2014-11-27', '2014-11-28', 4, 1, 'Active', 0),
-(11, 'Testing Colleges', 'Testing Limiting Colleges', 'testing-colleges', '2014-10-30', '2014-10-31', 2, 0, 'Closed', 0),
-(12, 'Testing Dates', 'Testing to see if elections are updated', 'election-update', '2014-10-01', '2014-11-01', 1, 0, 'Closed', 0),
-(15, 'Candidates Election', 'Testing Adding Candidates to an Election', 'candidates-election', '2014-11-02', '2014-11-03', 1, 0, 'Closed', 0),
-(16, 'Adding Candidates', 'Testing Adding Candidates to an Election and editing an election.', 'adding-candidates', '2014-11-27', '2014-11-29', 4, 2, 'Active', 0),
-(17, 'Creating Candidates', 'I am testing editing and creating candidates in this election', 'creating-candidates', '2014-11-11', '2014-11-12', 4, 0, 'Closed', 0),
-(19, 'Testing New Create Election', 'Testing the new new Create Election form and date format', 'testing-new-create-election', '2014-11-04', '2014-11-07', 4, 11, 'Closed', 0),
-(20, 'Testing Views', 'Testing whether or not the new create election form is working', 'testing-views', '2014-11-05', '2014-11-06', 4, 1, 'Closed', 0),
-(21, 'New Testing Elections', 'jkfldsjflksj fjsk fsjkl fsdjkl jkflsd jfklds fsdjklf jkflsd jkflsd jkfls jklfs jklfsd jkflsd', 'new-testing-elections', '2014-11-15', '2014-11-17', 4, 1, 'Closed', 0),
-(22, 'UNTVote President', 'UNTVote is here!  Now who should be the president of this wonderful system?', 'untvote-president', '2014-11-17', '2014-11-19', 15, 2, 'Closed', 0);
+INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `start_time`, `end_time`, `college_id`, `total_votes`, `status`, `remind_users`, `reminder_sent`) VALUES
+(8, 'Computer Science President', 'Who should be the president of the Computer Science department', 'computer-science-president', '2014-11-27', '2014-11-27', 2, 0, 'Closed', 1, 0),
+(10, 'College of Engineering Dean', 'Dean of the College of Engineering and some long description...', 'college-of-engineering-dean', '2014-11-27', '2014-11-28', 4, 1, 'Active', 0, 0),
+(11, 'Testing Colleges', 'Testing Limiting Colleges', 'testing-colleges', '2014-10-30', '2014-10-31', 2, 0, 'Closed', 0, 0),
+(12, 'Testing Dates', 'Testing to see if elections are updated', 'election-update', '2014-10-01', '2014-11-01', 1, 0, 'Closed', 0, 0),
+(15, 'Candidates Election', 'Testing Adding Candidates to an Election', 'candidates-election', '2014-11-02', '2014-11-03', 1, 0, 'Closed', 0, 0),
+(16, 'Adding Candidates', 'Testing Adding Candidates to an Election and editing an election.', 'adding-candidates', '2014-11-27', '2014-11-29', 4, 2, 'Active', 0, 0),
+(17, 'Creating Candidates', 'I am testing editing and creating candidates in this election', 'creating-candidates', '2014-11-11', '2014-11-12', 4, 0, 'Closed', 0, 0),
+(19, 'Testing New Create Election', 'Testing the new new Create Election form and date format', 'testing-new-create-election', '2014-11-04', '2014-11-07', 4, 11, 'Closed', 0, 0),
+(20, 'Testing Views', 'Testing whether or not the new create election form is working', 'testing-views', '2014-11-05', '2014-11-06', 4, 1, 'Closed', 0, 0),
+(21, 'New Testing Elections', 'jkfldsjflksj fjsk fsjkl fsdjkl jkflsd jfklds fsdjklf jkflsd jkflsd jkfls jklfs jklfsd jkflsd', 'new-testing-elections', '2014-11-15', '2014-11-17', 4, 1, 'Closed', 0, 0),
+(22, 'UNTVote President', 'UNTVote is here!  Now who should be the president of this wonderful system?', 'untvote-president', '2014-11-17', '2014-11-19', 15, 2, 'Closed', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -125,8 +126,8 @@ INSERT INTO `election_candidates` (`id`, `candidate_id`, `election_id`, `votes`)
 (10, 5, 20, 1),
 (23, 1, 8, 0),
 (25, 1, 21, 0),
-(26, 1, 16, 1),
-(27, 6, 16, 1),
+(26, 1, 16, 0),
+(27, 6, 16, 2),
 (28, 6, 21, 1),
 (29, 5, 21, 0),
 (30, 6, 22, 2),
@@ -201,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `about_me`, `goals`, `avatar`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$CARllLsGWWMSbq4bPpGbieDtMj8C6IUISiM5K4nlg.1dwA9dJHEmq', '', 'admin@my.unt.edu', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1417067478, 1, 'Admin', 'Smith', 'None', '2147296420', 'I am the lead server side programmer on UNTVote.  I lead and designed the backend system and designed all of the databases. ', 'I will bring great things to the school.  I will bring UNTVote to the public!', 'assets/upload/meandDog.jpg'),
+(1, '127.0.0.1', 'administrator', '$2y$08$CARllLsGWWMSbq4bPpGbieDtMj8C6IUISiM5K4nlg.1dwA9dJHEmq', '', 'admin@my.unt.edu', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1417141667, 1, 'Admin', 'Smith', 'None', '2147296420', 'I am the lead server side programmer on UNTVote.  I lead and designed the backend system and designed all of the databases. ', 'I will bring great things to the school.  I will bring UNTVote to the public!', 'assets/upload/meandDog.jpg'),
 (5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1417067439, 1, 'Chad', 'Smith', NULL, NULL, 'I''m the best their is, best their was', 'Free Books!', 'assets/upload/untBowlGame3.png'),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Kieth', '', NULL, NULL, 'I''m a master at UX!', NULL, 'assets/img/user-default.png'),
 (34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL, NULL, NULL, 'assets/img/user-default.png'),
@@ -278,25 +279,26 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 CREATE TABLE IF NOT EXISTS `voters` (
 `id` int(10) NOT NULL,
   `election_id` int(10) NOT NULL,
-  `user_id` int(10) NOT NULL
+  `user_id` int(10) NOT NULL,
+  `has_voted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `voters`
 --
 
-INSERT INTO `voters` (`id`, `election_id`, `user_id`) VALUES
-(14, 17, 5),
-(16, 19, 5),
-(19, 8, 1),
-(20, 8, 5),
-(21, 21, 1),
-(22, 21, 5),
-(24, 16, 1),
-(27, 22, 5),
-(28, 22, 1),
-(29, 10, 5),
-(30, 16, 5);
+INSERT INTO `voters` (`id`, `election_id`, `user_id`, `has_voted`) VALUES
+(14, 17, 5, 0),
+(16, 19, 5, 0),
+(19, 8, 1, 0),
+(20, 8, 5, 0),
+(21, 21, 1, 0),
+(22, 21, 5, 0),
+(24, 16, 1, 0),
+(27, 22, 5, 0),
+(28, 22, 1, 0),
+(29, 10, 5, 0),
+(30, 16, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -310,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `vote_log` (
   `candidate_id` int(11) NOT NULL,
   `voter_id` int(11) NOT NULL,
   `vote_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
 
 --
 -- Dumping data for table `vote_log`
@@ -323,12 +325,12 @@ INSERT INTO `vote_log` (`id`, `election_id`, `candidate_id`, `voter_id`, `vote_t
 (37, 17, 6, 5, '2014-11-27 06:28:49'),
 (39, 8, 39, 5, '2014-11-27 06:28:49'),
 (41, 8, 39, 1, '2014-11-27 06:28:49'),
-(42, 16, 1, 1, '2014-11-27 06:28:49'),
 (43, 21, 6, 1, '2014-11-27 06:28:49'),
 (47, 22, 6, 5, '2014-11-27 06:28:49'),
 (49, 22, 6, 1, '2014-11-27 06:28:49'),
 (50, 10, 6, 5, '2014-11-27 06:28:49'),
-(58, 16, 6, 5, '2014-11-27 08:02:30');
+(58, 16, 6, 5, '2014-11-27 08:02:30'),
+(59, 16, 6, 1, '2014-11-28 02:59:09');
 
 --
 -- Indexes for dumped tables
@@ -408,7 +410,7 @@ ALTER TABLE `vote_log`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `colleges`
 --
@@ -458,7 +460,7 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 -- AUTO_INCREMENT for table `vote_log`
 --
 ALTER TABLE `vote_log`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=60;
 --
 -- Constraints for dumped tables
 --
