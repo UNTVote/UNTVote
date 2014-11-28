@@ -1,5 +1,34 @@
 var electionResults;
+var hourlyResults;
 var pdfDoc;
+
+function hourlyChart() {
+  $("#activeElectionSection").show();
+
+   var data = {
+    labels: ["1 hour", "2 hour", "3 hour", "4 hour", "5 hour", "6 hour", "7 hour", "8 hour", "9 hour", "10 hour", "11 hour", "12 hour", "13 hour", "14 hour", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
+    datasets: [
+        {
+            label: "Hourly results",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80]
+        }
+      ]
+    };
+
+    // This will get the first returned node in the jQuery collection
+    var ctx = $("#activeElectionsChart").get(0).getContext("2d");
+
+    // Create chart
+    var resultsBarChart = new Chart(ctx).Bar(data, {
+      barShowStroke: false,
+      tooltipTitleFontStyle: "normal",
+      responsive: true
+    });
+}
 
 function createChart() {
   var candidates = [];
@@ -108,6 +137,28 @@ function getElectionResults(electionID){
   });
 }
 
+function getHourlyResults(electionID){
+
+  var postData = {election: electionID};
+
+  $.ajax({
+      url : "../admin/VoteData",
+      type: "POST",
+      data : postData,
+      success: function(data, textStatus, jqXHR)
+      {
+        hourlyResults = data;
+        hourlyChart();
+        console.log(data);
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+        console.log("Error getting JSON data from 'VoteData'");
+        alert("Sorry, we couldn't load results for that election");
+      }
+  });
+}
+
 function createPDF(){
 
    pdfDoc = {
@@ -191,6 +242,10 @@ function downloadPDF(){
 }
 
 $(document).ready(function() {
+
+  $('#activeElectionsSelect').on('change', function() {
+    getHourlyResults(this.value);
+  });
 
   $('#electionsList').on('change', function() {
     getElectionResults(this.value);

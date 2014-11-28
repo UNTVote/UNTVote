@@ -1,51 +1,94 @@
-        <!-- Main body content -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Results</h1>
-          <br>
+<!-- Main body content -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Results</h1>
+  <br>
 
-          <div class="row">
-            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
 
-              <div class="row">
-                <div class="col-xs-12">
-                <?php if($numberElections <= 0): ?>
-                    <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
-                  <?php else:?>
-                    <label>Election</label>
-                  <select name="elections" class="form-control" id="electionsList">
-                    <option value="" disabled selected>Choose election</option>
+      <div role="tabpanel">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#activeElections" role="tab" data-toggle="tab">Active elections</a>
+          </li>
+          <li role="presentation"><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="activeElections">
+            <br>
+            <div class="row">
+              <div class="col-xs-12">
+                <label>Election</label>
+                <select class="form-control" id="activeElectionsSelect">
+                  <option value="" disabled selected>Choose election</option>
+                  <option>Election XYZ</option>
+                  <option>Election HRE</option>
+                  <option>Election SOS</option>
+                </select>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col-xs-12" id="activeElectionSection" hidden>
+                <br>
+                <h4 class="text-center">Hourly results for the past 24 hours</h4>
+                <br>
+                <canvas id="activeElectionsChart" class="bar-chart"></canvas>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="closedElections">
+            <br>
+            <div class="row">
+              <div class="col-xs-12">
+                <?php if($numberElections <=0 ): ?>
+                <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
+                <?php else:?>
+                <label>Election</label>
+                <select name="elections" class="form-control" id="electionsList">
+                  <option value="" disabled selected>Choose election</option>
                   <?php foreach($elections as $election) : ?>
-                    <option value="<?=$election['id']?>"><?=$election['election_name']?></option>
+                  <option value="<?=$election['id']?>">
+                    <?=$election[ 'election_name']?>
+                  </option>
                   <?php endforeach?>
-                  </select>
+                </select>
                 <?php endif?>
-                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="panel panel-default" id="electionResultsPanel" hidden>
+              <div class="panel-heading">
+                <h3 class="panel-title"><span id="electionName">Election XYZ</span> <span class="text-muted" id="electionDates">- (08/21/14 - 09/12/14)</span></h3>
+
+
               </div>
 
-              <br>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-11 block-center">
+                    <br>
 
-              <div class="panel panel-default" id="electionResultsPanel" hidden>
-                <div class="panel-heading">
-                  <h3 class="panel-title"><span id="electionName">Election XYZ</span> <span class="text-muted" id="electionDates">- (08/21/14 - 09/12/14)</span></h3>
-
-
-                </div>
-
-                <div class="panel-body">
-                  <div class="row">
-                    <div class="col-xs-11 block-center">
-                      <br>
-
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <canvas id="resultsChart" class="bar-chart" hidden></canvas>
-                        </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <canvas id="resultsChart" class="bar-chart" hidden></canvas>
                       </div>
+                    </div>
 
-                      <br><br>
+                    <br>
+                    <br>
 
-                      <div class="row" id="candidates">
-<!--
+                    <div class="row" id="candidates">
+                      <!--
                         <div class="col-xs-12">
                           <ul class="list-inline election-winners">
                             <li><h1>1.</h1></li>
@@ -71,60 +114,73 @@
                           </ul>
                         </div>
 -->
-                      </div>
-
-                      <h4 class="text-center">Statistics</h4>
-                      <br>
-
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                          <ul class="list-inline">
-                            <li><strong>Total votes</strong></li>
-                            <li><p id="totalVotes">0</p></li>
-                          </ul>
-                          <ul class="list-inline">
-                            <li><strong>Registered voters</strong></li>
-                            <li><p id="registeredVoters">0</p></li>
-                          </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 text-right-sm">
-                          <ul class="list-inline">
-                            <li><strong>Total candidates:</strong></li>
-                            <li><p id="totalCandidates">0</p></li>
-                          </ul>
-                          <ul class="list-inline">
-                            <li><strong>Category:</strong></li>
-                            <li id="electionCategory">Empty</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <br>
-
-                      <h4 class="text-center">Actions</h4>
-                      <br>
-
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                          <button class="btn btn-block btn-primary" id="btnPrint">
-                            <span class="glyphicon glyphicon-print"></span> Print
-                          </button>
-                        </div>
-                        <div class="col-xs-12 visible-xs">&nbsp;</div>
-                        <div class="col-xs-12 col-sm-6">
-                          <button class="btn btn-block btn-success" id="btnDownload">
-                            <span class="glyphicon glyphicon-download"></span> Download
-                          </button>
-                        </div>
-                      </div>
-                      <br>
                     </div>
+
+                    <h4 class="text-center">Statistics</h4>
+                    <br>
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <ul class="list-inline">
+                          <li><strong>Total votes</strong>
+                          </li>
+                          <li>
+                            <p id="totalVotes">0</p>
+                          </li>
+                        </ul>
+                        <ul class="list-inline">
+                          <li><strong>Registered voters</strong>
+                          </li>
+                          <li>
+                            <p id="registeredVoters">0</p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-xs-12 col-sm-6 text-right-sm">
+                        <ul class="list-inline">
+                          <li><strong>Total candidates:</strong>
+                          </li>
+                          <li>
+                            <p id="totalCandidates">0</p>
+                          </li>
+                        </ul>
+                        <ul class="list-inline">
+                          <li><strong>Category:</strong>
+                          </li>
+                          <li id="electionCategory">Empty</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <br>
+
+                    <h4 class="text-center">Actions</h4>
+                    <br>
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <button class="btn btn-block btn-primary" id="btnPrint">
+                          <span class="glyphicon glyphicon-print"></span> Print
+                        </button>
+                      </div>
+                      <div class="col-xs-12 visible-xs">&nbsp;</div>
+                      <div class="col-xs-12 col-sm-6">
+                        <button class="btn btn-block btn-success" id="btnDownload">
+                          <span class="glyphicon glyphicon-download"></span> Download
+                        </button>
+                      </div>
+                    </div>
+                    <br>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
+
       </div>
     </div>
+  </div>
+</div>
+</div>
+</div>

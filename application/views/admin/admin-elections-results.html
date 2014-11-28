@@ -1,131 +1,311 @@
-        <!-- Main body content -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Results</h1>
-          <br>
-          
-          <div class="row">
-            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
-            
-              <div class="row">
-                <div class="col-xs-12">
-                  <label>Choose election</label>
-                  <select class="form-control">
-                    <option>Election XYZ</option>
-                    <option>Election HRE</option>
-                    <option>Election SOS</option>
-                  </select>
-                </div>
-              </div>
-              
-              <br>
-              
-              
-              <div class="panel panel-default">
-                <div class="panel-heading">              
-                  <h3 class="panel-title">Election XYZ <span class="text-muted">- (08/21/14 - 09/12/14)</span></h3>
-                  
-                  
-                </div>
-                
-                <div class="panel-body">
-                  <div class="row">
-                    <div class="col-xs-11 block-center">
-                      <br>
-                      
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <canvas id="resultsChart" class="bar-chart"></canvas>
-                        </div>
-                      </div>
+<!DOCTYPE html>
+<html lang="en">
 
-                      <br><br>
-                      
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <ul class="list-inline election-winners">
-                            <li><h1>1.</h1></li>
-                            <li><img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70"></li>
-                            <li>
-                              <ul class="list-unstyled">
-                                <li><H4>Steve Jobs</H4></li>
-                                <li class="text-muted">94 votes</li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="col-xs-12">
-                          <ul class="list-inline election-winners">
-                            <li class="lol"><h1>2.</h1></li>
-                            <li><img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70"></li>
-                            <li>
-                              <ul class="list-unstyled">
-                                <li><H4>Jony Ive</H4></li>
-                                <li class="text-muted">86 votes</li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <h4 class="text-center">Statistics</h4>
-                      <br>
-                      
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                          <ul class="list-inline">
-                            <li><strong>Total votes</strong></li>
-                            <li><p>35</p></li>
-                          </ul>
-                          <ul class="list-inline">
-                            <li><strong>Registered voters</strong></li>
-                            <li><p>56</p></li>
-                          </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 text-right-sm">
-                          <ul class="list-inline">
-                            <li><strong>Total candidates:</strong></li>
-                            <li><p>3</p></li>
-                          </ul>
-                          <ul class="list-inline">
-                            <li><strong>Category:</strong></li>
-                            <li>College of engineering</li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <br>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
 
-                      <h4 class="text-center">Actions</h4>
-                      <br>
-                      
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-4">
-                          <button class="btn btn-block btn-primary">
-                            <span class="glyphicon glyphicon-print"></span> Print
-                          </button>
-                        </div>
-                        <div class="col-xs-12 visible-xs">&nbsp;</div>
-                        <div class="col-xs-12 col-sm-4">
-                          <button class="btn btn-block btn-success">
-                            <span class="glyphicon glyphicon-envelope"></span> Email
-                          </button>
-                        </div>
-                        <div class="col-xs-12 visible-xs">&nbsp;</div>
-                        <div class="col-xs-12 col-sm-4">
-                          <button class="btn btn-block btn-warning">
-                            <span class="glyphicon glyphicon-download"></span> Download
-                          </button>
-                        </div>
-                      </div>
-                      <br>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
+  <title>Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Custom styles -->
+  <link href="../../../assets/css/style-main.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <!-- Navigation -->
+  <div class="navbar nav-bar-unt navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-5">
+          <a href="#">
+            <img class="navbar-brand" src="../../../assets/img/UNTVote-logo.png" alt="UNTVote">
+          </a>
+        </div>
+        <div class="col-xs-7 text-right">
+          <label class="profile-name">Username</label>
+          <div class="btn-group">
+            <img src="../../../assets/img/user-default.png" class="img-circle dropdown-toggle profile-pic" type="button" data-toggle="dropdown">
+            <ul class="dropdown-menu dropdown-menu-open-left " role="menu">
+              <li><a href="#">Action</a>
+              </li>
+              <li><a href="#">Another action</a>
+              </li>
+              <li><a href="#">Something else here</a>
+              </li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar panel-group" id="menuAccordion">
+          <li class="panel"><a href="#"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Dashboard</a>
+          </li>
+          <li class="panel">
+            <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseElections"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Elections</a>
+            <div id="collapseElections" class="panel-collapse collapse">
+              <ul class="nav-sidebar-sub-menu">
+                <li><a href="#">Manage</a>
+                </li>
+                <li><a href="#">Results</a>
+                </li>
+                <li><a href="#">Live Feed</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="panel">
+            <a data-toggle="collapse" data-parent="#menuAccordion" href="#collapseUsers"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Users</a>
+            <div id="collapseUsers" class="panel-collapse collapse">
+              <ul class="nav-sidebar-sub-menu">
+                <li><a href="#">Manage</a>
+                </li>
+                <li><a href="#">Approvals</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main body content -->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Results</h1>
+        <br>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
+
+            <div role="tabpanel">
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#activeElections" role="tab" data-toggle="tab">Active elections</a>
+                </li>
+                <li role="presentation"><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
+                </li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="activeElections">
+                  <br>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <label>Choose election</label>
+                      <select class="form-control" id="activeElectionsSelect">
+                        <option>Election XYZ</option>
+                        <option>Election HRE</option>
+                        <option>Election SOS</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <canvas id="activeElectionsChart" class="bar-chart"></canvas>
+                    </div>
+                  </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="closedElections">
+                  <br>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <label>Choose election</label>
+                      <select class="form-control">
+                        <option>Election XYZ</option>
+                        <option>Election HRE</option>
+                        <option>Election SOS</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <br>
+
+
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Election XYZ <span class="text-muted">- (08/21/14 - 09/12/14)</span></h3>
+
+
+                    </div>
+
+                    <div class="panel-body">
+                      <div class="row">
+                        <div class="col-xs-11 block-center">
+                          <br>
+
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <canvas id="resultsChart" class="bar-chart"></canvas>
+                            </div>
+                          </div>
+
+                          <br>
+                          <br>
+
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <ul class="list-inline election-winners">
+                                <li>
+                                  <h1>1.</h1>
+                                </li>
+                                <li>
+                                  <img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70">
+                                </li>
+                                <li>
+                                  <ul class="list-unstyled">
+                                    <li>
+                                      <H4>Steve Jobs</H4>
+                                    </li>
+                                    <li class="text-muted">94 votes</li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-xs-12">
+                              <ul class="list-inline election-winners">
+                                <li class="lol">
+                                  <h1>2.</h1>
+                                </li>
+                                <li>
+                                  <img src="../../../assets/img/user-default.png" class="img-circle img-thumbnail" width="70">
+                                </li>
+                                <li>
+                                  <ul class="list-unstyled">
+                                    <li>
+                                      <H4>Jony Ive</H4>
+                                    </li>
+                                    <li class="text-muted">86 votes</li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <h4 class="text-center">Statistics</h4>
+                          <br>
+
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                              <ul class="list-inline">
+                                <li><strong>Total votes</strong>
+                                </li>
+                                <li>
+                                  <p>35</p>
+                                </li>
+                              </ul>
+                              <ul class="list-inline">
+                                <li><strong>Registered voters</strong>
+                                </li>
+                                <li>
+                                  <p>56</p>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 text-right-sm">
+                              <ul class="list-inline">
+                                <li><strong>Total candidates:</strong>
+                                </li>
+                                <li>
+                                  <p>3</p>
+                                </li>
+                              </ul>
+                              <ul class="list-inline">
+                                <li><strong>Category:</strong>
+                                </li>
+                                <li>College of engineering</li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <br>
+
+                          <h4 class="text-center">Actions</h4>
+                          <br>
+
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                              <button class="btn btn-block btn-primary">
+                                <span class="glyphicon glyphicon-print"></span> Print
+                              </button>
+                            </div>
+                            <div class="col-xs-12 visible-xs">&nbsp;</div>
+                            <div class="col-xs-12 col-sm-4">
+                              <button class="btn btn-block btn-success">
+                                <span class="glyphicon glyphicon-envelope"></span> Email
+                              </button>
+                            </div>
+                            <div class="col-xs-12 visible-xs">&nbsp;</div>
+                            <div class="col-xs-12 col-sm-4">
+                              <button class="btn btn-block btn-warning">
+                                <span class="glyphicon glyphicon-download"></span> Download
+                              </button>
+                            </div>
+                          </div>
+                          <br>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer area -->
+  <div class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-6">
+          <p class="footer-text">&copy; 2014 UNT Vote</p>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a href="#" class="footer-text">Contact</a>
+          &nbsp;
+          <a href="#" class="footer-text">Help</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All scripts go below this area -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="../../../assets/js/vendor/chart.min.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/admin-elections-results.js"></script>
+</body>
+
+</html>
