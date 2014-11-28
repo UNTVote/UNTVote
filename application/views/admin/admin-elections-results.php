@@ -22,13 +22,19 @@
             <br>
             <div class="row">
               <div class="col-xs-12">
+               <?php if($numberActiveElections <=0 ): ?>
+                <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
+                <?php else:?>
                 <label>Election</label>
-                <select class="form-control" id="activeElectionsSelect">
+                <select name="activeElections" class="form-control" id="activeElectionsSelect">
                   <option value="" disabled selected>Choose election</option>
-                  <option>Election XYZ</option>
-                  <option>Election HRE</option>
-                  <option>Election SOS</option>
+                  <?php foreach($activeElections as $election) : ?>
+                  <option value="<?=$election['id']?>">
+                    <?=$election[ 'election_name']?>
+                  </option>
+                  <?php endforeach?>
                 </select>
+                <?php endif?>
               </div>
             </div>
 

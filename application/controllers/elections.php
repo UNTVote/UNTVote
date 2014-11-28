@@ -60,6 +60,7 @@ class Elections extends CI_Controller
         if($this->ion_auth->is_admin())
         {
         	$elections = $this->election_model->GetElectionsByStatus('Closed');
+        	$activeElections = $this->election_model->GetElectionsByStatus('Active');
         }
         else
         {
@@ -68,6 +69,11 @@ class Elections extends CI_Controller
         }
 
         $numberElections = count($elections);
+        if(isset($activeElections))
+        {
+        	$numberActiveElections = count($activeElections);
+        	$this->data['numberActiveElections'] = $numberActiveElections;
+        }
 
         $scripts = array('vendor/chart.min.js', 'vendor/pdfmake.min.js', 'vendor/vfs_fonts.js', 'admin-elections-results.js');
 
@@ -78,6 +84,8 @@ class Elections extends CI_Controller
         $this->load->view('templates/header_user', $this->data);
         if($this->ion_auth->is_admin())
         {
+        	// only pass in the active elections if the user is an admin
+        	$this->data['activeElections'] = $activeElections;
         	$this->load->view('templates/navigation_admin', $this->data);
         	$this->load->view('templates/sidebar_admin');
         }
