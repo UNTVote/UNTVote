@@ -315,6 +315,7 @@ class Elections extends CI_Controller
 			}
 			else
 			{
+				$this->election_model->UpdateElectionVotes($electionID);
 				$this->load->helper('string');
 				$electionVoted = $this->input->post('slug');
 				$electionID = $this->election_model->GetElectionIDBySlug($electionVoted);

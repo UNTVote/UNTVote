@@ -369,7 +369,7 @@ class Election_Model extends CI_Model
 
 	// UpdateElectionVotes - updates the election tables total number of votes
 	// election - the election to update the total number of votes
-	private function UpdateElectionVotes($election)
+	public function UpdateElectionVotes($election)
 	{
 		// get how many votes this election now has and udpate the election table
 		$this->db->where('election_id', $election);

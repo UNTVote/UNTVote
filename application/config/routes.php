@@ -37,6 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['cronjobs/(:any)'] = 'cronjobs/$1';
 $route['contact/(:any)'] = 'contact/$1';
 $route['contact'] = 'contact';
 $route['candidates/(:any)'] = 'candidates/$1';
