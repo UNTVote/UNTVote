@@ -1076,6 +1076,34 @@ class Admin extends CI_Controller {
 		$this->_render_page('templates/footer');
 	}
 
+	// view the vote log
+	function vote_log()
+	{
+		if (!$this->ion_auth->is_admin())
+		{
+			// show them an error message, they can't be here
+			show_error("You must be an admin to view this page.");
+		}
+
+		// scripts
+		$cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
+		$scripts = array();
+
+		$firstName = $this->ion_auth->user()->row()->first_name;
+        $this->data['user'] = $this->ion_auth->user()->row();
+        $this->data['title'] = $firstName . " | UNTVote";
+        $this->data['cdnScripts'] = $cdnScripts;
+        $this->data['scripts'] = $scripts;
+
+		$this->_render_page('templates/header_manage_elections', $this->data);
+		$this->_render_page('templates/navigation_admin', $this->data);
+		$this->_render_page('templates/sidebar_admin');
+		$this->_render_page('admin/admin-users-vote-log', $this->data);
+		$this->_render_page('templates/scripts_main');
+		$this->_render_page('templates/scripts_custom', $this->data);
+		$this->_render_page('templates/footer');
+	}
+
 	function _get_csrf_nonce()
 	{
 		$this->load->helper('string');

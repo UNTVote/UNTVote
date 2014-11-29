@@ -18,7 +18,7 @@
                 <ul class="nav-sidebar-sub-menu">
                   <li><?=anchor('admin/manage_users', 'Manage')?></li>
                   <li><?=anchor('notifications/', 'Approvals')?></li>
-                  <li><?=anchor('notifications/', 'Vote log')?></li>
+                  <li><?=anchor('admin/vote_log', 'Vote log')?></li>
                 </ul>
               </div>
             </li>
