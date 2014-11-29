@@ -7,26 +7,24 @@
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 block-center fade-on-load" hidden>
 
       <div role="tabpanel">
-      <?php if(!$isAdmin)
-      {
-        $active = ' class="active" ';
-        $inActive = 'in active';
-      }
-      ?>
-
         <!-- Nav tabs -->
+      <?php if($isAdmin) : ?>
         <ul class="nav nav-tabs" role="tablist">
-        <?php if($isAdmin) : ?>
           <li role="presentation" class="active"><a href="#activeElections" role="tab" data-toggle="tab">Active elections</a>
           </li>
-        <?php endif?>
-          <li role="presentation" <?=$active?>><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
+          <li role="presentation"><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
           </li>
         </ul>
+      <?php else: ?>
+         <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#closedElections" role="tab" data-toggle="tab">Closed elections</a>
+          </li>
+        </ul>
+      <?php endif?>
 
         <!-- Tab panes -->
-        <div class="tab-content">
         <?php if($isAdmin) : ?>
+        <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="activeElections">
             <br>
             <div class="row">
@@ -59,8 +57,9 @@
             </div>
             <br>
           </div>
-          <div role="tabpanel" class="tab-pane fade <?=$inActive?>" id="closedElections">
+          <div role="tabpanel" class="tab-pane fade" id="closedElections">
             <br>
+
             <div class="row">
               <div class="col-xs-12">
                 <?php if($numberElections <=0 ): ?>
@@ -79,8 +78,28 @@
               </div>
             </div>
 
+            <?php else:?>
+              <div role="tabpanel" class="tab-pane fade in active" id="closedElections">
             <br>
+            <div class="row">
+              <div class="col-xs-12">
+                <?php if($numberElections <=0 ): ?>
+                <h3 class='text-muted text-center'>Oops, there are no elections.  Please check back later</h3>
+                <?php else:?>
+                <label>Election</label>
+                <select name="elections" class="form-control" id="electionsList">
+                  <option value="" disabled selected>Choose election</option>
+                  <?php foreach($elections as $election) : ?>
+                  <option value="<?=$election['id']?>">
+                    <?=$election[ 'election_name']?>
+                  </option>
+                  <?php endforeach?>
+                </select>
+                <?php endif?>
+              </div>
+            </div>
           <?php endif?>
+            <br>
 
             <div class="panel panel-default" id="electionResultsPanel" hidden>
               <div class="panel-heading">
