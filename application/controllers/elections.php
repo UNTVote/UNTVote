@@ -412,7 +412,7 @@ class Elections extends CI_Controller
 		}
 		else
 		{
-			$confirmationNumber = random_string('alnum', 5) . $receipt['id'];
+			$confirmationNumber = $receipt['confirmation_number'];
 		}
 
 		$scripts = array('vendor/pdfmake.min.js', 'user-elections-confirmation.js');

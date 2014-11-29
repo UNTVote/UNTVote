@@ -315,6 +315,8 @@ class Election_Model extends CI_Model
 	// electionID - the ID of the election they voted on
 	public function Vote($userID, $electionID)
 	{
+		$this->load->helper('string');
+
 		// grab the candidate the user voted for
 		$candidate = $this->input->post('candidate');
 
@@ -359,12 +361,17 @@ class Election_Model extends CI_Model
 		$this->db->update('election_candidates');
 
 		// add to the vote log
-		$this->db->insert('vote_log', array('election_id' => $electionID, 'candidate_id' => $candidate, 'voter_id' => $userID));
+		$confirmationNumber = random_string('alnum', 5);
+		$confirmationNumber = increment_string($confirmationNumber, '-');
+		$this->db->insert('vote_log', array('election_id' => $electionID, 
+											'candidate_id' => $candidate, 
+											'voter_id' => $userID,
+											'confirmation_number' => $confirmationNumber));
 		$this->ion_auth_model->set_message('vote_successful');
 
 		// update the total votes for the election table
 		$this->UpdateElectionVotes($electionID);
-		
+
 		return true;
 	}
 
