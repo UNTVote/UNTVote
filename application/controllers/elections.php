@@ -415,7 +415,7 @@ class Elections extends CI_Controller
 			$confirmationNumber = $receipt['confirmation_number'];
 		}
 
-		$scripts = array('vendor/pdfmake.min.js', 'user-elections-confirmation.js');
+		$scripts = array('vendor/pdfmake.min.js', 'vendor/vfs_fonts.js', 'user-elections-confirmation.js');
 
 		$data['confirmationNumber'] = $confirmationNumber;
 		$data['title'] = $title;
