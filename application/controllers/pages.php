@@ -10,6 +10,7 @@ class Pages extends CI_Controller
 
         $this->load->library('ion_auth');
         $this->load->model('college_model');
+        $this->load->model('election_model');
         $this->load->library('form_validation');
         $this->load->helper('url');
     }
@@ -66,6 +67,7 @@ class Pages extends CI_Controller
 		}
 		else
 		{
+			$this->election_model->UpdateElections();
 			$this->load->view('templates/header', $data);
         	$this->load->view('templates/navigation', $data);
 		}

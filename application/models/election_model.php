@@ -56,7 +56,7 @@ class Election_Model extends CI_Model
 	// GetElectionsUpdate - returns all the elections, but only the fields we need for a little faster query
 	public function GetElectionsUpdate()
 	{
-		$this->db->select('id, start_time, end_time');
+		$this->db->select('id, start_time, end_time, remind_users');
 		$query = $this->db->get('election');
 
 		return $query->result_array();
@@ -123,6 +123,21 @@ class Election_Model extends CI_Model
 		$query = $this->db->get('election');
 		$row = $query->row();
 		return $row->id;
+	}
+
+	// GetLastUpdate - gets the last time the elections were updated
+	// used to make sure elections are only updated once a day.
+	public function GetLastUpdate()
+	{
+		$query = $this->db->get('last_update');
+		return $query->row_array();
+	}
+
+	// UpdateLastUpdate - updates the last time the elections were updated
+	public function UpdateLastUpdate()
+	{
+		$data = array('last_update' => date('Y-m-d'));
+		$this->db->update('last_update', $data);
 	}
 
 	// GetElectionsByUser - returns all the elections the specific user can see
@@ -588,40 +603,56 @@ class Election_Model extends CI_Model
 	// UpdateElections - This checks whether each election needs to have their status updated, and if so update it
 	public function UpdateElections()
 	{
-		$elections = $this->GetElectionsUpdate();
+		$lastUpdate = $this->GetLastUpdate()['last_update'];
+		$todaysDate = date('Y-m-d');
 
-		foreach($elections as $election)
+		$lastUpdate = new DateTime($lastUpdate);
+		$nowDate = new DateTime($todaysDate);
+		$dateDifference = $lastUpdate->diff($nowDate);
+		$days = $dateDifference->days;
+
+		if($days >= 1)
 		{
-			// update all the election votes
-			$this->UpdateElectionVotes($election['id']);
-			if($this->IsActive($election['start_time']))
+			$elections = $this->GetElectionsUpdate();
+
+			foreach($elections as $election)
 			{
-				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'Active'));
-			}
-			else
-			{
-				$this->db->where('id', $election['id']);
-				$this->db->update('election', array('status' => 'Upcoming'));
-			}
-			if($this->IsActive($election['end_time']))
-			{
-				// chceck to see if we have a tie before we close the election
-				if(!$this->IsTie($election['id']))
+				// update all the election votes
+				$this->UpdateElectionVotes($election['id']);
+				if($this->IsActive($election['start_time']))
 				{
 					$this->db->where('id', $election['id']);
-					$this->db->update('election', array('status' => 'Closed'));
+					$this->db->update('election', array('status' => 'Active'));
 				}
 				else
 				{
-					$this->ExtendElection($election['id']);
+					$this->db->where('id', $election['id']);
+					$this->db->update('election', array('status' => 'Upcoming'));
+				}
+				if($this->IsActive($election['end_time']))
+				{
+					// chceck to see if we have a tie before we close the election
+					if(!$this->IsTie($election['id']))
+					{
+						$this->db->where('id', $election['id']);
+						$this->db->update('election', array('status' => 'Closed'));
+					}
+					else
+					{
+						$this->ExtendElection($election['id']);
+					}
+				}
+				if($election['remind_users'] == true)
+				{
+					if($this->SendReminder($election['end_time']))
+					{
+						$this->SendReminderEmails($election['id']);
+						$this->UpdateReminders($election['id']);
+					}
 				}
 			}
-			if($this->SendReminder($election['end_time']))
-			{
-				$this->SendReminderEmails($election['id']);
-				$this->UpdateReminders($election['id']);
-			}
+			// elections have been updated, update the table
+			$this->UpdateLastUpdate();
 		}
 	}
 

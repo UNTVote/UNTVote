@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2014 at 08:23 PM
+-- Generation Time: Nov 29, 2014 at 09:50 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -162,8 +162,16 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `last_update` (
-  `last_update` date NOT NULL COMMENT 'the last time the elections have been updated'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `last_update` date NOT NULL COMMENT 'the last time the elections have been updated',
+`id` int(2) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `last_update`
+--
+
+INSERT INTO `last_update` (`last_update`, `id`) VALUES
+('2014-11-29', 1);
 
 -- --------------------------------------------------------
 
@@ -213,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `about_me`, `goals`, `avatar`) VALUES
 (1, '127.0.0.1', 'administrator', '$2y$08$CARllLsGWWMSbq4bPpGbieDtMj8C6IUISiM5K4nlg.1dwA9dJHEmq', '', 'admin@my.unt.edu', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1417280727, 1, 'Admin', 'Smith', 'None', '2147296420', 'I am the lead server side programmer on UNTVote.  I lead and designed the backend system and designed all of the databases. ', 'I will bring great things to the school.  I will bring UNTVote to the public!', 'assets/upload/meandDog.jpg'),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1417281103, 1, 'Chad', 'Smith', NULL, NULL, 'I''m the best their is, best their was', 'Free Books!', 'assets/upload/untBowlGame3.png'),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1417291641, 1, 'Chad', 'Smith', NULL, NULL, 'I''m the best their is, best their was', 'Free Books!', 'assets/upload/untBowlGame3.png'),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Kieth', '', NULL, NULL, 'I''m a master at UX!', NULL, 'assets/img/user-default.png'),
 (34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL, NULL, NULL, 'assets/img/user-default.png'),
 (35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Jony', 'Ive', NULL, NULL, NULL, NULL, 'assets/img/user-default.png'),
@@ -378,6 +386,12 @@ ALTER TABLE `groups`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `last_update`
+--
+ALTER TABLE `last_update`
+ ADD PRIMARY KEY (`id`), ADD KEY `last_update` (`last_update`);
+
+--
 -- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
@@ -442,6 +456,11 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 ALTER TABLE `groups`
 MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `last_update`
+--
+ALTER TABLE `last_update`
+MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
