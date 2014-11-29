@@ -358,12 +358,13 @@ class Election_Model extends CI_Model
 		$this->db->set('votes', 'votes+1', FALSE);
 		$this->db->update('election_candidates');
 
-		// update the total votes for the election table
-		$this->UpdateElectionVotes($electionID);
-
 		// add to the vote log
 		$this->db->insert('vote_log', array('election_id' => $electionID, 'candidate_id' => $candidate, 'voter_id' => $userID));
 		$this->ion_auth_model->set_message('vote_successful');
+
+		// update the total votes for the election table
+		$this->UpdateElectionVotes($electionID);
+		
 		return true;
 	}
 

@@ -24,7 +24,7 @@ class User extends CI_Controller
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
-        $this->election_model->UpdateElections();
+        //$this->election_model->UpdateElections();
     }
 
     // UserElectionData - used for ajax to return the users election data in JSON format
