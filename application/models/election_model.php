@@ -674,4 +674,13 @@ class Election_Model extends CI_Model
 			return $query->row_array();
 		}
 	}
+
+	// GetVoteLog
+	// gets the votelog information
+	public function GetVoteLog()
+	{
+		$query = $this->db->get('vote_log');
+
+		return $query->result_array();
+	}
 }

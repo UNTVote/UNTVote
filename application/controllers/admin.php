@@ -112,6 +112,45 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	// VoteLog
+	// used for ajax to return the vote log in a json formatted string
+	function VoteLog()
+	{
+		header('Content-Type: application/json');
+
+		// do we have an ajax request
+		if($this->input->is_ajax_request())
+		{
+			$voteLog = $this->election_model->GetVoteLog();
+
+			$voteLogData = array();
+			foreach($voteLog as $vote)
+			{
+				$election = $this->election_model->GetElection($vote['election_id']);
+				$userFirstName = $this->ion_auth->user($vote['voter_id'])->row()->first_name;
+				$userLastName = $this->ion_auth->user($vote['voter_id'])->row()->last_name;
+				$userName = $userFirstName . ' ' . $userLastName;
+				$candidateFirstName = $this->ion_auth->user($vote['candidate_id'])->row()->first_name;
+				$candidateLastName = $this->ion_auth->user($vote['candidate_id'])->row()->last_name;
+				$candidateName = $candidateFirstName . ' ' . $candidateLastName;
+				$electionName = $election['election_name'];
+				$timeStampSQL = strtotime($vote['vote_time']);
+				$timeStamp = date('m-d-Y g:i A', $timeStampSQL);
+				$confirmationNumber = $vote['confirmation_number'];
+
+				$voteLogData[] = array(
+										'confirmation_number' => $confirmationNumber,
+										'voter_name' => $userName,
+										'candidate' => $candidateName,
+										'election_name' => $electionName,
+										'vote_time' => $timeStamp
+										);
+			}
+			$return = json_encode($voteLogData);
+			echo $return;
+		}
+	}
+
 	// VoteData
 	// Used for ajax to return the number of votes in an hour in a json formatted string
 	function VoteData()
