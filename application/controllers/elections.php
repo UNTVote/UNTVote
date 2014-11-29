@@ -316,7 +316,6 @@ class Elections extends CI_Controller
 			}
 			else
 			{
-				$this->election_model->UpdateElectionVotes($electionID);
 				$this->load->helper('string');
 				$electionVoted = $this->input->post('slug');
 				$electionID = $this->election_model->GetElectionIDBySlug($electionVoted);
@@ -405,6 +404,7 @@ class Elections extends CI_Controller
 		$receipt = $this->election_model->GenerateElectionReceipt($election, $user->id);
 		$electionName = $this->election_model->GetElection($election)['election_name'];
 		$candidateVoted = $this->ion_auth->user($receipt['candidate_id'])->row();
+		$dateVoted = date("m-d-Y", strtotime($receipt['vote_time']));
 		$confirmationNumber = null;
 		if(!$receipt)
 		{
@@ -415,17 +415,22 @@ class Elections extends CI_Controller
 			$confirmationNumber = random_string('alnum', 5) . $receipt['id'];
 		}
 
+		$scripts = array('vendor/pdfmake.min.js', 'user-elections-confirmation.js');
+
 		$data['confirmationNumber'] = $confirmationNumber;
 		$data['title'] = $title;
 		$data['user'] = $user;
 		$data['electionName'] = $electionName;
 		$data['candidateVoted'] = $candidateVoted->first_name . ' ' . $candidateVoted->last_name;
+		$data['dateVoted'] = $dateVoted;
+		$data['scripts'] = $scripts;
 
 		$this->load->view('templates/header_user', $data);
 		$this->load->view('templates/navigation_user', $data);
 		$this->load->view('templates/sidebar_user');
 		$this->load->view('user/user-elections-confirmation', $data);
 		$this->load->view('templates/scripts_main');
+		$this->load->view('templates/scripts_custom', $data);
 		$this->load->view('templates/footer');
 	}
 }
