@@ -16,7 +16,7 @@
 
           <div class="row">
             <div class="col-xs-6 text-right">
-              <button class="btn btn-success" id="btnDownloadReceipt" data-election="<?=$electionName?>" data-candidate="<?=$candidateVoted?>" data-date="<?=$dateVoted?>" data-confirmation="<?=$confirmationNumber?>">Download receipt</button>
+              <button class="btn btn-success" id="btnDownloadReceipt" data-user="<?=$user->first_name . ' ' . $user->last_name?>" data-election="<?=$electionName?>" data-candidate="<?=$candidateVoted?>" data-date="<?=$dateVoted?>" data-confirmation="<?=$confirmationNumber?>">Download receipt</button>
             </div>
             <div class="col-xs-6 text-left">
               <a class="btn btn-default" href="https://twitter.com/share?url=<?=base_url()?>&text=I voted at UNTVote! You should too!" target="_blank">Share on Twitter</a>

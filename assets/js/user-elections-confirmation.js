@@ -8,7 +8,7 @@ function createPDF(){
       pageMargins: [ 40, 40, 40, 40 ],
 
       content: [
-       {  text: 'UNTVote - Confirmation receipt\n\n',
+       {  text: 'UNTVote - Confirmation receipt for ' + $('#btnDownloadReceipt').data('user') + '\n\n',
           style: 'header',
           fontSize: 18
        },
