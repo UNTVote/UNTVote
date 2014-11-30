@@ -49,7 +49,7 @@
                                   <label>College</label>
                                   <select name="colleges[]" class="form-control">
                                   <?php foreach($colleges as $college):?>
-                                  <?php 
+                                  <?php
                                     $cID = $college['id'];
                                     $selected = null;
                                     $item = null;
@@ -79,9 +79,9 @@
                                     $gID=$group['id'];
                                       $checked = null;
                                       $item = null;
-                                      foreach($currentGroups as $grp) 
+                                      foreach($currentGroups as $grp)
                                       {
-                                        if ($gID == $grp->id) 
+                                        if ($gID == $grp->id)
                                         {
                                           $checked= ' selected="selected"';
                                           break;
@@ -91,6 +91,23 @@
                                     <option value="<?=$group['id']?>" <?=$checked?>><?=$group['name']?></option>
                                   <?php endforeach?>
                                   </select>
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="form-group">
+                                  <label>Vote cost</label>
+                                  <div class="row">
+                                    <div class="col-xs-10">
+                                      <input id="voteCostSlider" type="range" min="1" max="5" value="1">
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                      <strong id="voteCostText">1X</strong>
+                                    </div>
+                                  </div>
+                                  <small class="help-block">Increasing this value will add more weight to this user's votes</small>
                                 </div>
                               </div>
                             </div>

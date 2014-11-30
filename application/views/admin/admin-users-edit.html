@@ -125,22 +125,8 @@
                                 <div class="form-group">
                                   <label>College</label>
                                   <select class="form-control">
-                                  <?php foreach($colleges as $college):?>
-                                  <?php 
-                                    $cID = $college['id'];
-                                    $selected = null;
-                                    $item = null;
-                                    foreach($currentColleges as $clg)
-                                    {
-                                      if($cID == $clg['id'])
-                                      {
-                                        $selected = ' selected="selectedl"';
-                                        break;
-                                      }
-                                    }
-                                    ?>
-                                    <option value="<?=$college['id']?>" <?=$selected?>><?=$college['description']?></option>
-                                  <?php endforeach?>
+                                    <option value="1">College of engineering</option>
+                                    <option value="2">College of arts</option>
                                   </select>
                                 </div>
                               </div>
@@ -151,30 +137,32 @@
                                 <div class="form-group">
                                   <label>Role</label>
                                   <select class="form-control">
-                                  <?php foreach ($groups as $group):?>
-                                  <?php
-                                    $gID=$group['id'];
-                                      $checked = null;
-                                      $item = null;
-                                      foreach($currentGroups as $grp) 
-                                      {
-                                        if ($gID == $grp->id) 
-                                        {
-                                          $checked= ' selected="selected"';
-                                          break;
-                                        }
-                                      }
-                                  ?>
-                                    <option value="<?=$group['id']?>" <?=$checked?>><?=$group['name']?></option>
-                                  <?php endforeach?>
+                                    <option value="1">Member</option>
+                                    <option value="2">Candidate</option>
+                                    <option value="3">Admin</option>
                                   </select>
                                 </div>
                               </div>
                             </div>
                             <br>
                             <div class="row">
-                              <?php echo form_hidden('id', $user->id);?>
-                              <?php echo form_hidden($csrf); ?>
+                              <div class="col-xs-12">
+                                <div class="form-group">
+                                  <label>Vote cost</label>
+                                  <div class="row">
+                                    <div class="col-xs-10">
+                                      <input id="voteCostSlider" type="range" min="1" max="5" value="1">
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                      <strong id="voteCostText">1X</strong>
+                                    </div>
+                                  </div>
+                                  <small class="help-block">Increasing this value will add more weight to this users votes</small>
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
                               <div class="col-xs-12 col-sm-6 col-sm-push-6">
                                 <button class="btn btn-primary btn-block">Save changes</button>
                               </div>
@@ -216,5 +204,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="../../../assets/js/vendor/parsley.min.js"></script>
     <script src="../../../assets/js/app.js"></script>
+    <script src="../../../assets/js/admin-users-edit.js"></script>
   </body>
 </html>

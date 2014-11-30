@@ -706,7 +706,7 @@ class Admin extends CI_Controller {
 		$data['user'] = $this->ion_auth->user()->row();
 		$profile = $this->ion_auth->user($id)->row();
 		$data['title'] = $profile->first_name . "'s Profile | UNTVote";
-		$scripts = array('vendor/parsley.min.js');
+		$scripts = array('vendor/parsley.min.js', 'admin-users-edit.js');
 		$data['scripts'] = $scripts;
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
