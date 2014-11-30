@@ -107,7 +107,7 @@
                                       <strong id="voteCostText">1X</strong>
                                     </div>
                                   </div>
-                                  <small class="help-block">Increasing this value will add more weight to this users votes</small>
+                                  <small class="help-block">Increasing this value will add more weight to this user's votes</small>
                                 </div>
                               </div>
                             </div>
