@@ -555,6 +555,8 @@ class Election_Model extends CI_Model
 	{
 		// get all the voters who have not yet voted
 		$voters = $this->GetUsersNotVoted($electionID);
+		$election = $this->GetElection($electionID);
+		$electionURL = site_url('elections/'.$election['slug']);
 
 		// send an email to them
 		foreach($voters as $voter)
@@ -562,11 +564,15 @@ class Election_Model extends CI_Model
 			$voterEmail = $this->ion_auth->user($voter['user_id'])->row()->email;
 			$voterName =  $this->ion_auth->user($voter['user_id'])->row()->first_name;
 
+			$message = 'Hey ' . $voterName . ',<br>
+						We are sending you this email to let you know that you have two days left to vote in the 
+						<strong>' .$election['election_name'].'</strong> election.<p>
+						You may click <a href="'$electionURL'">HERE</a> to go now and vote on the election.';
+
 			$this->email->from('UNTVote@gmail.com', 'UNTVote@gmail.com');
 			$this->email->to($voterEmail);
 			$this->email->subject('UNTVote: Election Reminder');
-			$this->email->message('Hey ' . $voterName . ',
-								  <br>We are sending you this email to let you know you have two days left to vote in an election');
+			$this->email->message($message);
 			$this->email->send();
 		}
 	}
