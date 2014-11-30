@@ -1125,8 +1125,8 @@ class Admin extends CI_Controller {
 		}
 
 		// scripts
-		$cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js');
-		$scripts = array();
+		$cdnScripts = array('//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js','https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js');
+		$scripts = array('admin-users-vote-log.js');
 
 		$firstName = $this->ion_auth->user()->row()->first_name;
         $this->data['user'] = $this->ion_auth->user()->row();
