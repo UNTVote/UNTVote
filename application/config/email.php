@@ -6,9 +6,9 @@
 */
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'mail.rangersrounding3rd.com';
-$config['smtp_port'] = '25';
-$config['smtp_user'] = 'untvote@rangersrounding3rd.com';
+$config['smtp_host'] = 'smtp.gmail.com';
+$config['smtp_port'] = '465';
+$config['smtp_user'] = 'untvote@gmail.com';
 $config['smtp_pass'] = 'UNTVOTE2014';
 $config['charset'] = 'utf-8';
 $config['newline'] = "\r\n";
