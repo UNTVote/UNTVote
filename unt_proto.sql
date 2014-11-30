@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2014 at 06:40 AM
+-- Generation Time: Nov 30, 2014 at 09:38 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admin_notifications` (
   `type` varchar(20) NOT NULL COMMENT 'candidate or vote',
   `election_id` int(10) NOT NULL,
   `response` varchar(10) NOT NULL DEFAULT 'No'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `election` (
   `status` varchar(10) NOT NULL,
   `remind_users` tinyint(1) NOT NULL DEFAULT '0',
   `reminder_sent` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `election`
@@ -101,7 +101,8 @@ INSERT INTO `election` (`id`, `election_name`, `election_description`, `slug`, `
 (19, 'Testing New Create Election', 'Testing the new new Create Election form and date format', 'testing-new-create-election', '2014-11-04', '2014-11-07', 4, 11, 'Closed', 0, 0),
 (20, 'Testing Views', 'Testing whether or not the new create election form is working', 'testing-views', '2014-11-05', '2014-11-06', 4, 1, 'Closed', 0, 0),
 (21, 'New Testing Elections', 'jkfldsjflksj fjsk fsjkl fsdjkl jkflsd jfklds fsdjklf jkflsd jkflsd jkfls jklfs jklfsd jkflsd', 'new-testing-elections', '2014-11-15', '2014-11-17', 4, 1, 'Closed', 0, 0),
-(22, 'UNTVote President', 'UNTVote is here!  Now who should be the president of this wonderful system?', 'untvote-president', '2014-11-17', '2014-11-19', 15, 2, 'Closed', 0, 0);
+(22, 'UNTVote President', 'UNTVote is here!  Now who should be the president of this wonderful system?', 'untvote-president', '2014-11-17', '2014-11-19', 15, 2, 'Closed', 0, 0),
+(23, 'Reminder Election', 'Election to test out the new reminders and voting confirmation system.', 'reminder-election', '2014-11-30', '2014-12-02', 15, 5, 'Active', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `election_candidates` (
   `candidate_id` int(10) NOT NULL,
   `election_id` int(10) NOT NULL,
   `votes` int(10) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `election_candidates`
@@ -132,7 +133,9 @@ INSERT INTO `election_candidates` (`id`, `candidate_id`, `election_id`, `votes`)
 (29, 5, 21, 0),
 (30, 6, 22, 2),
 (31, 5, 22, 0),
-(32, 6, 10, 1);
+(32, 6, 10, 1),
+(33, 6, 23, 5),
+(34, 1, 23, 0);
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `last_update` (
 --
 
 INSERT INTO `last_update` (`last_update`, `id`) VALUES
-('2014-11-29', 1);
+('2014-11-30', 1);
 
 -- --------------------------------------------------------
 
@@ -221,10 +224,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `about_me`, `goals`, `avatar`, `vote_cost`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$CARllLsGWWMSbq4bPpGbieDtMj8C6IUISiM5K4nlg.1dwA9dJHEmq', '', 'admin@my.unt.edu', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1417294447, 1, 'Admin', 'Smith', 'None', '2147296420', 'I am the lead server side programmer on UNTVote.  I lead and designed the backend system and designed all of the databases. ', 'I will bring great things to the school.  I will bring UNTVote to the public!', 'assets/upload/meandDog.jpg', 1),
-(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1417291641, 1, 'Chad', 'Smith', NULL, NULL, 'I''m the best their is, best their was', 'Free Books!', 'assets/upload/untBowlGame3.png', 1),
+(1, '127.0.0.1', 'administrator', '$2y$08$CARllLsGWWMSbq4bPpGbieDtMj8C6IUISiM5K4nlg.1dwA9dJHEmq', '', 'admin@my.unt.edu', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1417336604, 1, 'Admin', 'Smith', 'None', '2147296420', 'I am the lead server side programmer on UNTVote.  I lead and designed the backend system and designed all of the databases. ', 'I will bring great things to the school.  I will bring UNTVote to the public!', 'assets/upload/meandDog.jpg', 4),
+(5, '::1', 'cs0357', '$2y$08$uMmijbEwzlwy4.yXjhcaauRO/U3hSWSayBU26RuZrM193Zt6A6B7e', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1417335463, 1, 'Chad', 'Smith', NULL, NULL, 'I''m the best their is, best their was', 'Free Books!', 'assets/upload/untBowlGame3.png', 1),
 (6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Kieth', '', NULL, NULL, 'I''m a master at UX!', NULL, 'assets/img/user-default.png', 1),
-(34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'root@gmail.com', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL, NULL, NULL, 'assets/img/user-default.png', 1),
+(34, '::1', 'root', '$2y$08$9thZv5u.Vq.HlT4THEjEWOT.pqRduVuGQ9sxcay.XaGWjmlHFvru6', NULL, 'roo@my.unt.edu', NULL, NULL, NULL, NULL, 1412727194, 1412727194, 1, 'Steve', 'Jobs', NULL, NULL, NULL, NULL, 'assets/img/user-default.png', 2),
 (35, '::1', 'root2', '$2y$08$z6/aMT1rKPdNV3W1BOWDPeMG9g4zXe8.pFgnhbVLQD/Q0/c2VA7zK', NULL, 'root@root.com', NULL, NULL, NULL, NULL, 1412727278, 1412727278, 1, 'Jony', 'Ive', NULL, NULL, NULL, NULL, 'assets/img/user-default.png', 1),
 (36, '::1', 'cs1', '$2y$08$Pooyam.gF/K00NNfDVS3z.fI07rCPmCSLiFw/XjoptIIPcJP5PKwe', NULL, 'testing@test.com', NULL, NULL, NULL, NULL, 1412909291, 1412909291, 1, 'Bill', 'Gates', NULL, NULL, NULL, NULL, 'assets/img/user-default.png', 1),
 (37, '::1', 'ej123', '$2y$08$FmiA9AF55Y3KIKaZownv6O0Sh5ztVxZ.EPHqGNcXEUSjeEFmW/LVy', NULL, 'rootemail@my.unt.edu', NULL, NULL, NULL, NULL, 1412916249, 1412916249, 1, 'Steve', 'Balmer', NULL, NULL, NULL, NULL, 'assets/img/user-default.png', 1);
@@ -239,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `users_colleges` (
 `id` mediumint(5) NOT NULL,
   `user_id` mediumint(5) NOT NULL,
   `college_id` mediumint(5) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=118 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=128 ;
 
 --
 -- Dumping data for table `users_colleges`
@@ -253,15 +256,16 @@ INSERT INTO `users_colleges` (`id`, `user_id`, `college_id`) VALUES
 (36, 31, 1),
 (37, 32, 1),
 (38, 33, 1),
-(39, 34, 1),
 (42, 35, 4),
 (43, 36, 4),
 (44, 37, 4),
 (49, 8, 15),
-(114, 1, 4),
-(115, 1, 15),
 (116, 5, 4),
-(117, 5, 15);
+(117, 5, 15),
+(124, 34, 1),
+(125, 34, 15),
+(126, 1, 4),
+(127, 1, 15);
 
 -- --------------------------------------------------------
 
@@ -273,18 +277,18 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=158 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=166 ;
 
 --
 -- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(155, 1, 1),
+(165, 1, 1),
 (157, 5, 2),
 (14, 6, 2),
 (151, 6, 3),
-(136, 34, 2),
+(162, 34, 2),
 (138, 35, 2),
 (139, 36, 2),
 (140, 37, 2);
@@ -300,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `voters` (
   `election_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `has_voted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `voters`
@@ -317,7 +321,9 @@ INSERT INTO `voters` (`id`, `election_id`, `user_id`, `has_voted`) VALUES
 (27, 22, 5, 0),
 (28, 22, 1, 0),
 (29, 10, 5, 0),
-(30, 16, 5, 0);
+(30, 16, 5, 0),
+(31, 23, 5, 0),
+(32, 23, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -331,24 +337,27 @@ CREATE TABLE IF NOT EXISTS `vote_log` (
   `candidate_id` int(11) NOT NULL,
   `voter_id` int(11) NOT NULL,
   `vote_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `confirmation_number` varchar(10) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
+  `confirmation_number` varchar(10) NOT NULL,
+  `vote_cost` int(10) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=72 ;
 
 --
 -- Dumping data for table `vote_log`
 --
 
-INSERT INTO `vote_log` (`id`, `election_id`, `candidate_id`, `voter_id`, `vote_time`, `confirmation_number`) VALUES
-(23, 19, 5, 1, '2014-11-27 06:28:49', ''),
-(26, 20, 5, 5, '2014-11-27 06:28:49', ''),
-(29, 19, 5, 5, '2014-11-27 06:28:49', ''),
-(37, 17, 6, 5, '2014-11-27 06:28:49', ''),
-(43, 21, 6, 1, '2014-11-27 06:28:49', ''),
-(47, 22, 6, 5, '2014-11-27 06:28:49', ''),
-(49, 22, 6, 1, '2014-11-27 06:28:49', ''),
-(50, 10, 6, 5, '2014-11-27 06:28:49', ''),
-(58, 16, 6, 5, '2014-11-27 08:02:30', ''),
-(59, 16, 6, 1, '2014-11-28 02:59:09', '');
+INSERT INTO `vote_log` (`id`, `election_id`, `candidate_id`, `voter_id`, `vote_time`, `confirmation_number`, `vote_cost`) VALUES
+(23, 19, 5, 1, '2014-11-27 06:28:49', '', 1),
+(26, 20, 5, 5, '2014-11-27 06:28:49', '', 1),
+(29, 19, 5, 5, '2014-11-27 06:28:49', '', 1),
+(37, 17, 6, 5, '2014-11-27 06:28:49', '', 1),
+(43, 21, 6, 1, '2014-11-27 06:28:49', '', 1),
+(47, 22, 6, 5, '2014-11-27 06:28:49', '', 1),
+(49, 22, 6, 1, '2014-11-27 06:28:49', '', 1),
+(50, 10, 6, 5, '2014-11-27 06:28:49', '', 1),
+(58, 16, 6, 5, '2014-11-27 08:02:30', '', 1),
+(59, 16, 6, 1, '2014-11-28 02:59:09', '', 1),
+(69, 23, 6, 5, '2014-11-30 08:36:33', 'tFnQ7-1', 1),
+(71, 23, 6, 1, '2014-11-30 08:37:51', 'XMgzc-1', 4);
 
 --
 -- Indexes for dumped tables
@@ -434,7 +443,7 @@ ALTER TABLE `vote_log`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `colleges`
 --
@@ -444,12 +453,12 @@ MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 -- AUTO_INCREMENT for table `election`
 --
 ALTER TABLE `election`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `election_candidates`
 --
 ALTER TABLE `election_candidates`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -474,22 +483,22 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 -- AUTO_INCREMENT for table `users_colleges`
 --
 ALTER TABLE `users_colleges`
-MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=118;
+MODIFY `id` mediumint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=128;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=158;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=166;
 --
 -- AUTO_INCREMENT for table `voters`
 --
 ALTER TABLE `voters`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `vote_log`
 --
 ALTER TABLE `vote_log`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=60;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
 --
 -- Constraints for dumped tables
 --

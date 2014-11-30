@@ -720,6 +720,7 @@ class Admin extends CI_Controller {
 		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
 		$colleges = $this->college_model->GetCollegesNotLike('All');
 		$currentColleges = $this->ion_auth->get_users_colleges($id)->result();
+		$voteCost = $user->vote_cost;
 		//validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
@@ -739,7 +740,8 @@ class Admin extends CI_Controller {
 			$data = array(
 				'first_name' => $this->input->post('first_name'),
 				'last_name'  => $this->input->post('last_name'),
-				'email'      => $email
+				'email'      => $email,
+				'vote_cost'  => $this->input->post('voteWeight')
 			);
 			// Only allow updating groups if user is admin
 			if ($this->ion_auth->is_admin())
@@ -794,6 +796,7 @@ class Admin extends CI_Controller {
 		$this->data['currentGroups'] = $currentGroups;
 		$this->data['colleges'] = $colleges;
 		$this->data['currentColleges'] = $currentColleges;
+		$this->data['voteCost'] = $voteCost;
 
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/navigation_admin', $data);

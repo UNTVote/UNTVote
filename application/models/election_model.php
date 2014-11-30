@@ -334,10 +334,13 @@ class Election_Model extends CI_Model
 
 		// grab the candidate the user voted for
 		$candidate = $this->input->post('candidate');
+		// grabs how much each vote costs from this user
+		$voteCost = $this->ion_auth->user($userID)->row()->vote_cost;
 
 		// first check if the user has already voted
 		if($this->HasUserVoted($userID, $electionID))
 		{
+			$previousVoteCost = $this->GetPreviousVoteCost($userID, $electionID);
 			// find out who they voted for
 			$this->db->where('voter_id', $userID);
 			$this->db->where('election_id', $electionID);
@@ -356,7 +359,7 @@ class Election_Model extends CI_Model
 				$this->db->where('election_id', $electionID);
 				$this->db->where('candidate_id', $result['candidate_id']);
 				// do not protect the query with backticks (') to generate the correct query.
-				$this->db->set('votes', 'votes-1', FALSE);
+				$this->db->set('votes', 'votes-'.$previousVoteCost, FALSE);
 				$this->db->update('election_candidates');
 
 				// clear their previous vote from the vote log
@@ -372,7 +375,7 @@ class Election_Model extends CI_Model
 		$this->db->where('election_id', $electionID);
 		$this->db->where('candidate_id', $candidate);
 		// do not protect the query with backticks (') to generate the correct query.
-		$this->db->set('votes', 'votes+1', FALSE);
+		$this->db->set('votes', 'votes+'.$voteCost, FALSE);
 		$this->db->update('election_candidates');
 
 		// add to the vote log
@@ -381,7 +384,8 @@ class Election_Model extends CI_Model
 		$this->db->insert('vote_log', array('election_id' => $electionID, 
 											'candidate_id' => $candidate, 
 											'voter_id' => $userID,
-											'confirmation_number' => $confirmationNumber));
+											'confirmation_number' => $confirmationNumber,
+											'vote_cost' => $voteCost));
 		$this->ion_auth_model->set_message('vote_successful');
 
 		// update the total votes for the election table
@@ -405,6 +409,17 @@ class Election_Model extends CI_Model
 		$this->db->where('id', $election);
 		$this->db->set('total_votes', $totalVotes);
 		$this->db->update('election');
+	}
+
+	// GetPreviousVoteCost - Returns the users vote cost that they orginally voted with
+	// userID - the user we are getting
+	// electionID - the election that user voted in
+	public function GetPreviousVoteCost($userID, $electionID)
+	{
+		$query = $this->db->get_where('vote_log', array('voter_id' => $userID,
+														'election_id' => $electionID));
+		$voteCost = $query->row_array()['vote_cost'];
+		return $voteCost;
 	}
 
 	// HasUserVoted - Checks to see if a user has voted
