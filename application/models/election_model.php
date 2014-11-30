@@ -567,7 +567,7 @@ class Election_Model extends CI_Model
 			$message = 'Hey ' . $voterName . ',<br>
 						We are sending you this email to let you know that you have two days left to vote in the 
 						<strong>' .$election['election_name'].'</strong> election.<p>
-						You may click <a href="'$electionURL'">HERE</a> to go now and vote on the election.';
+						You may click <a href="'.$electionURL.'">HERE</a> to go now and vote on the election.';
 
 			$this->email->from('UNTVote@gmail.com', 'UNTVote@gmail.com');
 			$this->email->to($voterEmail);
