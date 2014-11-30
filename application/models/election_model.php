@@ -8,6 +8,8 @@ class Election_Model extends CI_Model
         $this->load->database();
         $this->load->model('ion_auth_model');
         $this->load->library('ion_auth');
+        // set the timezone to central
+		date_default_timezone_set('America/Chicago');
     }
 
     // GetElections - Returns all the elections, or a certain elections by its slug
@@ -69,6 +71,16 @@ class Election_Model extends CI_Model
 	{
 		$query = $this->db->get_where('voters', array('election_id' => $electionID));
 		$result = $query->num_rows();
+
+		return $result;
+	}
+
+	// GetVoters - gets all the voters in an election
+	// electionID - the election we need to know
+	public function GetVoters($electionID)
+	{
+		$query = $this->db->get_where('voters', array('election_id' => $electionID));
+		$result = $query->result_array();
 
 		return $result;
 	}
@@ -313,7 +325,29 @@ class Election_Model extends CI_Model
 				$this->AddCandidateToElection($candidate, $electionID);
 			}
 		}
-			$this->ion_auth_model->set_message('edit_election_successful');
+		$this->ion_auth_model->set_message('edit_election_successful');
+
+		// send an email to every voter in this election
+		$voters = $this->GetVoters($electionID);
+		foreach($voters as $voter)
+		{
+			$voterEmail = $this->ion_auth->user($voter['user_id'])->row()->email;
+			$voterName =  $this->ion_auth->user($voter['user_id'])->row()->first_name;
+
+			$message = 'Hey ' . $voterName . ',<br>
+						We are sending you this email to let you know that an election you are registered to vote in has been updated!
+						<br>It is possible that the elections ending date may have moved, so we wanted you aware of this.
+						<p>Here are the election details: <br>
+						<strong>Election Name</strong>: ' . $electionName . '<br>
+						<strong>Start Date</strong>: ' . $startDate . '<br>
+						<strong>End Date</strong>: ' . $endDate . '<br>';
+
+			$this->email->from('UNTVote@gmail.com', 'UNTVote@gmail.com');
+			$this->email->to($voterEmail);
+			$this->email->subject('UNTVote: An Election has been Edited');
+			$this->email->message($message);
+			$this->email->send();
+		}
 	}
 
 	// RemoveCandidate - Removes the given candidate from the given election
@@ -379,8 +413,7 @@ class Election_Model extends CI_Model
 		$this->db->update('election_candidates');
 
 		// add to the vote log
-		$confirmationNumber = random_string('alnum', 5);
-		$confirmationNumber = increment_string($confirmationNumber, '-');
+		$confirmationNumber = random_string('numeric', 5) .'-UNT'.date('H');
 		$this->db->insert('vote_log', array('election_id' => $electionID, 
 											'candidate_id' => $candidate, 
 											'voter_id' => $userID,
