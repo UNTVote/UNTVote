@@ -450,6 +450,15 @@ class Election_Model extends CI_Model
 
 		return $query->result_array();
 	}
+	// GetHowManyUsersVoted - gets all the users who have voted in an election
+	// electionID - the election to get the voters for
+	public function GetHowManyUsersVoted($electionID)
+	{
+		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', 'true')->get();
+
+		$totalVoters = $query->num_rows();
+		return $totalVoters;
+	}
 
 	// IsUserRegistered - Checks to see if the logged in user is registered to vote in that election
 	// electionID - The election we are seeing if they have voted

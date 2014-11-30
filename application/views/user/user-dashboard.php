@@ -44,7 +44,7 @@
                         <tbody>
                           <?php foreach ($activeElections as $activeElection) : ?>
                           <?php
-                            $totalVotes = $activeElection['total_votes'];
+                            $totalVotes = $this->election_model->GetHowManyUsersVoted($activeElection['id']);
                             $percentage = 0;
                             if($totalVotes == 0)
                             {
@@ -61,7 +61,7 @@
                             <td>
                               <div class="progress" style="margin-bottom: 0px;">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="<?=$activeElection['total_votes']?>" aria-valuemin="0" aria-valuemax="100"
-                                 style="width: <?=$percentage?>%;"><?=$activeElection['total_votes']?> /
+                                 style="width: <?=$percentage?>%;"><?=$totalVotes?> /
                                  <?=$this->election_model->GetElectionVoters($activeElection['id'])?></div>
                               </div>
                             </td>
