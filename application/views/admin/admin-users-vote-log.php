@@ -6,7 +6,7 @@
     <br>
     <div class="row">
       <div class="col-xs-12 fuelux">
-        <div class="repeater" data-staticheight="350" id="confirmationTable">
+        <div class="repeater" data-staticheight="350" id="voteLogTable">
           <div class="repeater-header">
             <div class="repeater-header-left">
               <div class="repeater-search">
@@ -31,7 +31,7 @@
                 <ul class="dropdown-menu" role="menu">
                   <li data-value="all" data-selected="true"><a href="#">all</a>
                   </li>
-                  <li data-value="some"><a href="#">some</a>
+                  <li data-value="Some"><a href="#">some</a>
                   </li>
                   <li data-value="others"><a href="#">others</a>
                   </li>
