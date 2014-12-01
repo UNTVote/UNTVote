@@ -412,6 +412,11 @@ class Election_Model extends CI_Model
 		$this->db->set('votes', 'votes+'.$voteCost, FALSE);
 		$this->db->update('election_candidates');
 
+		$this->db->where('user_id', $userID);
+		$this->db->where('election_id', $electionID);
+		$this->db->set('has_voted', '1');
+		$this->db->update('voters');
+
 		// add to the vote log
 		$confirmationNumber = random_string('numeric', 5) .'-UNT'.date('H');
 		$this->db->insert('vote_log', array('election_id' => $electionID, 
@@ -479,7 +484,7 @@ class Election_Model extends CI_Model
 	// electionID - the election to get the voters for
 	private function GetUsersNotVoted($electionID)
 	{
-		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', 'false')->get();
+		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', '0' )->get();
 
 		return $query->result_array();
 	}
