@@ -492,7 +492,7 @@ class Election_Model extends CI_Model
 	// electionID - the election to get the voters for
 	public function GetHowManyUsersVoted($electionID)
 	{
-		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', 'true')->get();
+		$query = $this->db->select('user_id')->from('voters')->where('election_id', $electionID)->where('has_voted', '1')->get();
 
 		$totalVoters = $query->num_rows();
 		return $totalVoters;
