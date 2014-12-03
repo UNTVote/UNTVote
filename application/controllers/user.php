@@ -66,6 +66,11 @@ class User extends CI_Controller
         {
             redirect('user/login', 'refresh');
         }
+        // user is an admin, redirect them to the admin page
+        else if($this->ion_auth->is_admin())
+        {
+            redirect('admin', 'refresh');
+        }
         else
         {
             $user = $this->ion_auth->user()->row();

@@ -304,6 +304,18 @@ class Election_Model extends CI_Model
 		{
 			$status = "Upcoming";
 		}
+		if($this->IsActive($endDate))
+		{
+			// chceck to see if we have a tie before we close the election
+			if(!$this->IsTie($electionID))
+			{
+				$status = "Closed";
+			}
+			else
+			{
+				$this->ExtendElection($electionID);
+			}
+		}
 
 		// data array to update the election table
 		$data = array('election_name' => $electionName,

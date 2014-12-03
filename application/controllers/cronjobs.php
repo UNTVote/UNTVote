@@ -15,19 +15,11 @@ class Cronjobs extends CI_Controller
 	// Update all the elections
 	public function UpdateElections()
 	{
-		// only run if this was a cli request
-		if($this->input->is_cli_request())
-		{
-			$this->election_model->UpdateElections();
-		}
+		$this->election_model->UpdateElections();
 	}
 
 	public function TestCron()
 	{
-		// only run if this was a cli request
-		if($this->input->is_cli_request())
-		{
-			echo 'Testing!!!';
-		}
+		echo 'Testing!!!';
 	}
 }
